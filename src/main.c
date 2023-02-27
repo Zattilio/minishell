@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commain.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 15:06:13 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/27 18:29 by jlanza           ###   ########.fr       */
+/*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
+/*   Updated: 2023/02/27 19:01:12 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "include/minishell.h"
 
 int	g_return_value = 0;
-u
 
 int	main(int argc, char *argv[], char *env[])
 {
 	char	do_;
-	char	*command_buf;
+	char	*cmd_buf;
 
 	do_ = 1;
 	print_minishell_title();
 	while (do_)
 	{
 		if (g_return_value == 0)
-			command_buf = readline("\033[0;32m➜ \033[0;36mminishell$ \033[0m");
+			cmd_buf = readline("\033[1;32m➜ \033[0;36m\e[1mminishell$\e[0m \033[0m");
 		else
-			command_buf = readline("\033[0;31m➜ \033[0;36mminishell$ \033[0m");
-		if (ft_strlen(command_buf) > 0)
-			add_history(command_buf);
-		if (!ft_strcmp(command_buf, "exit"))
+			cmd_buf = readline("\033[1;31m➜ \033[0;36m\e[1mminishell$\e[0m \033[0m");
+		if (ft_strlen(cmd_buf) > 0)
+			add_history(cmd_buf);
+		if (!ft_strcmp(cmd_buf, "exit"))
 			do_ = 0;
-		g_return_value = 1;
 	}
 	rl_clear_history();
 	(void)argc;
