@@ -6,14 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:58:37 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/27 13:35:39 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/27 18:15:27 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "../../libft/libft.h"
+# include "minishell.h"
 
 /*import wait*/
 # include <sys/wait.h>
