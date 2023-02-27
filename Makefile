@@ -5,65 +5,68 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/02/27 16:31:22 by jlanza           ###   ########.fr        #
+#    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
+#    Updated: 2023/02/27 17:43:04 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =	src/pipex/main_pipex.c \
-		src/pipex/get_path_name.c \
-		src/pipex/execute_cmd.c \
-		src/pipex/execute_n_cmd.c \
-		src/pipex/is_parent_process.c \
-		src/pipex/ft_error.c \
-		src/pipex/close_fd.c \
-		src/pipex/error_cmd.c \
-		src/pipex/ft_wait.c \
-		src/pipex/init.c \
-		src/pipex/here_doc.c \
-		src/command_line_interface/command_line_interface.c
-
-BONUS_SRC =
-
-LIBFT = ./libft/libft.a
-OBJ = ${SRC:.c=.o}
-
 NAME = minishell
-NAME_BONUS = minishell
-CLIB = -lreadline
-CFLAGS = -Wall -Wextra -Werror -g3
+
+SOURCES_DIR = ./src/
+
+BUILD_DIR = ./build/
+
+SOURCES =	pipex/main_pipex.c \
+			pipex/get_path_name.c \
+			pipex/execute_cmd.c \
+			pipex/execute_n_cmd.c \
+			pipex/is_parent_process.c \
+			pipex/ft_error.c \
+			pipex/close_fd.c \
+			pipex/error_cmd.c \
+			pipex/ft_wait.c \
+			pipex/init.c \
+			pipex/here_doc.c \
+			command_line_interface/command_line_interface.c
+
+OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
+
+DEPS := $(OBJECTS:.o=.d)
+
 CC = cc
-RM = rm -f
-HEADER = src/include/pipex.h src/include/minishell.h
-HEADER_BONUS =
 
-BONUS=no
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 
-ifneq ($(BONUS),no)
-OBJ = ${BONUS_SRC:.c=.o}
-SRC = $(BONUS_SRC)
-HEADER = $(HEADER_BONUS)
-endif
+RM = rm -rf
 
-.c.o: $(SRCS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+LIBFT_DIR = libft/
 
-$(NAME): $(OBJ) $(HEADER)
-	$(MAKE) -C ./libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) libft/libft.a $(CLIB)
+CLIB = -Llibft -lft -lreadline
 
 all: $(NAME)
 
-bonus: $(HEADER_BONUS)
-	@$(MAKE) BONUS=yes
+$(BUILD_DIR)%.o: $(SOURCES_DIR)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -O3 -c $< -o $@
+	@echo "Compiling " $<
+
+$(NAME):	$(OBJECTS)
+			@echo
+			@make -C $(LIBFT_DIR)
+			@$(CC) $(CFLAGS) $(OBJECTS) $(CLIB) -o $(NAME)
+			@echo "\nCreating ./"$(NAME)
+			@echo "\n----- ALL DONE THANKS! -----\n"
 
 clean:
-	$(RM) *.o */*.o
-	$(MAKE) fclean -C ./libft
+	$(RM) $(BUILD_DIR)
+	make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM)  $(NAME)
+	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
+
+-include $(DEPS)
