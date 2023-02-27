@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 15:44:12 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:53:01 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	garbage_col(t_param *prm, void *ptr)
 {
 	t_garb	*new_garb;
 
-	if (ptr == NULL)
-		return ;
 	new_garb = (t_garb *)malloc(sizeof(t_garb));
 	if (new_garb == NULL)
 		return (1);
@@ -56,4 +54,19 @@ int	garbage_col(t_param *prm, void *ptr)
 		prm->garb = new_garb;
 	}
 	return (0);
+}
+
+void	empty_garbage(t_param *prm)
+{
+	t_garb	*elem_garb;
+	t_garb	*temp;
+
+	elem_garb = prm->garb;
+	while (elem_garb)
+	{
+		temp = elem_garb;
+		free(elem_garb->ptr);
+		elem_garb = temp->next;
+		free(temp);
+	}
 }

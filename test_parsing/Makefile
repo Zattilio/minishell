@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/27 15:00:39 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/02/27 15:58:20 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ BUILD_DIR = ./build/
 
 SOURCES = 	print_ast.c \
 			lexeur.c \
+			garbage.c \
+			utils.c \
 			
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
 

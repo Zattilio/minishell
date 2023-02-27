@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 15:41:07 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:45:37 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,27 @@ void	print_ast(t_node *root)
 {
 	print2dutil(root, 0);
 }
-
+/*
 int	main(void)
 {
 	t_param	prm;
+	int id = 0;
+	int curseur = 0;
 	t_node *root;
 
 	ft_memset(&prm, 0, sizeof(t_param));
-	root = make_node(0, TK_WORD, "word");
-	root->left = make_node(1, TK_DOLLAR, "$");
-	root->right = make_node(2, TK_DQUOTE, "\"");
+	root = make_node(&prm, 0, TK_WORD, "word");
+	root->left = make_node(&prm, 1, TK_DOLLAR, "$");
+	root->right = make_node(&prm, 2, TK_DQUOTE, "\"");
 	print_ast(root);
+
+	char line[] = "   ls | coucou  &    ";
+	
+	print_ast(get_token(&prm, &id, line, &curseur));
+	print_ast(get_token(&prm, &id, line, &curseur));
+	print_ast(get_token(&prm, &id, line, &curseur));
+	print_ast(get_token(&prm, &id, line, &curseur));
+	print_ast(get_token(&prm, &id, line, &curseur));
+	empty_garbage(&prm);
 	return (0);
-}
+}*/
