@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:33:18 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int	main(int argc, char *argv[], char *env[])
+int	main_pipex(int argc, char *argv[], char *env[])
 {
 	t_arg	*args;
 	t_fd	*fd_list;

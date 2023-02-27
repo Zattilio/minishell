@@ -6,12 +6,12 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:58:37 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:39:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:35:39 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include "../../libft/libft.h"
 
@@ -31,6 +31,8 @@ typedef struct s_arg
 	char	**argv;
 	char	**env;
 }				t_arg;
+
+int		main_pipex(int argc, char *argv[], char *env[]);
 
 int		get_path_name(t_arg *args, char **path_cmd1, char **cmd);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 10:37:24 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/14 15:22:02 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/27 13:23:55 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	last_process(t_pipex *px, t_cmd *cmd, char **env, char **argv)
 
 	px->fd_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (px->fd_out == -1)
-	{	
+	{
 		close_pipe(px->pipe_fd);
 		return (ft_exit(px, ERROR_PERROR, argv[4], 2));
 	}

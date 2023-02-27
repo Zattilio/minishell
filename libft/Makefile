@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 15:24:20 by jlanza            #+#    #+#              #
-#    Updated: 2023/01/13 16:04:47 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/27 15:54:47 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC =	ft_is/ft_isalpha.c \
 		ft_str/ft_strlcat.c \
 		ft_str/ft_strchr.c \
 		ft_str/ft_strrchr.c \
+		ft_str/ft_strcmp.c \
 		ft_str/ft_strncmp.c \
 		ft_str/ft_strnstr.c \
 		ft_str/ft_strdup.c \
@@ -64,7 +65,7 @@ OBJ = ${SRC:.c=.o}
 AR = ar rcs
 NAME = libft.a
 CFLAGS = -Wall -Wextra -Werror
-CC = gcc
+CC = cc
 RM = rm -f
 HEADER =	libft.h \
 			get_next_line/get_next_line.h \
