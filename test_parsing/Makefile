@@ -6,13 +6,13 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/27 15:58:20 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/02/27 17:33:23 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = test_parsing
 
-SOURCES_DIR = ./
+SOURCES_DIR = ./srcs/
 
 BUILD_DIR = ./build/
 
@@ -20,6 +20,8 @@ SOURCES = 	print_ast.c \
 			lexeur.c \
 			garbage.c \
 			utils.c \
+			test_parsing.c \
+			parseur.c \
 			
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
 
