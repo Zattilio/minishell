@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 17:30:08 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:26:52 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static char	*get_tk_str_2(int tk_type)
 		return ("DOUBLE QUOTE");
 	if (tk_type == TK_WILDCARD)
 		return ("WILDCARD");
+	if (tk_type == TK_EOF)
+		return ("TK_EOF");
 	return ("");
 }
 
@@ -81,5 +83,7 @@ static void	print2dutil(t_node *root, int space)
 
 void	print_ast(t_node *root)
 {
+	if (root == NULL)
+		return ;
 	print2dutil(root, 0);
 }

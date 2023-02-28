@@ -6,9 +6,13 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:48:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 17:24:54 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:07:15 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*The lexer, or tokenizer aims to create groups of character from the command
+line and identify what type they are. It does not check whether or not the 
+command is synaxicaly correct (this is the role of the parser).*/
 
 #include "parsing.h"
 
@@ -16,6 +20,8 @@ t_node	*make_node(t_param *prm, int id, int token_type, char *token)
 {
 	t_node	*node;
 
+	if (token == NULL)
+		return (NULL);
 	node = ft_malloc_gc(prm, sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
@@ -24,21 +30,12 @@ t_node	*make_node(t_param *prm, int id, int token_type, char *token)
 	node->token = token;
 	node->left = NULL;
 	node->right = NULL;
+	node->parent = NULL;
 	return (node);
 }
 
-int	get_token_type(char *token)
+t_token	get_token_type_2(char *token)
 {
-	if (ft_strncmp(token, "|", 2) == 0)
-		return (TK_PIPE);
-	if (ft_strncmp(token, "&", 2) == 0)
-		return (TK_AMP);
-	if (ft_strncmp(token, "||", 2) == 0)
-		return (TK_DPIPE);
-	if (ft_strncmp(token, "&&", 2) == 0)
-		return (TK_DAMP);
-	if (ft_strncmp(token, "<", 2) == 0)
-		return (TK_INF);
 	if (ft_strncmp(token, ">", 2) == 0)
 		return (TK_SUP);
 	if (ft_strncmp(token, "<<", 2) == 0)
@@ -56,29 +53,75 @@ int	get_token_type(char *token)
 	return (TK_WORD);
 }
 
-t_node	*get_token(t_param *prm, int *id, char *line, int *cur)
+t_token	get_token_type(char *token)
 {
-	int		pos_start;
-	char	*token;
-	t_node	*node;
+	if (token == NULL)
+		return (TK_ERROR);
+	if (token[0] == '\0')
+		return (TK_EOF);
+	if (ft_strncmp(token, "|", 2) == 0)
+		return (TK_PIPE);
+	if (ft_strncmp(token, "&", 2) == 0)
+		return (TK_AMP);
+	if (ft_strncmp(token, "||", 2) == 0)
+		return (TK_DPIPE);
+	if (ft_strncmp(token, "&&", 2) == 0)
+		return (TK_DAMP);
+	if (ft_strncmp(token, "<", 2) == 0)
+		return (TK_INF);
+	return (get_token_type_2(token));
+}
 
-	if (!line)
+char	*get_token(t_param *prm)
+{
+	size_t	pos_start;
+	char	*token;
+	size_t	cur;
+
+	cur = prm->source.cur;
+	if (!prm->source.line)
 		return (NULL);
-	while (line[*cur] && ft_isspace(line[*cur]))
-		(*cur)++;
-	if (*cur >= (int)ft_strlen(line))
+	while (prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
+		(cur)++;
+	if (cur >= prm->source.line_size)
+		return (ft_strdup_gc(prm, ""));
+	pos_start = cur;
+	while (prm->source.line[cur] && !ft_isspace(prm->source.line[cur])
+		&& !ft_strchr("|&<>$\'\"*", prm->source.line[cur]))
+		(cur)++;
+	if ((prm->source.line[cur] == '<' && prm->source.line[cur + 1] == '<')
+		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>')
+		|| (prm->source.line[cur] == '&' && prm->source.line[cur + 1] == '&')
+		|| (prm->source.line[cur] == '|' && prm->source.line[cur + 1] == '|'))
+		(cur)++;
+	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start + 1);
+	(cur)++;
+	prm->source.cur = cur;
+	return (token);
+}
+
+char	*pick_next_token(t_param *prm)
+{
+	int			pos_start;
+	char		*token;
+	size_t		cur;
+
+	cur = prm->source.cur;
+	if (!prm->source.line)
 		return (NULL);
-	pos_start = *cur;
-	while (line[*cur] && !ft_isspace(line[*cur])
-		&& !ft_strchr("|&<>$\'\"*", line[*cur]))
-		(*cur)++;
-	if ((line[*cur] == '<' && line[*cur + 1] == '<')
-		|| (line[*cur] == '>' && line[*cur + 1] == '>')
-		|| (line[*cur] == '&' && line[*cur + 1] == '&')
-		|| (line[*cur] == '|' && line[*cur + 1] == '|'))
-		(*cur)++;
-	token = ft_substr_gc(prm, line, pos_start, *cur - pos_start + 1);
-	node = make_node(prm, ++(*id), get_token_type(token), token);
-	(*cur)++;
-	return (node);
+	while (prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
+		(cur)++;
+	if (cur >= prm->source.line_size)
+		return (ft_strdup_gc(prm, ""));
+	pos_start = cur;
+	while (prm->source.line[cur] && !ft_isspace(prm->source.line[cur])
+		&& !ft_strchr("|&<>$\'\"*", prm->source.line[cur]))
+		(cur)++;
+	if ((prm->source.line[cur] == '<' && prm->source.line[cur + 1] == '<')
+		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>')
+		|| (prm->source.line[cur] == '&' && prm->source.line[cur + 1] == '&')
+		|| (prm->source.line[cur] == '|' && prm->source.line[cur + 1] == '|'))
+		(cur)++;
+	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start + 1);
+	return (token);
 }

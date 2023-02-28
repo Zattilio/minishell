@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 17:34:50 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/28 14:23:14 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-enum e_token {
+typedef enum e_token {
+	TK_ERROR = -1,
 	TK_WORD,
 	TK_PIPE,
 	TK_AMP,
@@ -32,8 +33,9 @@ enum e_token {
 	TK_DOLLAR,
 	TK_SQUOTE,
 	TK_DQUOTE,
-	TK_WILDCARD
-};
+	TK_WILDCARD,
+	TK_EOF
+}			t_token;
 
 typedef struct s_node {
 	int				id;
@@ -41,6 +43,7 @@ typedef struct s_node {
 	char			*token;
 	struct s_node	*right;
 	struct s_node	*left;
+	struct s_node	*parent;
 }					t_node;
 
 typedef struct s_garb
@@ -50,8 +53,15 @@ typedef struct s_garb
 	struct s_garb	*next;
 }					t_garb;
 
+typedef struct s_source {
+	char			*line;
+	size_t			line_size;
+	size_t			cur;
+}					t_source;
+
 typedef struct s_param {
 	int				id;
+	t_source		source;
 	t_garb			*garb;
 }					t_param;
 
@@ -66,9 +76,12 @@ void	print_ast(t_node *root);
 
 /*	lexeur.c	*/
 t_node	*make_node(t_param *prm, int id, int token_type, char *token);
-t_node	*get_token(t_param *prm, int *id, char *line, int *cur);
+char	*get_token(t_param *prm);
+char	*pick_next_token(t_param *prm);
+t_token	get_token_type(char *token);
 
 /*	utils.c	*/
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
+char	*ft_strdup_gc(t_param *prm, const char *s);
 
 #endif

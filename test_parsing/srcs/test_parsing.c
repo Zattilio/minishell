@@ -6,28 +6,35 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 17:30:12 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:07:57 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_param	prm;
+	t_node	*node;
+	char	*token;
+	int		id;
 
-	t_node *token;
-	int id = 0;
-	int curseur = 0;
-	char line[] = " <<a  && cou | bou || gfjg < >> o   ";
-	
+	id = 0;
+	if (argc != 2)
+		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
-	token = get_token(&prm, &id, line, &curseur);
-	while (token)
+	prm.source.line = ft_strdup(argv[1]);
+	if (prm.source.line)
+		prm.source.line_size = ft_strlen(prm.source.line);
+	while (1)
 	{
-		print_ast(token);
-		token = get_token(&prm, &id, line, &curseur);
+		token = get_token(&prm);
+		node = make_node(&prm, ++id, get_token_type(token), token);
+		print_ast(node);
+		if (node->token_type == TK_EOF)
+			break ;
 	}
 	empty_garbage(&prm);
+	free(prm.source.line);
 	return (0);
 }

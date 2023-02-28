@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:11:32 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/02 16:53:43 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/02/28 14:01:33 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,10 +94,12 @@ $(NAME): $(MY_OBJECTS)
 	@echo "Creating "$(NAME)
 
 clean:
-	$(RM) $(BUILD_DIR)
+	@$(RM) $(BUILD_DIR)
+	@echo "Removing "${BUILD_DIR}
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "Removing ./"$(NAME)
 
 re: fclean all
 

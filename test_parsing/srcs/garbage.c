@@ -6,9 +6,14 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 15:53:01 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:14:56 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*We created two fonctions malloc_gabage_collection and calloc_gc. They are
+able to reproduce the behaviour of malloc and calloc but they also store the
+allocated adresse in out garbage list. This way we don't have to worry about 
+free until we are finish.*/
 
 #include "parsing.h"
 
@@ -68,5 +73,26 @@ void	empty_garbage(t_param *prm)
 		free(elem_garb->ptr);
 		elem_garb = temp->next;
 		free(temp);
+	}
+}
+
+void	remove_from_garb(t_param *prm, void *ptr)
+{
+	t_garb	*elem;
+	t_garb	*next;
+	t_garb	*previous;
+
+	previous = NULL;
+	elem = prm->garb;
+	while (elem && elem->ptr != ptr)
+	{
+		previous = elem;
+		elem = elem->next;
+	}
+	if (elem)
+	{
+		previous->next = elem->next;
+		free(elem->ptr);
+		free(elem);
 	}
 }

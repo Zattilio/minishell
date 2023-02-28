@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/27 18:28:26 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/02/28 14:03:45 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,16 +66,17 @@ $(NAME):	$(OBJECTS)
 			@echo "		⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿"
 			@echo "		⠀⠙⠿⠿⠿⠿⠿⢿⣿⣿⣶⣦⣴⣿⣷⣦⣴⣾⣿⣿⣿⠿⠿⠟⠿⠿⠛⠀"
 			@echo "		⠀⠀⠀⠀⠀⠀⠀⠘⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠇⠀⠀⠀⠀⠀⠀⠀"
-			@echo "		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠛⠛⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-			@echo "But I belive, Ang can save the word ...\e[0m"			
+			@echo "		⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠛⠛⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\e[0m"
 
 clean:
-	$(RM) $(BUILD_DIR)
-	make clean -C $(LIBFT_DIR)
+	@$(RM) $(BUILD_DIR)
+	@echo "Removing "${BUILD_DIR}
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	$(RM)  $(NAME)
-	make fclean -C $(LIBFT_DIR)
+	@$(RM)  $(NAME)
+	@echo "Removing ./"$(NAME)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
