@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/27 18:23:28 by jlanza           ###   ########.fr        #
+#    Updated: 2023/02/28 19:42:41 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES =	pipex/main_pipex.c \
 			pipex/init.c \
 			pipex/here_doc.c \
 			command_line_interface/command_line_interface.c \
+			builtins/cd.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})

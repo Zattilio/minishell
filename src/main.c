@@ -6,13 +6,11 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/28 19:03:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/28 20:05:00 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-int	g_return_value = 0;
 
 void	handle_sigint(int sig)
 {
@@ -39,25 +37,6 @@ void	pwd(void)
 	free(working_directory);
 }
 
-void	cd(char *path)
-{
-	int		i;
-	char	*new_path;
-
-	i = 0;
-	if (path[0] != '\0')
-	{
-		while (path[i] == ' ')
-			i++;
-		if (chdir(path) == -1)
-		{
-			new_path = ft_strjoin("./", &path[i]);
-			chdir(new_path);
-			free(new_path);
-		}
-	}
-}
-
 int	main(int argc, char *argv[], char *env[])
 {
 	char				do_;
@@ -81,7 +60,7 @@ int	main(int argc, char *argv[], char *env[])
 			add_history(cmd_buf);
 		if (!ft_strncmp(cmd_buf, "pwd ", 4) || !ft_strcmp(cmd_buf, "pwd"))
 			pwd();
-		if (!ft_strncmp(cmd_buf, "cd ", 3))
+		if (!ft_strncmp(cmd_buf, "cd ", 3) || !ft_strcmp(cmd_buf, "cd"))
 			cd(&cmd_buf[3]);
 	}
 	rl_clear_history();

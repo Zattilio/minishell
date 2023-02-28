@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/28 16:53:00 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/02/28 20:08:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
 # define _XOPEN_SOURCE 700
 # define _GNU_SOURCE
 
+# ifndef GLOBAL
+int	g_return_value = 0;
+# endif
+
+/* command_line_interface */
 void	print_minishell_title(void);
+
+/* builtins */
+void	cd(char *path);
 
 #endif
