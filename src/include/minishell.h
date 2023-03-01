@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/28 20:08:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/01 04:02:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,16 @@
 # define GRAS_END "\e[0m"
 # define RESET_COLOR "\033[0m"
 
-# define _XOPEN_SOURCE 700
-# define _GNU_SOURCE
-
-# ifndef GLOBAL
-int	g_return_value = 0;
-# endif
+extern unsigned char	g_return_value;
 
 /* command_line_interface */
 void	print_minishell_title(void);
+void	print_new_prompt(char **cmd_buf);
+void	init_signal(void);
 
 /* builtins */
 void	cd(char *path);
+void	pwd(void);
+void	ft_exit(char *cmd, char *do_);
 
 #endif

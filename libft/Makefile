@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:11:32 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/27 18:07:55 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/01 03:30:11 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ MY_SOURCES =	ft_is/ft_isalpha.c \
 				ft_is/ft_isalnum.c \
 				ft_is/ft_isascii.c \
 				ft_is/ft_isprint.c \
+				ft_is/ft_isint.c \
 				ft_str/ft_strlen.c \
 				ft_str/ft_strlcpy.c \
 				ft_str/ft_strlcat.c \
@@ -74,7 +75,7 @@ DEPS := $(MY_OBJECTS:.o=.d)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 
 RM = rm -rf
 
@@ -82,7 +83,7 @@ all: $(NAME)
 
 $(BUILD_DIR)%.o : $(SOURCES_DIR)%.c
 	@mkdir -p $(dir $@)
-	@$(CC) -c $(CFLAGS) -O3 -c $< -o $@
+	@$(CC) -c $(CFLAGS) -c $< -o $@
 	@echo "	Compiling " $<
 
 $(NAME): $(MY_OBJECTS)

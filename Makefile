@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/28 19:42:41 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/01 04:02:00 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,10 @@ SOURCES =	pipex/main_pipex.c \
 			pipex/init.c \
 			pipex/here_doc.c \
 			command_line_interface/command_line_interface.c \
+			command_line_interface/signal.c \
 			builtins/cd.c \
+			builtins/pwd.c \
+			builtins/ft_exit.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
@@ -37,7 +40,7 @@ DEPS := $(OBJECTS:.o=.d)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 
 RM = rm -rf
 
@@ -49,7 +52,7 @@ all: $(NAME)
 
 $(BUILD_DIR)%.o: $(SOURCES_DIR)%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiling " $<
 
 $(NAME):	$(OBJECTS)

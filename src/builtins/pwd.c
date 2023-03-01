@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 14:46:30 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/27 20:23:10 by jlanza           ###   ########.fr       */
+/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/01 02:58:16 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../include/minishell.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	pwd(void)
 {
-	write(fd, &c, 1);
+	char	*working_directory;
+
+	working_directory = getcwd(NULL, 0);
+	ft_printf("%s\n", working_directory);
+	free(working_directory);
 }

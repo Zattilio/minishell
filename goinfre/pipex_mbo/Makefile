@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/02 16:54:27 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/01 00:10:24 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,12 @@ SOURCES = 	main.c \
 			parsing.c \
 			ft_exit.c \
 			garbage.c \
-			
+
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
 
 DEPS := $(OBJECTS:.o=.d)
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 

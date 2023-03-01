@@ -1,4 +1,4 @@
-build/builtins/cd.o: src/builtins/cd.c \
+build/builtins/ft_exit.o: src/builtins/ft_exit.c \
  src/builtins/../include/minishell.h \
  src/builtins/../include/../../libft/src/libft.h
 src/builtins/../include/minishell.h:
