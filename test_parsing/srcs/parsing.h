@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 13:49:09 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:49:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# define PARSING_STOPPER "|<>$\'\""
 
 typedef enum e_token {
 	TK_ERROR = -1,
 	TK_WORD,
 	TK_PIPE,
 	TK_EXEC,
-	TK_AMP,
-	TK_DPIPE,
-	TK_DAMP,
+	//TK_AMP,
+	//TK_DPIPE,
+	//TK_DAMP,
 	TK_INF,
 	TK_SUP,
 	TK_DINF,
@@ -34,13 +35,18 @@ typedef enum e_token {
 	TK_DOLLAR,
 	TK_SQUOTE,
 	TK_DQUOTE,
-	TK_WILDCARD,
+	//TK_WILDCARD,
 	TK_EOF
 }			t_token;
 
+enum e_error_parsing {
+	ERR_SQUOTE_CLOSE,
+	ERR_DQUOTE_CLOSE,
+};
+
 typedef struct s_node {
 	int				id;
-	int				token_type;
+	t_token			token_type;
 	char			*token;
 	char			*file_name;
 	int				flags_open;
@@ -48,7 +54,6 @@ typedef struct s_node {
 	char			**cmd;
 	struct s_node	*right;
 	struct s_node	*left;
-	struct s_node	*parent;
 }					t_node;
 
 typedef struct s_garb
@@ -59,13 +64,14 @@ typedef struct s_garb
 }					t_garb;
 
 typedef struct s_source {
+	int				id;
 	char			*line;
 	size_t			line_size;
 	size_t			cur;
+	int				error;
 }					t_source;
 
 typedef struct s_param {
-	int				id;
 	t_source		source;
 	t_garb			*garb;
 }					t_param;
@@ -86,8 +92,8 @@ char	*get_tk_str(int tk_type);
 /*	lexeur.c	*/
 t_node	*make_node(t_param *prm, int id, int token_type, char *token);
 char	*get_token(t_param *prm);
-char	*pick_next_token(t_param *prm);
-t_token	get_token_type(char *token);
+t_token	pick_tk(t_param *prm);
+t_token	get_t_token(char *token);
 
 /*	utils.c	*/
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
@@ -103,5 +109,8 @@ t_node	*make_exec_node(t_param *prm, char **cmd);
 t_node	*parsing(t_param *prm);
 t_node	*parse_pipe(t_param *prm);
 t_node	*parse_exec(t_param *prm);
+t_node	*parse_redir(t_param *prm);
+char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
+void	add_last_left(t_node **root, t_node *node);
 
 #endif

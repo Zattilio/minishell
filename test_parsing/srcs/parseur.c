@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 14:00:38 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:29:18 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ the execution.*/
 /*Plusieurs approches de parsing ; Top Down Parsing et Bottom up parsing.
  mais aussi Recursive descent parser
  */
+
+/* quand j'ai une erreur de syntax je renvoie un NULL, mais je l'interprete pas.
+il faudra changer ca par la suite*/
+
 #include "parsing.h"
 
 t_node	*make_pipe_node(t_param *prm, t_node *left, t_node *right)
@@ -27,7 +31,7 @@ t_node	*make_pipe_node(t_param *prm, t_node *left, t_node *right)
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
-	node->id = prm->id;
+	node->id = prm->source.id;
 	node->token_type = TK_PIPE;
 	node->token = "|";
 	node->left = left;
@@ -44,7 +48,7 @@ t_node	*make_redir_node(t_param *prm, t_node *left,
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
-	node->id = prm->id;
+	node->id = prm->source.id;
 	node->token_type = token_type;
 	node->token = get_tk_str(token_type);
 	node->mode_open = 00644;
@@ -69,7 +73,7 @@ t_node	*make_exec_node(t_param *prm, char **cmd)
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
-	node->id = prm->id;
+	node->id = prm->source.id;
 	node->token_type = TK_EXEC;
 	node->token = get_tk_str(TK_EXEC);
 	node->cmd = cmd;
@@ -81,7 +85,7 @@ t_node	*parsing(t_param *prm)
 	t_node	*root;
 
 	root = parse_pipe(prm);
-	if (get_token_type(pick_next_token(prm)) != TK_EOF)
+	if (pick_tk(prm) != TK_EOF)
 		return (NULL);
 	return (root);
 }
@@ -91,7 +95,7 @@ t_node	*parse_pipe(t_param *prm)
 	t_node	*node;
 
 	node = parse_exec(prm);
-	if (get_token_type(pick_next_token(prm)) == TK_PIPE)
+	if (pick_tk(prm) == TK_PIPE)
 	{
 		get_token(prm);
 		node = make_pipe_node(prm, node, parse_pipe(prm));
@@ -102,19 +106,97 @@ t_node	*parse_pipe(t_param *prm)
 t_node	*parse_exec(t_param *prm)
 {
 	t_node	*node;
-	t_token	peak_token;
+	char	**cmd;
 
 	node = NULL;
-	peak_token = get_token_type(pick_next_token(prm));
-	if (is_redir(peak_token))
+	cmd = NULL;
+	if (is_redir(pick_tk(prm)))
 		node = parse_redir(prm);
-	peak_token = get_token_type(pick_next_token(prm));
-	while (peak_token == TK_WORD || is_redir(peak_token))
+	while (pick_tk(prm) == TK_WORD || is_redir(pick_tk(prm)))
 	{
-		
-		peak_token = get_token_type(pick_next_token(prm));
+		if (pick_tk(prm) == TK_WORD)
+			cmd = add_cmd_arg(prm, cmd, get_token(prm));
+		else
+			add_last_left(&node, parse_redir(prm));
 	}
+	add_last_left(&node, make_exec_node(prm, cmd));
 	return (node);
 }
 
+t_node	*parse_redir(t_param *prm)
+{
+	t_node	*node;
+	t_token	token;
+	char	*file_name;
+
+	token = get_t_token(get_token(prm));
+	if (pick_tk(prm) != TK_WORD)
+		return (NULL);
+	file_name = get_token(prm);
+	node = make_redir_node(prm, NULL, token, file_name);
+	return (node);
+}
+
+void	add_last_left(t_node **root, t_node *node)
+{
+	t_node	*elem;
+
+	elem = *root;
+	if (elem == NULL)
+		*root = node;
+	else
+	{
+		while (elem->left)
+			elem = elem->left;
+		elem->left = node;
+	}
+}
+
+int	get_nb_arg(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	if (cmd == NULL)
+		return (0);
+	while (cmd[i])
+		i++;
+	return (i);
+}
+
+char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
+{
+	char	**new_cmd;
+	int		nb_arg;
+	int		i;
+
+	i = -1;
+	nb_arg = get_nb_arg(cmd);
+	new_cmd = (char **)ft_malloc_gc(prm, (nb_arg + 2) * sizeof(char *));
+	if (new_cmd == NULL)
+		return (NULL);
+	new_cmd[nb_arg] = ft_strdup_gc(prm, arg);
+	if (new_cmd[nb_arg] == NULL)
+		return (NULL);
+	new_cmd[nb_arg + 1] = NULL;
+	while (++i < nb_arg)
+		new_cmd[i] = cmd[i];
+	return (new_cmd);
+}
+/*
+char	*get_word_squote(t_param *prm)
+{
+	char *word;
+	
+	word = NULL;
+	while (pick_tk(prm) == TK_SQUOTE || pick_tk(prm) == TK_EOF)
+	{
+		
+	}
+	if (pick_tk(prm) == TK_EOF)
+	{
+		prm->source.error = ERR_SQUOTE_CLOSE;
+		return (NULL);
+	}
+}*/
 /*il faut une fonction pour chaque truc de la grammaire. */

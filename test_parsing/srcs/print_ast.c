@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 13:47:56 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:28:44 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static char	*get_tk_str_2(int tk_type)
 		return ("SINGLE QUOTE");
 	if (tk_type == TK_DQUOTE)
 		return ("DOUBLE QUOTE");
-	if (tk_type == TK_WILDCARD)
-		return ("WILDCARD");
 	if (tk_type == TK_EXEC)
 		return ("EXEC");
 	if (tk_type == TK_EOF)
@@ -39,12 +37,6 @@ char	*get_tk_str(int tk_type)
 		return ("WORD");
 	if (tk_type == TK_PIPE)
 		return ("PIPE");
-	if (tk_type == TK_AMP)
-		return ("AMPERSAND");
-	if (tk_type == TK_DPIPE)
-		return ("DOUBLE_PIPE");
-	if (tk_type == TK_DAMP)
-		return ("DOUBLE_AMPERSAND");
 	if (tk_type == TK_INF)
 		return ("INF");
 	if (tk_type == TK_SUP)
@@ -65,6 +57,8 @@ static void	print_node_suite(t_node *root, int space)
 	ft_printf("| flags_open : %u\n", root->mode_open);
 	print_space(space);
 	ft_printf("| cmd : ");
+	if (root->cmd == NULL)
+		ft_printf("%s", NULL);
 	while (root->cmd && root->cmd[++i])
 		ft_printf("%s ", root->cmd[i]);
 	ft_printf("\n");

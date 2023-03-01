@@ -10,6 +10,9 @@ parse_pipe PIPE :
 
 
 cd 'toto""'toto'tata'
+wc >out2 <in < in2 -l > out
+
+
 
 Dans exec je dois stocker mon tableau de commandes.
 Dans REDIR : 

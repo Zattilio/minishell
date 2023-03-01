@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 13:48:50 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 17:41:52 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	garbage_col(t_param *prm, void *ptr)
 	if (new_garb == NULL)
 		return (1);
 	new_garb->ptr = ptr;
-	new_garb->id = prm->id;
+	new_garb->id = prm->source.id;
 	new_garb->next = NULL;
 	if (prm->garb == NULL)
 		prm->garb = new_garb;

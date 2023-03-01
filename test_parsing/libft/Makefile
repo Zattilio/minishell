@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:11:32 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/28 14:01:33 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/01 15:38:05 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ MY_OBJECTS = $(addprefix ${BUILD_DIR}, ${MY_SOURCES:.c=.o})
 
 DEPS := $(MY_OBJECTS:.o=.d)
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 
@@ -85,7 +85,7 @@ all: $(NAME)
 
 $(BUILD_DIR)%.o : $(SOURCES_DIR)%.c
 	@mkdir -p $(dir $@)
-	@$(CC) -c $(CFLAGS) -O3 -c $< -o $@
+	@$(CC) -c $(CFLAGS) -c $< -o $@
 	@echo "	Compiling " $<
 	
 $(NAME): $(MY_OBJECTS)

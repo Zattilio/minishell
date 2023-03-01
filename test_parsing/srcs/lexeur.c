@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:48:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 16:07:15 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:24:06 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ t_node	*make_node(t_param *prm, int id, int token_type, char *token)
 	node->token = token;
 	node->left = NULL;
 	node->right = NULL;
-	node->parent = NULL;
 	return (node);
 }
 
-t_token	get_token_type_2(char *token)
+t_token	get_t_token_2(char *token)
 {
 	if (ft_strncmp(token, ">", 2) == 0)
 		return (TK_SUP);
@@ -48,12 +47,10 @@ t_token	get_token_type_2(char *token)
 		return (TK_SQUOTE);
 	if (ft_strncmp(token, "\"", 1) == 0)
 		return (TK_DQUOTE);
-	if (ft_strncmp(token, "*", 1) == 0)
-		return (TK_WILDCARD);
 	return (TK_WORD);
 }
 
-t_token	get_token_type(char *token)
+t_token	get_t_token(char *token)
 {
 	if (token == NULL)
 		return (TK_ERROR);
@@ -61,15 +58,9 @@ t_token	get_token_type(char *token)
 		return (TK_EOF);
 	if (ft_strncmp(token, "|", 2) == 0)
 		return (TK_PIPE);
-	if (ft_strncmp(token, "&", 2) == 0)
-		return (TK_AMP);
-	if (ft_strncmp(token, "||", 2) == 0)
-		return (TK_DPIPE);
-	if (ft_strncmp(token, "&&", 2) == 0)
-		return (TK_DAMP);
 	if (ft_strncmp(token, "<", 2) == 0)
 		return (TK_INF);
-	return (get_token_type_2(token));
+	return (get_t_token_2(token));
 }
 
 char	*get_token(t_param *prm)
@@ -82,25 +73,24 @@ char	*get_token(t_param *prm)
 	if (!prm->source.line)
 		return (NULL);
 	while (prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
-		(cur)++;
+		cur++;
 	if (cur >= prm->source.line_size)
 		return (ft_strdup_gc(prm, ""));
 	pos_start = cur;
 	while (prm->source.line[cur] && !ft_isspace(prm->source.line[cur])
-		&& !ft_strchr("|&<>$\'\"*", prm->source.line[cur]))
-		(cur)++;
+		&& !ft_strchr(PARSING_STOPPER, prm->source.line[cur]))
+		cur++;
 	if ((prm->source.line[cur] == '<' && prm->source.line[cur + 1] == '<')
-		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>')
-		|| (prm->source.line[cur] == '&' && prm->source.line[cur + 1] == '&')
-		|| (prm->source.line[cur] == '|' && prm->source.line[cur + 1] == '|'))
-		(cur)++;
-	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start + 1);
-	(cur)++;
+		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>'))
+		cur++;
+	if (!ft_isspace(prm->source.line[cur]))
+		cur++;
+	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start);
 	prm->source.cur = cur;
 	return (token);
 }
 
-char	*pick_next_token(t_param *prm)
+t_token	pick_tk(t_param *prm)
 {
 	int			pos_start;
 	char		*token;
@@ -108,20 +98,20 @@ char	*pick_next_token(t_param *prm)
 
 	cur = prm->source.cur;
 	if (!prm->source.line)
-		return (NULL);
+		return (TK_ERROR);
 	while (prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
-		(cur)++;
+		cur++;
 	if (cur >= prm->source.line_size)
-		return (ft_strdup_gc(prm, ""));
+		return (TK_EOF);
 	pos_start = cur;
 	while (prm->source.line[cur] && !ft_isspace(prm->source.line[cur])
-		&& !ft_strchr("|&<>$\'\"*", prm->source.line[cur]))
-		(cur)++;
+		&& !ft_strchr(PARSING_STOPPER, prm->source.line[cur]))
+		cur++;
 	if ((prm->source.line[cur] == '<' && prm->source.line[cur + 1] == '<')
-		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>')
-		|| (prm->source.line[cur] == '&' && prm->source.line[cur + 1] == '&')
-		|| (prm->source.line[cur] == '|' && prm->source.line[cur + 1] == '|'))
-		(cur)++;
-	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start + 1);
-	return (token);
+		|| (prm->source.line[cur] == '>' && prm->source.line[cur + 1] == '>'))
+		cur++;
+	if (!ft_isspace(prm->source.line[cur]))
+		cur++;
+	token = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start);
+	return (get_t_token(token));
 }

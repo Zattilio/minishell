@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/02/28 14:03:45 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/01 16:28:13 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,19 @@ SOURCES_DIR = ./srcs/
 
 BUILD_DIR = ./build/
 
-SOURCES = 	print_ast.c \
-			lexeur.c \
+SOURCES = 	garbage_2.c \
 			garbage.c \
-			utils.c \
-			test_parsing.c \
+			lexeur.c \
 			parseur.c \
+			print_ast.c \
+			test_parsing.c \
+			utils.c \
 			
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
 
 DEPS := $(OBJECTS:.o=.d)
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g3
 
@@ -41,7 +42,7 @@ all: $(NAME)
 
 $(BUILD_DIR)%.o: $(SOURCES_DIR)%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "\e[32mCompiling \e[0m" $<
 
 $(NAME):	$(OBJECTS)
