@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/01 04:02:00 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/01 19:20:28 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ SOURCES =	pipex/main_pipex.c \
 			pipex/here_doc.c \
 			command_line_interface/command_line_interface.c \
 			command_line_interface/signal.c \
-			builtins/cd.c \
-			builtins/pwd.c \
+			builtins/ft_cd.c \
+			builtins/ft_pwd.c \
 			builtins/ft_exit.c \
 			main.c
 

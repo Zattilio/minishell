@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:34:29 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/01 03:29:51 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:06:00 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_lstiter(t_list	*lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 char	*get_next_line(int fd);
-int		ft_printf(const char*str, ...);
+int		ft_printf(const char *str, ...);
+int		ft_printf_fd(int fd, const char *str, ...);
 
 #endif

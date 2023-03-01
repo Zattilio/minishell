@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/01 04:02:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:20:38 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "../../libft/src/libft.h"
+# include "./pipex.h"
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -35,8 +37,8 @@ void	print_new_prompt(char **cmd_buf);
 void	init_signal(void);
 
 /* builtins */
-void	cd(char *path);
-void	pwd(void);
+void	ft_cd(char *path);
+void	ft_pwd(void);
 void	ft_exit(char *cmd, char *do_);
 
 #endif
