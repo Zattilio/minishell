@@ -1,3 +1,25 @@
+parse_exec EXEC : REDIR {aaa REDIR}+
+
+parse_redirs REDIR : {< aaa
+                     > aaa
+                     << aaa
+                     >> aaa }
+
+parse_pipe PIPE : 
+                  EXEC [ | PIPE]
+
+
+cd 'toto""'toto'tata'
+
+Dans exec je dois stocker mon tableau de commandes.
+Dans REDIR : 
+- filename
+- mode ouverture
+- fd
+lien vers la commande. 
+
+pipe : left et right
+
 
 /* -------------------------------------------------------
    The grammar symbols

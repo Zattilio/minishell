@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:57:00 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 16:06:25 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:47:51 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,24 @@ char	*ft_strdup_gc(t_param *prm, const char *s)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+int	is_redir(int token_type)
+{
+	if (token_type == TK_INF || token_type == TK_SUP
+		|| token_type == TK_DINF || token_type == TK_DSUP)
+		return (1);
+	return (0);
+}
+
+void	print_space(int space)
+{
+	int	i;
+
+	i = 15;
+	while (i < space)
+	{
+		ft_printf(" ");
+		i++;
+	}
 }

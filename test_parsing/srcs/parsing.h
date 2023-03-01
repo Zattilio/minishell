@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 14:23:14 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:49:09 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_token {
 	TK_ERROR = -1,
 	TK_WORD,
 	TK_PIPE,
+	TK_EXEC,
 	TK_AMP,
 	TK_DPIPE,
 	TK_DAMP,
@@ -41,6 +42,10 @@ typedef struct s_node {
 	int				id;
 	int				token_type;
 	char			*token;
+	char			*file_name;
+	int				flags_open;
+	mode_t			mode_open;
+	char			**cmd;
 	struct s_node	*right;
 	struct s_node	*left;
 	struct s_node	*parent;
@@ -66,13 +71,17 @@ typedef struct s_param {
 }					t_param;
 
 /*	garbage.c	*/
+int		garbage_col(t_param *prm, void *ptr);
+void	empty_garbage(t_param *prm, int id);
+void	print_garbage(t_param *prm);
+
+/*	garbage_2.c	*/
 void	*ft_malloc_gc(t_param *prm, size_t size);
 void	*ft_calloc_gc(t_param *prm, size_t nmemb, size_t size);
-int		garbage_col(t_param *prm, void *ptr);
-void	empty_garbage(t_param *prm);
 
 /*	print_ast.c	*/
 void	print_ast(t_node *root);
+char	*get_tk_str(int tk_type);
 
 /*	lexeur.c	*/
 t_node	*make_node(t_param *prm, int id, int token_type, char *token);
@@ -83,5 +92,16 @@ t_token	get_token_type(char *token);
 /*	utils.c	*/
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
 char	*ft_strdup_gc(t_param *prm, const char *s);
+int		is_redir(int token_type);
+void	print_space(int space);
+
+/*	parseur.c	*/
+t_node	*make_pipe_node(t_param *prm, t_node *left, t_node *right);
+t_node	*make_redir_node(t_param *prm, t_node *left,
+			int token_type, char *file_name);
+t_node	*make_exec_node(t_param *prm, char **cmd);
+t_node	*parsing(t_param *prm);
+t_node	*parse_pipe(t_param *prm);
+t_node	*parse_exec(t_param *prm);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 16:07:57 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:37:47 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
 	prm.source.line = ft_strdup(argv[1]);
+	prm.id = 1;
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
 	while (1)
@@ -34,7 +35,9 @@ int	main(int argc, char **argv)
 		if (node->token_type == TK_EOF)
 			break ;
 	}
-	empty_garbage(&prm);
+	print_garbage(&prm);
+	empty_garbage(&prm, prm.id);
+	print_garbage(&prm);
 	free(prm.source.line);
 	return (0);
 }

@@ -6,23 +6,11 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 14:26:52 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:47:56 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-static void	print_space(int space)
-{
-	int	i;
-
-	i = 15;
-	while (i < space)
-	{
-		ft_printf(" ");
-		i++;
-	}
-}
 
 static char	*get_tk_str_2(int tk_type)
 {
@@ -38,12 +26,14 @@ static char	*get_tk_str_2(int tk_type)
 		return ("DOUBLE QUOTE");
 	if (tk_type == TK_WILDCARD)
 		return ("WILDCARD");
+	if (tk_type == TK_EXEC)
+		return ("EXEC");
 	if (tk_type == TK_EOF)
 		return ("TK_EOF");
 	return ("");
 }
 
-static char	*get_tk_str(int tk_type)
+char	*get_tk_str(int tk_type)
 {
 	if (tk_type == TK_WORD)
 		return ("WORD");
@@ -62,6 +52,24 @@ static char	*get_tk_str(int tk_type)
 	return (get_tk_str_2(tk_type));
 }
 
+static void	print_node_suite(t_node *root, int space)
+{
+	int	i;
+
+	i = -1;
+	print_space(space);
+	ft_printf("| file_name : %s\n", root->file_name);
+	print_space(space);
+	ft_printf("| flags_open : %d\n", root->flags_open);
+	print_space(space);
+	ft_printf("| flags_open : %u\n", root->mode_open);
+	print_space(space);
+	ft_printf("| cmd : ");
+	while (root->cmd && root->cmd[++i])
+		ft_printf("%s ", root->cmd[i]);
+	ft_printf("\n");
+}
+
 static void	print2dutil(t_node *root, int space)
 {
 	if (root == NULL)
@@ -76,6 +84,7 @@ static void	print2dutil(t_node *root, int space)
 	ft_printf("| type  : %s\n", get_tk_str(root->token_type));
 	print_space(space);
 	ft_printf("| token : %s\n", root->token);
+	print_node_suite(root, space);
 	print_space(space);
 	ft_printf("|--------------|\n");
 	print2dutil(root->left, space);

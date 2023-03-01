@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/28 16:14:56 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:48:50 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,6 @@ allocated adresse in out garbage list. This way we don't have to worry about
 free until we are finish.*/
 
 #include "parsing.h"
-
-void	*ft_malloc_gc(t_param *prm, size_t size)
-{
-	void	*result;
-
-	result = malloc(size);
-	if (result == NULL)
-		return (NULL);
-	if (garbage_col(prm, result))
-		return (NULL);
-	return (result);
-}
-
-void	*ft_calloc_gc(t_param *prm, size_t nmemb, size_t size)
-{
-	void	*result;
-
-	result = ft_calloc(nmemb, size);
-	if (result == NULL)
-		return (NULL);
-	if (garbage_col(prm, result))
-		return (NULL);
-	return (result);
-}
 
 int	garbage_col(t_param *prm, void *ptr)
 {
@@ -61,7 +37,7 @@ int	garbage_col(t_param *prm, void *ptr)
 	return (0);
 }
 
-void	empty_garbage(t_param *prm)
+void	empty_all_garbage(t_param *prm)
 {
 	t_garb	*elem_garb;
 	t_garb	*temp;
@@ -76,10 +52,52 @@ void	empty_garbage(t_param *prm)
 	}
 }
 
+void	empty_garbage(t_param *prm, int id)
+{
+	t_garb	*elem;
+	t_garb	*temp;
+	t_garb	*previous;
+
+	previous = NULL;
+	elem = prm->garb;
+	if (id == -1)
+		empty_all_garbage(prm);
+	while (id != -1 && elem)
+	{
+		if (elem->id != id)
+		{
+			previous = elem;
+			elem = elem->next;
+			continue ;
+		}
+		if (previous)
+			previous->next = elem->next;
+		else
+			prm->garb = elem->next;
+		temp = elem;
+		elem = elem->next;
+		free(temp->ptr);
+		free(temp);
+	}
+}
+
+void	print_garbage(t_param *prm)
+{
+	t_garb	*elem;
+
+	elem = prm->garb;
+	if (elem == NULL)
+		ft_printf("Garbage empty...\n");
+	while (elem)
+	{
+		ft_printf("%d - %p\n", elem->id, elem->ptr);
+		elem = elem->next;
+	}
+}
+
 void	remove_from_garb(t_param *prm, void *ptr)
 {
 	t_garb	*elem;
-	t_garb	*next;
 	t_garb	*previous;
 
 	previous = NULL;
@@ -91,7 +109,10 @@ void	remove_from_garb(t_param *prm, void *ptr)
 	}
 	if (elem)
 	{
-		previous->next = elem->next;
+		if (previous)
+			previous->next = elem->next;
+		else
+			prm->garb = elem->next;
 		free(elem->ptr);
 		free(elem);
 	}
