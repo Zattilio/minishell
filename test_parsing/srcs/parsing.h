@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 17:49:26 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:07:58 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_param {
 int		garbage_col(t_param *prm, void *ptr);
 void	empty_garbage(t_param *prm, int id);
 void	print_garbage(t_param *prm);
+char	*ft_strjoin_gc(t_param *prm, char const *s1, char const *s2);
 
 /*	garbage_2.c	*/
 void	*ft_malloc_gc(t_param *prm, size_t size);
@@ -92,8 +93,9 @@ char	*get_tk_str(int tk_type);
 /*	lexeur.c	*/
 t_node	*make_node(t_param *prm, int id, int token_type, char *token);
 char	*get_token(t_param *prm);
-t_token	pick_tk(t_param *prm);
+t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
+size_t	test_double_token(t_param *prm, size_t cur);
 
 /*	utils.c	*/
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
@@ -112,5 +114,7 @@ t_node	*parse_exec(t_param *prm);
 t_node	*parse_redir(t_param *prm);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 void	add_last_left(t_node **root, t_node *node);
+char	*get_word_squote(t_param *prm);
+char	*get_word(t_param *prm);
 
 #endif

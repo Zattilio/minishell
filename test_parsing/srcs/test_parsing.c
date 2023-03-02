@@ -6,21 +6,41 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 18:34:30 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:20:21 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Probleme dans mon lexeur pour  ./test_parsing "'ls'"
-==> J'arrive pas a choper le second ' et a la place je prend
-un mot qui est ls'*/
-
 #include "parsing.h"
+/*
+int	main(void)
+{
+	t_param	prm;
+	char	*word = NULL;
+	
+	ft_memset(&prm, 0, sizeof(t_param));
+	prm.source.id = 0;
+	prm.source.line = "ls \'coucou $ * | < >\' > in";
+	if (prm.source.line)
+		prm.source.line_size = ft_strlen(prm.source.line);
+	while (peek_tk(&prm) != TK_EOF)
+	{
+		if (peek_tk(&prm) == TK_WORD || peek_tk(&prm) == TK_SQUOTE)
+		{
+			word = get_word(&prm);
+			printf("%s\n",word);
+		}
+		else
+			get_token(&prm);
+	}
+	empty_garbage(&prm, prm.source.id);
+	return (0);
+}*/
 /*
 int	main(int argc, char **argv)
 {
 	t_param	prm;
 	t_node	*node;
-
+	
 	if (argc != 2)
 		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
@@ -32,8 +52,8 @@ int	main(int argc, char **argv)
 	print_ast(node);
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}
-*/
+}*/
+/*
 int	main(int argc, char **argv)
 {
 	t_param	prm;
@@ -62,4 +82,4 @@ int	main(int argc, char **argv)
 	print_garbage(&prm);
 	free(prm.source.line);
 	return (0);
-}
+}*/

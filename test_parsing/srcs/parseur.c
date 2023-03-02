@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/01 18:29:18 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:12:51 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_node	*parsing(t_param *prm)
 	t_node	*root;
 
 	root = parse_pipe(prm);
-	if (pick_tk(prm) != TK_EOF)
+	if (peek_tk(prm) != TK_EOF)
 		return (NULL);
 	return (root);
 }
@@ -95,7 +95,7 @@ t_node	*parse_pipe(t_param *prm)
 	t_node	*node;
 
 	node = parse_exec(prm);
-	if (pick_tk(prm) == TK_PIPE)
+	if (peek_tk(prm) == TK_PIPE)
 	{
 		get_token(prm);
 		node = make_pipe_node(prm, node, parse_pipe(prm));
@@ -110,11 +110,11 @@ t_node	*parse_exec(t_param *prm)
 
 	node = NULL;
 	cmd = NULL;
-	if (is_redir(pick_tk(prm)))
+	if (is_redir(peek_tk(prm)))
 		node = parse_redir(prm);
-	while (pick_tk(prm) == TK_WORD || is_redir(pick_tk(prm)))
+	while (peek_tk(prm) == TK_WORD || is_redir(peek_tk(prm)))
 	{
-		if (pick_tk(prm) == TK_WORD)
+		if (peek_tk(prm) == TK_WORD)
 			cmd = add_cmd_arg(prm, cmd, get_token(prm));
 		else
 			add_last_left(&node, parse_redir(prm));
@@ -130,9 +130,17 @@ t_node	*parse_redir(t_param *prm)
 	char	*file_name;
 
 	token = get_t_token(get_token(prm));
-	if (pick_tk(prm) != TK_WORD)
+	file_name = NULL;
+	if (!(peek_tk(prm) == TK_WORD || peek_tk(prm) == TK_SQUOTE
+		|| peek_tk(prm) == TK_DQUOTE))
 		return (NULL);
-	file_name = get_token(prm);
+	file_name = get_word(prm);
+	/*if (peek_tk(prm) == TK_WORD)
+		file_name = get_token(prm);
+	else if (peek_tk(prm) == TK_SQUOTE)
+		file_name = get_word_squote(prm);
+	else if (peek_tk(prm) == TK_DQUOTE)
+		file_name = get_word_dquote(prm);*/
 	node = make_redir_node(prm, NULL, token, file_name);
 	return (node);
 }
@@ -183,20 +191,37 @@ char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
 		new_cmd[i] = cmd[i];
 	return (new_cmd);
 }
-/*
+
+char	*get_word(t_param *prm)
+{
+	t_token peek;
+	char	*token;
+
+	peek = peek_tk(prm);
+	if (!(peek == TK_WORD || peek == TK_SQUOTE))
+		return (NULL);
+	token = get_token(prm);
+	if (get_t_token(token) == TK_WORD)
+		return (token);
+	//if (get_t_token(token) == TK_SQUOTE)
+	else
+		return (get_word_squote(prm));
+}
+
 char	*get_word_squote(t_param *prm)
 {
-	char *word;
+	char 	*word;
+	size_t	pos_start;
 	
 	word = NULL;
-	while (pick_tk(prm) == TK_SQUOTE || pick_tk(prm) == TK_EOF)
-	{
-		
-	}
-	if (pick_tk(prm) == TK_EOF)
+	pos_start = prm->source.cur;
+	while (peek_tk(prm) != TK_SQUOTE && peek_tk(prm) != TK_EOF)
+		get_token(prm);
+	if (peek_tk(prm) == TK_EOF)
 	{
 		prm->source.error = ERR_SQUOTE_CLOSE;
 		return (NULL);
 	}
-}*/
-/*il faut une fonction pour chaque truc de la grammaire. */
+	word = ft_substr_gc(prm, prm->source.line, pos_start, prm->source.cur - pos_start);
+	return (word);
+}

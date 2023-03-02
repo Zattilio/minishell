@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 11:06:38 by mbocquel          #+#    #+#             */
-/*   Updated: 2022/11/29 17:05:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 12:18:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_printf_putchar(int c, int *error)
 {
 	int	n;
 
+	n = 0;
 	n = write(1, &c, 1);
 	if (n == -1)
 		*error = 1;
@@ -26,6 +27,7 @@ int	ft_printf_putstr(char *str, int *error)
 {
 	int	result;
 
+	result = 0;
 	if (str == NULL)
 		result = write(1, "(null)", 6);
 	else
