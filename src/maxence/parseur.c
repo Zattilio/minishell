@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parseur.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:58:02 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/02 16:25:07 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*The parser check that the syntax of the user command is valid. It then
+/*The parser check that the syntax of the user command is valid. It then 
 generates an Abstract Syntax Tree (AST) that will be use for the next step :
 the execution.*/
 
@@ -27,7 +27,7 @@ t_node	*make_pipe_node(t_param *prm, t_node *left, t_node *right)
 {
 	t_node	*node;
 
-	node = ft_malloc_gc(prm, sizeof(t_node));
+	node = ft_malloc_gc(prm, prm->source.id, sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
@@ -44,7 +44,7 @@ t_node	*make_redir_node(t_param *prm, t_node *left,
 {
 	t_node	*node;
 
-	node = ft_malloc_gc(prm, sizeof(t_node));
+	node = ft_malloc_gc(prm, prm->source.id, sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
@@ -69,7 +69,7 @@ t_node	*make_exec_node(t_param *prm, char **cmd)
 {
 	t_node	*node;
 
-	node = ft_malloc_gc(prm, sizeof(t_node));
+	node = ft_malloc_gc(prm, prm->source.id, sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));
@@ -180,7 +180,7 @@ char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
 
 	i = -1;
 	nb_arg = get_nb_arg(cmd);
-	new_cmd = (char **)ft_malloc_gc(prm, (nb_arg + 2) * sizeof(char *));
+	new_cmd = (char **)ft_malloc_gc(prm, prm->source.id, (nb_arg + 2) * sizeof(char *));
 	if (new_cmd == NULL)
 		return (NULL);
 	new_cmd[nb_arg] = ft_strdup_gc(prm, arg);
@@ -212,7 +212,7 @@ char	*get_word_squote(t_param *prm)
 {
 	char 	*word;
 	size_t	pos_start;
-
+	
 	word = NULL;
 	pos_start = prm->source.cur;
 	while (peek_tk(prm) != TK_SQUOTE && peek_tk(prm) != TK_EOF)
@@ -222,6 +222,8 @@ char	*get_word_squote(t_param *prm)
 		prm->source.error = ERR_SQUOTE_CLOSE;
 		return (NULL);
 	}
+	if (peek_tk(prm) == TK_SQUOTE)
+		get_token(prm);
 	word = ft_substr_gc(prm, prm->source.line, pos_start, prm->source.cur - pos_start);
 	return (word);
 }

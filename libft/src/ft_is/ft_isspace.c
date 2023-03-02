@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/02 16:51:40 by jlanza           ###   ########.fr       */
+/*   Created: 2022/11/14 16:01:24 by mbocquel          #+#    #+#             */
+/*   Updated: 2022/11/14 16:01:28 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-void	ft_pwd(char *arg[], char *env[])
+int	ft_isspace(int c)
 {
-	char	*working_directory;
-
-	working_directory = getcwd(NULL, 0);
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	(void)arg;
-	(void)env;
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	else
+		return (0);
 }

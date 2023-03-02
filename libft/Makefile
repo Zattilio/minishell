@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:11:32 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/01 03:30:11 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/02 17:57:10 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ MY_SOURCES =	ft_is/ft_isalpha.c \
 				ft_is/ft_isalnum.c \
 				ft_is/ft_isascii.c \
 				ft_is/ft_isprint.c \
+				ft_is/ft_isspace.c \
 				ft_is/ft_isint.c \
 				ft_str/ft_strlen.c \
 				ft_str/ft_strlcpy.c \

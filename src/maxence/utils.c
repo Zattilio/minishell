@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:57:00 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 11:41:45 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:24:05 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len)
 	}
 	else if (start > ft_strlen(s))
 		len_max = 0;
-	result_str = (char *)ft_calloc_gc(prm, (len_max + 1), sizeof(char));
+	result_str = (char *)ft_calloc_gc(prm, prm->source.id, (len_max + 1), sizeof(char));
 	if (result_str == NULL)
 		return (NULL);
 	i = 0;
@@ -48,7 +48,7 @@ char	*ft_strdup_gc(t_param *prm, const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dest = (char *)ft_malloc_gc(prm, (len + 1) * sizeof(char));
+	dest = (char *)ft_malloc_gc(prm, prm->source.id, (len + 1) * sizeof(char));
 	if (dest == NULL)
 		return (NULL);
 	while (s[i])

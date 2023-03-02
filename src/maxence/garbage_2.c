@@ -6,32 +6,32 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:48:31 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 12:08:50 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:16:46 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	*ft_malloc_gc(t_param *prm, size_t size)
+void	*ft_malloc_gc(t_param *prm, int id, size_t size)
 {
 	void	*result;
 
 	result = malloc(size);
 	if (result == NULL)
 		return (NULL);
-	if (garbage_col(prm, result))
+	if (garbage_col(prm, id, result))
 		return (NULL);
 	return (result);
 }
 
-void	*ft_calloc_gc(t_param *prm, size_t nmemb, size_t size)
+void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size)
 {
 	void	*result;
 
 	result = ft_calloc(nmemb, size);
 	if (result == NULL)
 		return (NULL);
-	if (garbage_col(prm, result))
+	if (garbage_col(prm, id, result))
 		return (NULL);
 	return (result);
 }
@@ -48,7 +48,7 @@ char	*ft_strjoin_gc(t_param *prm, char const *s1, char const *s2)
 		len[0] = ft_strlen(s1);
 	if (s2)
 		len[1] = ft_strlen(s2);
-	result_join = ft_calloc_gc(prm, (len[0] + len[1] + 1), sizeof(char));
+	result_join = ft_calloc_gc(prm, prm->source.id, (len[0] + len[1] + 1), sizeof(char));
 	if (result_join == NULL)
 		return (NULL);
 	i = 0;

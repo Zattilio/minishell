@@ -6,37 +6,38 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:34:37 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/02 17:55:38 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-/*
-int	main(void)
-{
-	t_param	prm;
-	char	*word = NULL;
 
-	ft_memset(&prm, 0, sizeof(t_param));
-	prm.source.id = 0;
-	prm.source.line = "ls \'coucou $ * | < >\' > in";
-	if (prm.source.line)
-		prm.source.line_size = ft_strlen(prm.source.line);
-	while (peek_tk(&prm) != TK_EOF)
-	{
-		if (peek_tk(&prm) == TK_WORD || peek_tk(&prm) == TK_SQUOTE)
-		{
-			word = get_word(&prm);
-			printf("%s\n",word);
-		}
-		else
-			get_token(&prm);
-	}
-	empty_garbage(&prm, prm.source.id);
-	return (0);
-}*/
+// int	main(void)
+// {
+// 	t_param	prm;
+// 	char	*word = NULL;
 
-int	main(int argc, char **argv)
+// 	ft_memset(&prm, 0, sizeof(t_param));
+// 	prm.source.id = 0;
+// 	prm.source.line = "ls \'coucou $ * | < >A\' > in";
+// 	if (prm.source.line)
+// 		prm.source.line_size = ft_strlen(prm.source.line);
+// 	while (peek_tk(&prm) != TK_EOF)
+// 	{
+// 		printf("prochain tk de type %d\n", peek_tk(&prm));
+// 		if (peek_tk(&prm) == TK_WORD || peek_tk(&prm) == TK_SQUOTE)
+// 		{
+// 			word = get_word(&prm);
+// 			printf("%s\n",word);
+// 		}
+// 		else
+// 			get_token(&prm);
+// 	}
+// 	empty_garbage(&prm, prm.source.id);
+// 	return (0);
+// }
+
+/* int	main(int argc, char **argv)
 {
 	t_param	prm;
 	t_node	*node;
@@ -52,7 +53,8 @@ int	main(int argc, char **argv)
 	print_ast(node);
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}
+} */
+
 /*
 int	main(int argc, char **argv)
 {
