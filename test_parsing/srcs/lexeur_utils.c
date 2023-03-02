@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 11:13:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 12:20:59 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:17:05 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_node	*make_node(t_param *prm, int id, int token_type, char *token)
 
 	if (token == NULL)
 		return (NULL);
-	node = ft_malloc_gc(prm, sizeof(t_node));
+	node = ft_malloc_gc(prm, prm->source.id, sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	ft_memset(node, 0, sizeof(t_node));

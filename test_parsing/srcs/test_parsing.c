@@ -6,12 +6,12 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:20:21 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:58:02 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-/*
+
 int	main(void)
 {
 	t_param	prm;
@@ -19,11 +19,12 @@ int	main(void)
 	
 	ft_memset(&prm, 0, sizeof(t_param));
 	prm.source.id = 0;
-	prm.source.line = "ls \'coucou $ * | < >\' > in";
+	prm.source.line = "ls \'coucou $ * | < >A\' > in";
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
 	while (peek_tk(&prm) != TK_EOF)
 	{
+		printf("prochain tk de type %d\n", peek_tk(&prm));
 		if (peek_tk(&prm) == TK_WORD || peek_tk(&prm) == TK_SQUOTE)
 		{
 			word = get_word(&prm);
@@ -34,7 +35,7 @@ int	main(void)
 	}
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}*/
+}
 /*
 int	main(int argc, char **argv)
 {

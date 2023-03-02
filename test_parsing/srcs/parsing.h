@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:07:58 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:15:57 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@ typedef struct s_source {
 typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
+	char			**env;
 }					t_param;
 
 /*	garbage.c	*/
-int		garbage_col(t_param *prm, void *ptr);
+int		garbage_col(t_param *prm, int id, void *ptr);
 void	empty_garbage(t_param *prm, int id);
 void	print_garbage(t_param *prm);
 char	*ft_strjoin_gc(t_param *prm, char const *s1, char const *s2);
 
 /*	garbage_2.c	*/
-void	*ft_malloc_gc(t_param *prm, size_t size);
-void	*ft_calloc_gc(t_param *prm, size_t nmemb, size_t size);
+void	*ft_malloc_gc(t_param *prm, int id, size_t size);
+void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size);
 
 /*	print_ast.c	*/
 void	print_ast(t_node *root);
