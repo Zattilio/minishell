@@ -6,22 +6,23 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:58:02 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:51:31 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	t_param	prm;
 	char	*word = NULL;
 	
 	ft_memset(&prm, 0, sizeof(t_param));
-	prm.source.id = 0;
+	prm.source.id = 1;
 	prm.source.line = "ls \'coucou $ * | < >A\' > in";
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
+	clone_env(&prm, env);
 	while (peek_tk(&prm) != TK_EOF)
 	{
 		printf("prochain tk de type %d\n", peek_tk(&prm));

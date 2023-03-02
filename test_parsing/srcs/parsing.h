@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:15:57 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:51:18 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_param {
 	t_garb			*garb;
 	char			**env;
 }					t_param;
+/*	ft_get_env.c	*/
+int		clone_env(t_param *prm, char **env);
+char	*ft_get_env(t_param *prm, char *name);
 
 /*	garbage.c	*/
 int		garbage_col(t_param *prm, int id, void *ptr);
