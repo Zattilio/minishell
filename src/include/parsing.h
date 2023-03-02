@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 15:07:58 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ typedef enum e_token {
 	TK_PIPE,
 	TK_EXEC,
 	//TK_AMP,
-	//TK_DPIPE,
-	//TK_DAMP,
+	TK_DPIPE,
+	TK_DAMP,
 	TK_INF,
 	TK_SUP,
 	TK_DINF,
@@ -74,6 +74,7 @@ typedef struct s_source {
 typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
+	char			*env[];
 }					t_param;
 
 /*	garbage.c	*/
