@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 15:19:40 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:20:58 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/exec.h"
 
-static int	is_path(char *str)
+/* static int	is_path(char *str)
 {
 	if (str[0] == 'P'
 		&& str[1] == 'A'
@@ -36,7 +36,7 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3)
 	return (res);
 }
 
-static char	**get_path_tab(t_arg *args, char **cmd)
+static char	**get_path_tab(t_node *root, char **cmd)
 {
 	int	i;
 
@@ -68,7 +68,7 @@ static int	test_exec_rights(char **path_cmd, char *path,
 	return (permission_denied(cmd));
 }
 
-int	get_path_name(t_arg *args, char **path_cmd, char **cmd)
+int	get_path_name(t_node *root, char **path_cmd, char **cmd)
 {
 	int		i;
 	char	**path_tab;
@@ -93,4 +93,4 @@ int	get_path_name(t_arg *args, char **path_cmd, char **cmd)
 	if (!access(cmd[0], F_OK))
 		return (test_exec_rights(path_cmd, cmd[0], path_tab, cmd));
 	return (command_not_found(path_tab, cmd));
-}
+} */

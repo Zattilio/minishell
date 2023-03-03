@@ -6,19 +6,19 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:31:45 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
-
-int	check_heredoc(t_arg *args)
+#include "../include/exec.h"
+/*
+int	check_heredoc(t_node *root)
 {
 	return (!ft_strncmp("here_doc", args->argv[1],
 			ft_strlen(args->argv[1]) + 1));
 }
 
-void	fork_heredoc(t_arg *args, int *pids, t_fd *fd_list)
+void	fork_heredoc(t_node *root, int *pids, t_fd *fd_list)
 {
 	if (check_heredoc(args))
 	{
@@ -35,7 +35,7 @@ void	fork_heredoc(t_arg *args, int *pids, t_fd *fd_list)
 	wait(NULL);
 }
 
-static void	ft_put_heredoc(t_arg *args)
+static void	ft_put_heredoc(t_node *root)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ static void	ft_lstprint(t_list *lst, char *stop)
 	}
 }
 
-void	ft_heredoc(t_arg *args, t_fd *fd_list)
+void	ft_heredoc(t_node *root, t_fd *fd_list)
 {
 	t_list	*lst_str;
 	char	*str;
@@ -76,3 +76,4 @@ void	ft_heredoc(t_arg *args, t_fd *fd_list)
 	close_fd(args, fd_list);
 	ft_lstclear(&lst_str, &free);
 }
+ */

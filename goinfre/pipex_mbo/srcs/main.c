@@ -6,11 +6,11 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 10:37:24 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/27 13:23:55 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:51:25 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "exec.h"
 
 /*Fonctions autorisees :
 open, close, read, write,

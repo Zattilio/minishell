@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 12:57:45 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:21:51 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
-
-int	execute_first_cmd(t_arg *args, t_fd *fd_list)
+#include "../include/exec.h"
+/*
+int	execute_first_cmd(t_node *root, t_fd *fd_list)
 {
 	int		fd_input;
 
@@ -38,7 +38,7 @@ int	execute_first_cmd(t_arg *args, t_fd *fd_list)
 	return (0);
 }
 
-void	execute_middle_cmd(t_arg *args, int *pids, t_fd *fd_list)
+void	execute_middle_cmd(t_node *root, int *pids, t_fd *fd_list)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ void	execute_middle_cmd(t_arg *args, int *pids, t_fd *fd_list)
 	}
 }
 
-int	execute_last_cmd(t_arg *args, t_fd *fd_list)
+int	execute_last_cmd(t_node *root, t_fd *fd_list)
 {
 	int	fd_output;
 
@@ -78,3 +78,4 @@ int	execute_last_cmd(t_arg *args, t_fd *fd_list)
 	close(fd_output);
 	return (execute_cmd(args, args->argc - 1 - 1));
 }
+ */

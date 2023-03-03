@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:11:55 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/02/06 12:31:12 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:51:25 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "exec.h"
 
 char	*ft_path(char const *s1, char const *s2)
 {

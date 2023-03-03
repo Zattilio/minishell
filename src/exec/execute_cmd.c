@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:21:13 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/exec.h"
 
-static int	check_only_spaces(char *cmd)
+/* static int	check_only_spaces(char *cmd)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ static char	**init_space_cmd(char *cmd)
 	return (cmd_tab);
 }
 
-int	execute_cmd(t_arg *args, int n_cmd)
+int	execute_cmd(t_node *root, int n_cmd)
 {
 	char	**cmd1;
 	char	*path_cmd1;
@@ -56,4 +56,4 @@ int	execute_cmd(t_arg *args, int n_cmd)
 		free_tab(cmd1);
 	}
 	return (6);
-}
+} */

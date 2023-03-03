@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/02 19:49:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:51:25 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../../libft/src/libft.h"
-# include "./pipex.h"
+# include "./exec.h"
 # include "../maxence/parsing.h"
 
 # include <stdio.h>

@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 05:35:02 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:42:42 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 17:28:33 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
-
-static int	check_empty(t_arg *args)
+#include "../include/exec.h"
+/*
+static int	check_empty(t_node *root)
 {
 	int	i;
 
@@ -26,9 +26,9 @@ static int	check_empty(t_arg *args)
 	return (0);
 }
 
-void	init_pipex(t_arg *args, int **pids, t_fd **fd_list)
+void	init_pipex(t_node *root, int **pids, t_fd **fd_list)
 {
-	if (args->argc < 4 || check_empty(args))
+	if (check_empty(NULL))
 		ft_error(7, args, NULL, NULL);
 	*pids = ft_calloc(args->argc - 3, sizeof(**pids));
 	if (*pids == NULL)
@@ -38,7 +38,7 @@ void	init_pipex(t_arg *args, int **pids, t_fd **fd_list)
 		ft_error(3, args, *pids, *fd_list);
 }
 
-void	init_pipes(t_arg *args, int *pids, t_fd *fd_list)
+void	init_pipes(t_node *root, int *pids, t_fd *fd_list)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ void	init_pipes(t_arg *args, int *pids, t_fd *fd_list)
 	}
 }
 
-void	init_fork(t_arg *args, int *pids, t_fd *fd_list)
+void	init_fork(t_node *root, int *pids, t_fd *fd_list)
 {
 	int	i;
 
@@ -67,15 +67,4 @@ void	init_fork(t_arg *args, int *pids, t_fd *fd_list)
 	}
 }
 
-t_arg	*init_arg(int *argc, char **argv[], char **env[])
-{
-	t_arg	*args;
-
-	args = malloc(sizeof(*args));
-	if (args == NULL)
-		exit(10);
-	args->argc = *argc;
-	args->argv = *argv;
-	args->env = *env;
-	return (args);
-}
+ */

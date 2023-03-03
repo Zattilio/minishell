@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   exec.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef EXEC_H
+# define EXEC_H
 
 # include "minishell.h"
 
@@ -20,36 +20,42 @@
 /*import read*/
 # include <fcntl.h>
 
+typedef struct s_param	t_param;
+typedef struct s_node	t_node;
+
 typedef struct s_fd
 {
 	int	fd[2];
 }				t_fd;
 
-typedef struct s_arg
+typedef struct s_pipe
 {
 	int		argc;
-	char	**argv;
+	t_node	**argv;
 	char	**env;
-}				t_arg;
+	t_param	*prm;
+}				t_pipe;
 
-int		main_pipex(int argc, char *argv[], char *env[]);
 
-int		get_path_name(t_arg *args, char **path_cmd1, char **cmd);
+int		exec_root(t_param *prm, t_node *root, char *env[]);
+int		exec_pipe(t_param *prm, t_node *root, char *env[]);
 
-void	ft_wait(t_arg *args, int *pids);
+int		get_path_name(t_node *root, char **path_cmd1, char **cmd);
 
-int		execute_cmd(t_arg *args, int n_cmd);
-int		execute_last_cmd(t_arg *args, t_fd *fd_list);
-void	execute_middle_cmd(t_arg *args, int *pids, t_fd *fd_list);
-int		execute_first_cmd(t_arg *args, t_fd *fd_lst);
+void	ft_wait(t_node *root, int *pids);
+
+int		execute_cmd(t_node *root, int n_cmd);
+int		execute_last_cmd(t_node *root, t_fd *fd_list);
+void	execute_middle_cmd(t_node *root, int *pids, t_fd *fd_list);
+int		execute_first_cmd(t_node *root, t_fd *fd_lst);
 
 int		is_parent_process(int *pids, int n);
-int		ft_error(int n, t_arg *args, int *pids, t_fd *fd_list);
-void	close_fd(t_arg *args, t_fd *fd_list);
+int		ft_error(int n, t_node *root, int *pids, t_fd *fd_list);
+void	close_fd(t_node *root, t_fd *fd_list);
 
-void	ft_heredoc(t_arg *args, t_fd *fd_list);
-int		check_heredoc(t_arg *args);
-void	fork_heredoc(t_arg *args, int *pids, t_fd *fd_list);
+void	ft_heredoc(t_node *root, t_fd *fd_list);
+int		check_heredoc(t_node *root);
+void	fork_heredoc(t_node *root, int *pids, t_fd *fd_list);
 
 void	ft_put2str_fd(char *s1, char *s2, int fd);
 void	ft_put3str_fd(char *s1, char *s2, char *s3, int fd);
@@ -60,9 +66,8 @@ int		command_not_found(char **path_tab, char **cmd);
 int		path_not_found(char **path_tab, char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
-void	init_pipex(t_arg *args, int **pids, t_fd **fd_list);
-void	init_pipes(t_arg *args, int *pids, t_fd *fd_list);
-void	init_fork(t_arg *args, int *pids, t_fd *fd_list);
-t_arg	*init_arg(int *argc, char **argv[], char **env[]);
+void	init_pipex(t_node *root, int **pids, t_fd **fd_list);
+void	init_pipes(t_node *root, int *pids, t_fd *fd_list);
+void	init_fork(t_node *root, int *pids, t_fd *fd_list);
 
 #endif

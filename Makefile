@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/02 17:58:56 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/03 17:37:51 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,19 @@ SOURCES_DIR = ./src/
 
 BUILD_DIR = ./build/
 
-SOURCES =	pipex/main_pipex.c \
-			pipex/get_path_name.c \
-			pipex/execute_cmd.c \
-			pipex/execute_n_cmd.c \
-			pipex/is_parent_process.c \
-			pipex/ft_error.c \
-			pipex/close_fd.c \
-			pipex/error_cmd.c \
-			pipex/ft_wait.c \
-			pipex/init.c \
-			pipex/here_doc.c \
+SOURCES =	exec/exec_pipe.c \
+			exec/exec_root.c \
+			exec/get_path_name.c \
+			exec/execute_cmd.c \
+			exec/execute_n_cmd.c \
+			exec/is_parent_process.c \
+			exec/ft_error.c \
+			exec/ft_putnstr_fd.c \
+			exec/close_fd.c \
+			exec/error_cmd.c \
+			exec/ft_wait.c \
+			exec/init.c \
+			exec/here_doc.c \
 			command_line_interface/command_line_interface.c \
 			command_line_interface/signal.c \
 			builtins/ft_cd.c \
