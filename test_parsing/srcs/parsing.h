@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:51:58 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 14:02:58 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ typedef enum e_token {
 
 enum e_error_parsing {
 	ERR_SQUOTE_CLOSE,
-	ERR_DQUOTE_CLOSE,
+	ERR_DQUOTE_CLOSE
 };
+
+typedef enum e_bool {
+	TRUE = 1,
+	FALSE = 0
+}				t_bool;
 
 typedef struct s_node {
 	int				id;
@@ -55,6 +60,7 @@ typedef struct s_node {
 	int				flags_open;
 	mode_t			mode_open;
 	char			**cmd;
+	t_bool			conv_dol;
 	struct s_node	*right;
 	struct s_node	*left;
 }					t_node;
