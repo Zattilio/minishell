@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:51:18 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:51:58 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@
 # include "../libft/libft.h"
 # define PARSING_STOPPER "|<>$\'\""
 
+/*
+	TK_WILDCARD,
+	TK_AMP,
+	TK_DPIPE,
+	TK_DAMP,
+*/
+
 typedef enum e_token {
 	TK_ERROR = -1,
 	TK_WORD,
 	TK_PIPE,
 	TK_EXEC,
-	//TK_AMP,
-	//TK_DPIPE,
-	//TK_DAMP,
 	TK_INF,
 	TK_SUP,
 	TK_DINF,
@@ -35,7 +39,6 @@ typedef enum e_token {
 	TK_DOLLAR,
 	TK_SQUOTE,
 	TK_DQUOTE,
-	//TK_WILDCARD,
 	TK_EOF
 }			t_token;
 
@@ -74,51 +77,59 @@ typedef struct s_source {
 typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
-	char			**env;
+	char			***env;
 }					t_param;
-/*	ft_get_env.c	*/
-int		clone_env(t_param *prm, char **env);
-char	*ft_get_env(t_param *prm, char *name);
 
-/*	garbage.c	*/
-int		garbage_col(t_param *prm, int id, void *ptr);
-void	empty_garbage(t_param *prm, int id);
-void	print_garbage(t_param *prm);
-char	*ft_strjoin_gc(t_param *prm, char const *s1, char const *s2);
-
-/*	garbage_2.c	*/
+/*	alloc_garbage -> ft_alloc_gc.c */
 void	*ft_malloc_gc(t_param *prm, int id, size_t size);
 void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size);
+char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
+char	*ft_strdup_gc(t_param *prm, const char *s);
 
-/*	print_ast.c	*/
-void	print_ast(t_node *root);
-char	*get_tk_str(int tk_type);
+/*	alloc_garbage -> garbage.c */
+int		garbage_col(t_param *prm, int id, void *ptr);
+void	empty_all_garbage(t_param *prm);
+void	empty_garbage(t_param *prm, int id);
+void	print_garbage(t_param *prm);
+void	remove_from_garb(t_param *prm, void *ptr);
 
-/*	lexeur.c	*/
-t_node	*make_node(t_param *prm, int id, int token_type, char *token);
+/*	builtins -> env.c	*/
+int		clone_env(t_param *prm, char **env);
+char	*get_env_var(t_param *prm, char *name);
+void	print_env(t_param *prm);
+
+/* lexer -> lexer.c	*/
 char	*get_token(t_param *prm);
 t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
-size_t	test_double_token(t_param *prm, size_t cur);
 
-/*	utils.c	*/
-char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
-char	*ft_strdup_gc(t_param *prm, const char *s);
-int		is_redir(int token_type);
-void	print_space(int space);
-
-/*	parseur.c	*/
+/*	parser -> make_node.c	*/
+t_node	*make_node(t_param *prm, int id, int token_type, char *token);
 t_node	*make_pipe_node(t_param *prm, t_node *left, t_node *right);
 t_node	*make_redir_node(t_param *prm, t_node *left,
 			int token_type, char *file_name);
 t_node	*make_exec_node(t_param *prm, char **cmd);
+
+/*	parser -> parser.c	*/
 t_node	*parsing(t_param *prm);
 t_node	*parse_pipe(t_param *prm);
 t_node	*parse_exec(t_param *prm);
 t_node	*parse_redir(t_param *prm);
-char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
+
+/*	parser -> parser_utils.c	*/
 void	add_last_left(t_node **root, t_node *node);
-char	*get_word_squote(t_param *prm);
+char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*get_word(t_param *prm);
+char	*get_word_squote(t_param *prm);
+
+/*	utils -> print_ast.c	*/
+void	print_ast(t_node *root);
+char	*get_tk_str(int tk_type);
+
+/*	utils -> utils.c	*/
+int		is_redir(int token_type);
+void	print_space(int space);
+int		get_pos_in_str(char *str, char c);
+int		get_nb_str(char **strs);
 
 #endif

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage_2.c                                        :+:      :+:    :+:   */
+/*   ft_alloc_gc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:48:31 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:16:46 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:18:58 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../parsing.h"
 
 void	*ft_malloc_gc(t_param *prm, int id, size_t size)
 {
@@ -36,31 +36,51 @@ void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size)
 	return (result);
 }
 
-char	*ft_strjoin_gc(t_param *prm, char const *s1, char const *s2)
+char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len)
 {
-	char	*result_join;
-	int		i;
-	int		len[2];
+	char	*result_str;
+	size_t	i;
+	size_t	len_max;
 
-	len[0] = 0;
-	len[1] = 0;
-	if (s1)
-		len[0] = ft_strlen(s1);
-	if (s2)
-		len[1] = ft_strlen(s2);
-	result_join = ft_calloc_gc(prm, prm->source.id, (len[0] + len[1] + 1), sizeof(char));
-	if (result_join == NULL)
+	len_max = len;
+	if (ft_strlen(s) - start < len_max && start <= ft_strlen(s))
+	{
+		len_max = ft_strlen(s) - start;
+	}
+	else if (start > ft_strlen(s))
+		len_max = 0;
+	result_str = (char *)ft_calloc_gc(prm, prm->source.id,
+			(len_max + 1), sizeof(char));
+	if (result_str == NULL)
 		return (NULL);
 	i = 0;
-	while (i < len[0])
+	while (i < len_max)
 	{
-		result_join[i] = s1[i];
+		result_str[i] = s[(size_t)start + i];
 		i++;
 	}
-	while (i < len[0] + len[1])
+	result_str[i] = '\0';
+	return (result_str);
+}
+
+char	*ft_strdup_gc(t_param *prm, const char *s)
+{
+	char	*dest;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	while (s[len])
+		len++;
+	dest = (char *)ft_malloc_gc(prm, prm->source.id, (len + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	while (s[i])
 	{
-		result_join[i] = s2[i - len[0]];
+		dest[i] = s[i];
 		i++;
 	}
-	return (result_join);
+	dest[i] = '\0';
+	return (dest);
 }

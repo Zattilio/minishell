@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/02 11:16:19 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/03 12:54:21 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,16 @@ SOURCES_DIR = ./srcs/
 
 BUILD_DIR = ./build/
 
-SOURCES = 	garbage_2.c \
-			garbage.c \
-			lexeur_utils.c \
-			lexeur.c \
-			parseur.c \
-			print_ast.c \
+SOURCES = 	alloc_garbage/ft_alloc_gc.c \
+			alloc_garbage/garbage.c \
+			builtins/env.c \
+			lexer/lexer.c \
+			parser/make_node.c \
+			parser/parser_utils.c \
+			parser/parser.c \
+			utils/print_ast.c \
+			utils/utils.c \
 			test_parsing.c \
-			utils.c \
 			
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
 

@@ -6,12 +6,29 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:51:31 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:14:17 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+/* Test de la recuperation des valeurs d'environnement */
+/*
+int	main(int argc, char **argv, char **env)
+{
+	t_param	prm;
+	(void)argc;
+	(void)argv;
+	ft_memset(&prm, 0, sizeof(t_param));
+	clone_env(&prm, env);
+	ft_printf("mon login = %s\n\n",get_env_var(&prm, "USER"));
+	print_env(&prm);
+	empty_garbage(&prm,-1);
+	return (0);
+}
+*/
+/*
+//main pour tester la prise en compte des quote
 int	main(int argc, char **argv, char **env)
 {
 	t_param	prm;
@@ -36,25 +53,26 @@ int	main(int argc, char **argv, char **env)
 	}
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}
-/*
+}*/
+
 int	main(int argc, char **argv)
 {
 	t_param	prm;
 	t_node	*node;
-	
+
 	if (argc != 2)
 		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
 	prm.source.id = 0;
 	prm.source.line = ft_strdup_gc(&prm, argv[1]);
+	ft_printf("%p\n", prm.source.line);
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
 	node = parse_pipe(&prm);
 	print_ast(node);
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}*/
+}
 /*
 int	main(int argc, char **argv)
 {

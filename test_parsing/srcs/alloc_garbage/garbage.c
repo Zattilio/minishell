@@ -6,16 +6,11 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:14:54 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:17:48 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*We created two fonctions malloc_gabage_collection and calloc_gc. They are
-able to reproduce the behaviour of malloc and calloc but they also store the
-allocated adresse in out garbage list. This way we don't have to worry about 
-free until we are finish.*/
-
-#include "parsing.h"
+#include "../parsing.h"
 
 int	garbage_col(t_param *prm, int id, void *ptr)
 {
