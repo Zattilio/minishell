@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/03 17:37:51 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/03 18:15:00 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,15 +34,16 @@ SOURCES =	exec/exec_pipe.c \
 			builtins/ft_cd.c \
 			builtins/ft_pwd.c \
 			builtins/ft_exit.c \
-			maxence/garbage_2.c \
-			maxence/garbage.c \
-			maxence/get_env.c \
-			maxence/lexeur.c \
-			maxence/lexeur_utils.c \
-			maxence/parseur.c \
-			maxence/print_ast.c \
+			maxence/alloc_garbage/garbage.c \
+			maxence/alloc_garbage/ft_alloc_gc.c \
+			maxence/builtins/env.c \
+			maxence/lexer/lexer.c \
+			maxence/parser/make_node.c \
+			maxence/parser/parser_utils.c \
+			maxence/parser/parser.c \
+			maxence/utils/print_ast.c \
+			maxence/utils/utils.c \
 			maxence/test_parsing.c \
-			maxence/utils.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})

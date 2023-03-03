@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 17:36:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 18:45:27 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int argc, char *argv[], char *env[])
 	do_ = 1;
 	while (do_)
 	{
+		prm.source.cur = 0;
 		readline_new_prompt(&cmd_buf);
 		if (cmd_buf == NULL)
 			return (0);
