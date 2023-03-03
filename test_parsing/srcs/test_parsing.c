@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:14:17 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:52:15 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ int	main(int argc, char **argv)
 {
 	t_param	prm;
 	t_node	*node;
-
+	//(void)argv;
+	//(void)argc;
 	if (argc != 2)
 		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
 	prm.source.id = 0;
 	prm.source.line = ft_strdup_gc(&prm, argv[1]);
-	ft_printf("%p\n", prm.source.line);
+	//prm.source.line = ft_strdup_gc(&prm, "\'ls \" $ |     \"  \'y");
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
+	//printf("%zu\n", prm.source.line_size);
 	node = parse_pipe(&prm);
 	print_ast(node);
 	empty_garbage(&prm, prm.source.id);

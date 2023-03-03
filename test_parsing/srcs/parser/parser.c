@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 15:21:52 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 16:59:54 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_node	*parse_exec(t_param *prm)
 {
 	t_node	*node;
 	char	**cmd;
+	char	*arg;
 
 	node = NULL;
 	cmd = NULL;
@@ -58,7 +59,10 @@ t_node	*parse_exec(t_param *prm)
 	while (is_word(peek_tk(prm)) || is_redir(peek_tk(prm)))
 	{
 		if (is_word(peek_tk(prm)))/*plutot que d'envoyer le get token, il faut envoyer le mot qui va bien*/
-			cmd = add_cmd_arg(prm, cmd, get_token(prm));
+		{
+			arg = get_word(prm);
+			cmd = add_cmd_arg(prm, cmd, arg);
+		}
 		else
 			add_last_left(&node, parse_redir(prm));
 	}

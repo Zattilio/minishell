@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 14:02:58 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:17:08 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	add_last_left(t_node **root, t_node *node);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*get_word(t_param *prm);
 char	*get_word_squote(t_param *prm);
+char	*get_word_dquote(t_param *prm);
 
 /*	utils -> print_ast.c	*/
 void	print_ast(t_node *root);
@@ -134,6 +135,7 @@ char	*get_tk_str(int tk_type);
 
 /*	utils -> utils.c	*/
 int		is_redir(int token_type);
+int		is_word(t_token token_type);
 void	print_space(int space);
 int		get_pos_in_str(char *str, char c);
 int		get_nb_str(char **strs);

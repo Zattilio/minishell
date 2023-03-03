@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:50:05 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 14:16:16 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:51:08 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,15 @@ char	*get_word(t_param *prm)
 	token = get_token(prm);
 	if (get_t_token(token) == TK_WORD)
 		return (token);
-	//if (get_t_token(token) == TK_SQUOTE)
-	else
+	if (get_t_token(token) == TK_SQUOTE)
 		return (get_word_squote(prm));
+	if (get_t_token(token) == TK_DQUOTE)
+		return (get_word_dquote(prm));
+	return (NULL);
 }
 
+/*tant que l'on est pas arrive sur une autre simple quote on continue 
+et on le rajoute dans le word que l'on renvoie sans jamais rien interpreter. */
 char	*get_word_squote(t_param *prm)
 {
 	char	*word;
@@ -81,6 +85,12 @@ char	*get_word_squote(t_param *prm)
 	if (peek_tk(prm) == TK_SQUOTE)
 		get_token(prm);
 	word = ft_substr_gc(prm, prm->source.line, pos_start,
-			prm->source.cur - pos_start);
+			prm->source.cur - pos_start - 1);
 	return (word);
+}
+
+char	*get_word_dquote(t_param *prm)
+{
+	(void)prm;
+	return (NULL);
 }
