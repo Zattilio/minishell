@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 12:57:45 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int	execute_first_cmd(t_arg *args, t_fd *fd_list)
 		if (fd_input == -1)
 		{
 			if (!access(args->argv[1], F_OK))
-				ft_putstr_fd("pipex: permission denied: ", 2);
+				ft_put3str_fd("minishell: ", args->argv[1],
+					": Permission denied\n", 2);
 			else
-				ft_putstr_fd("pipex: no such file or directory: ", 2);
-			ft_putendl_fd(args->argv[1], 2);
+				ft_put3str_fd("minishell: ", args->argv[1],
+					": No such file or directory\n", 2);
 			return (1);
 		}
 		dup2(fd_input, 0);
@@ -69,8 +70,8 @@ int	execute_last_cmd(t_arg *args, t_fd *fd_list)
 				O_WRONLY | O_CREAT | O_APPEND, 00644);
 	if (fd_output == -1)
 	{
-		ft_putstr_fd("pipex: permission denied: ", 2);
-		ft_putendl_fd(args->argv[args->argc - 1], 2);
+		ft_put3str_fd("minishell: ", args->argv[args->argc - 1],
+			": Permission denied\n", 2);
 		return (1);
 	}
 	dup2(fd_output, 1);

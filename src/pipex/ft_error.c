@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:19 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 12:58:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ int	ft_error(int n, t_arg *args, int *pids, t_fd *fd_list)
 		free(fd_list);
 	}
 	if (n == 2)
-		ft_putendl_fd("pipex: error calloc pids", 2);
+		ft_putendl_fd("minishell: error calloc pids", 2);
 	if (n == 3)
 	{
-		ft_putendl_fd("pipex: error calloc fd_list", 2);
+		ft_putendl_fd("minishell: error calloc fd_list", 2);
 		free(pids);
 	}
 	if (n == 4)
-		ft_putendl_fd("pipex: error pipe", 2);
+		ft_putendl_fd("minishell: error pipe", 2);
 	if (n == 5)
-		ft_putendl_fd("pipex: error fork", 2);
+		ft_putendl_fd("minishell: error fork", 2);
 	if (n == 6)
-		ft_putendl_fd("pipex: could not execve", 2);
+		ft_putendl_fd("minishell: could not execve", 2);
 	if (n == 7)
-		ft_putendl_fd("pipex: error arg", 2);
+		ft_putendl_fd("minishell: error arg", 2);
 	if (args != NULL)
 		free(args);
 	exit(n);

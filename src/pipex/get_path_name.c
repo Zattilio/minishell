@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:19:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_path(char *str)
 	return (0);
 }
 
-static char	*ft_strjoin3(char *str1, char *str2, char *str3)
+char	*ft_strjoin3(char *str1, char *str2, char *str3)
 {
 	char	*tmp;
 	char	*res;
@@ -36,15 +36,23 @@ static char	*ft_strjoin3(char *str1, char *str2, char *str3)
 	return (res);
 }
 
-static char	**get_path_tab(t_arg *args)
+static char	**get_path_tab(t_arg *args, char **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (args->env[i] != NULL && !is_path(args->env[i]))
 		i++;
-	if (!is_path(args->env[i]))
+	if (args->env[i] == NULL)
+	{
+		ft_put3str_fd("minishell: ", cmd[0], ": No such file or directory\n", 2);
 		return (NULL);
+	}
+	if (!is_path(args->env[i]))
+	{
+		ft_put3str_fd("minishell: ", cmd[0], ": Command not found\n", 2);
+		return (NULL);
+	}
 	return (ft_split(&(args->env[i][5]), ':'));
 }
 
@@ -66,11 +74,11 @@ int	get_path_name(t_arg *args, char **path_cmd, char **cmd)
 	char	**path_tab;
 	char	*path;
 
-	path_tab = get_path_tab(args);
+	path_tab = get_path_tab(args, cmd);
 	if (path_tab == NULL && !access(cmd[0], F_OK))
 		return (test_exec_rights(path_cmd, cmd[0], path_tab, cmd));
 	if (path_tab == NULL)
-		return (command_not_found(path_tab, cmd));
+		return (path_not_found(path_tab, cmd));
 	i = 0;
 	while (path_tab[i] != NULL)
 	{

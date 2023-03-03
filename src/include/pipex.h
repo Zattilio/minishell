@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:58:37 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/01 18:47:39 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/03 15:20:46 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ void	ft_heredoc(t_arg *args, t_fd *fd_list);
 int		check_heredoc(t_arg *args);
 void	fork_heredoc(t_arg *args, int *pids, t_fd *fd_list);
 
+void	ft_put2str_fd(char *s1, char *s2, int fd);
+void	ft_put3str_fd(char *s1, char *s2, char *s3, int fd);
+char	*ft_strjoin3(char *str1, char *str2, char *str3);
+
 int		permission_denied(char **cmd);
 int		command_not_found(char **path_tab, char **cmd);
+int		path_not_found(char **path_tab, char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
 void	init_pipex(t_arg *args, int **pids, t_fd **fd_list);
