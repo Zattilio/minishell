@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 17:17:08 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 18:33:25 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	*ft_malloc_gc(t_param *prm, int id, size_t size);
 void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size);
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
 char	*ft_strdup_gc(t_param *prm, const char *s);
+char	*ft_strjoin_gc(t_param *prm, int id, char const *s1, char const *s2);
 
 /*	alloc_garbage -> garbage.c */
 int		garbage_col(t_param *prm, int id, void *ptr);

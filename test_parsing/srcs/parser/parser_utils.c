@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:50:05 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 17:51:08 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/03 18:33:39 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,38 @@ char	*get_word_squote(t_param *prm)
 	return (word);
 }
 
+//Fonction pas termine. 
 char	*get_word_dquote(t_param *prm)
 {
-	(void)prm;
+	char	*word;
+	size_t	pos_start;
+	int	pos_end;
+
+	word = NULL;
+	get_token(prm);
+	pos_start = prm->source.cur;
+	pos_end = get_pos_in_str(prm->source.line + prm->source.cur, '\"');
+	if (pos_end == -1)
+	{
+		prm->source.error = ERR_DQUOTE_CLOSE;
+		return (NULL);
+	}
+	while (peek_tk(prm) != TK_DQUOTE)
+	{
+		if (peek_tk(prm) == TK_DINF)
+		{
+			//On recupere la variable.
+		}
+		else
+		{
+			pos_start = prm->source.cur;
+			get_token(prm);
+			pos_end = prm->source.cur;
+			ft_strjoin_gc(prm, prm->source.id, word, ft_substr_gc(prm, prm->source.line, pos_start, pos_end - pos_start));
+		}
+	}
 	return (NULL);
+	//je veux la position du prochain $. tant que j'en ai un je dois concatener 
+	//J'avance tant que je suis pas sur un $
+
 }
