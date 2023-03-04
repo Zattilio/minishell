@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 17:44:34 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:26:03 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_argc(t_node *root)
 		root = root->right;
 		n++;
 	}
-	return (n + 4);
+	return (n + 1);
 }
 
 static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
@@ -52,32 +52,46 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
 		i++;
 		right_parent = right_parent->right;
 	}
+	init_pipex(pipe, &pipe->pids, &pipe->fd_list);
+}
+
+static void	print_pipe(t_pipe *root)
+{
+	int		i;
+
+	i = 0;
+	while (root->argv[i])
+	{
+		print_ast(root->argv[i]);
+		i++;
+	}
+	if (root->argv[i] == NULL)
+		printf("end\n");
+	printf("argc = %d\n", root->argc);
 }
 
 int	exec_pipe(t_param *prm, t_node *root, char *env[])
 {
-	// t_fd	*fd_list;
-	t_pipe	pipe;
-	// int		*pids;
-	// int		status;
+	t_pipe	args;
+	int		status;
 
-	init_s_pipe(&pipe, root, env, prm);
-	print_ast(root);
-/* 	init_pipex(root, &pids, &fd_list);
-	init_pipes(root, pids, fd_list);
-	fork_heredoc(root, pids, fd_list);
-	init_fork(root, pids, fd_list);
-	if (pids[0] == 0)
-		ft_error(execute_first_cmd(root, fd_list), root, pids, fd_list);
-	execute_middle_cmd(root, pids, fd_list);
-	if (pids[ft_argc(root) - 4] == 0)
-		ft_error(execute_last_cmd(root, fd_list), root, pids, fd_list);
-	close_fd(root, fd_list);
-	ft_wait(root, pids);
-	waitpid(pids[ft_argc(root) - 4], &status, 0);
-	free(pids);
-	free(fd_list);
-	return (WEXITSTATUS(status));
-	(void) */
+	init_s_pipe(&args, root, env, prm);
+	print_pipe(&args);
+	init_pipes(&args, args.pids, args.fd_list);
+	// fork_heredoc(args, pids, args.fd_list);
+	init_fork(&args, args.pids, args.fd_list);
+	// if (args.pids[0] == 0)
+	// ft_error(execute_first_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
+	execute_middle_cmd(&args, args.pids, args.fd_list);
+	if (!is_parent_process(args.pids, args.argc))
+		exit(0);
+	// if (args.pids[pipe.argc] == 0)
+	// 	ft_error(execute_last_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
+	close_fd(&args, args.fd_list);
+	ft_wait(&args, args.pids);
+	waitpid(args.pids[args.argc], &status, 0);
+	free(args.pids);
+	free(args.fd_list);
+	// return (WEXITSTATUS(status));
 	return (0);
 }

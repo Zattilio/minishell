@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 17:21:51 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:53:15 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/exec.h"
 /*
-int	execute_first_cmd(t_node *root, t_fd *fd_list)
+int	execute_first_cmd(t_pipe *args, t_fd *fd_list)
 {
 	int		fd_input;
 
@@ -36,27 +36,29 @@ int	execute_first_cmd(t_node *root, t_fd *fd_list)
 		return (execute_cmd(args, 2));
 	}
 	return (0);
-}
+}*/
 
-void	execute_middle_cmd(t_node *root, int *pids, t_fd *fd_list)
+void	execute_middle_cmd(t_pipe *args, int *pids, t_fd *fd_list)
 {
 	int	i;
 
-	i = 1;
-	while (i < args->argc - 4)
+	i = 0;
+	while (i < args->argc)
 	{
 		if (pids[i] == 0)
 		{
-			dup2(fd_list[i].fd[1], 1);
-			dup2(fd_list[i - 1].fd[0], 0);
+			if (i + 1 != args->argc)
+				dup2(fd_list[i].fd[1], 1);
+			if (i + 1 != 1)
+				dup2(fd_list[i - 1].fd[0], 0);
 			close_fd(args, fd_list);
-			ft_error(execute_cmd(args, i + 2), args, pids, fd_list);
+			ft_error(execute_cmd(args, i), args, pids, fd_list);
 		}
 		i++;
 	}
 }
-
-int	execute_last_cmd(t_node *root, t_fd *fd_list)
+/*
+int	execute_last_cmd(t_pipe *args, t_fd *fd_list)
 {
 	int	fd_output;
 

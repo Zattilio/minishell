@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:40:40 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/02 16:51:12 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/04 12:20:49 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static int	check_nb_arguments_cd(char *arg[])
 
 void	ft_cd(char *arg[], char *env[])
 {
-	int		i;
+	// int		i;
 	char	*new_path;
 
-	i = 0;
+	// i = 0;
 	if (arg[0] == NULL)
 		g_return_value = 0;
 	else if (check_nb_arguments_cd(arg))

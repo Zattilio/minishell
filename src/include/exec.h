@@ -34,28 +34,30 @@ typedef struct s_pipe
 	t_node	**argv;
 	char	**env;
 	t_param	*prm;
+	t_fd	*fd_list;
+	int		*pids;
 }				t_pipe;
 
 
 int		exec_root(t_param *prm, t_node *root, char *env[]);
 int		exec_pipe(t_param *prm, t_node *root, char *env[]);
 
-int		get_path_name(t_node *root, char **path_cmd1, char **cmd);
+int		get_path_name(t_pipe *args, char **path_cmd1, char **cmd);
 
-void	ft_wait(t_node *root, int *pids);
+void	ft_wait(t_pipe *args, int *pids);
 
-int		execute_cmd(t_node *root, int n_cmd);
-int		execute_last_cmd(t_node *root, t_fd *fd_list);
-void	execute_middle_cmd(t_node *root, int *pids, t_fd *fd_list);
-int		execute_first_cmd(t_node *root, t_fd *fd_lst);
+int		execute_cmd(t_pipe *args, int n_cmd);
+int		execute_last_cmd(t_pipe *args, t_fd *fd_list);
+void	execute_middle_cmd(t_pipe *args, int *pids, t_fd *fd_list);
+int		execute_first_cmd(t_pipe *args, t_fd *fd_lst);
 
 int		is_parent_process(int *pids, int n);
-int		ft_error(int n, t_node *root, int *pids, t_fd *fd_list);
-void	close_fd(t_node *root, t_fd *fd_list);
+int		ft_error(int n, t_pipe *args, int *pids, t_fd *fd_list);
+void	close_fd(t_pipe *args, t_fd *fd_list);
 
-void	ft_heredoc(t_node *root, t_fd *fd_list);
-int		check_heredoc(t_node *root);
-void	fork_heredoc(t_node *root, int *pids, t_fd *fd_list);
+void	ft_heredoc(t_pipe *args, t_fd *fd_list);
+int		check_heredoc(t_pipe *args);
+void	fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list);
 
 void	ft_put2str_fd(char *s1, char *s2, int fd);
 void	ft_put3str_fd(char *s1, char *s2, char *s3, int fd);
@@ -66,8 +68,8 @@ int		command_not_found(char **path_tab, char **cmd);
 int		path_not_found(char **path_tab, char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
-void	init_pipex(t_node *root, int **pids, t_fd **fd_list);
-void	init_pipes(t_node *root, int *pids, t_fd *fd_list);
-void	init_fork(t_node *root, int *pids, t_fd *fd_list);
+void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
+void	init_pipes(t_pipe *args, int *pids, t_fd *fd_list);
+void	init_fork(t_pipe *args, int *pids, t_fd *fd_list);
 
 #endif

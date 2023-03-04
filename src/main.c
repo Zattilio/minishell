@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/03 18:45:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/04 16:41:13 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[], char *env[])
 		garbage_col(&prm, prm.source.id, cmd);
 
 		root = parsing(&prm);
-		exec_root(&prm, root, env);
+		g_return_value = exec_root(&prm, root, env);
 		empty_garbage(&prm, prm.source.id);
 	}
 	empty_garbage(&prm, -1);
