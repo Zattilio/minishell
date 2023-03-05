@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 20:48:31 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 03:46:15 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,19 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 	// if (args.pids[0] == 0)
 	// ft_error(execute_first_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	execute_middle_cmd(&args, args.pids, args.fd_list);
-	if (!is_parent_process(args.pids, args.argc))
-		exit(0);
 	// if (args.pids[pipe.argc] == 0)
 	// 	ft_error(execute_last_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
 	waitpid(args.pids[args.argc], &status, 0);
+	if (!is_parent_process(args.pids, args.argc))
+		exit(0);
 	free(args.pids);
 	free(args.fd_list);
-	// return (WEXITSTATUS(status));
-	return (0);
+	if (WIFSIGNALED(status))
+		g_return_value = WTERMSIG(status);
+	else if (WIFEXITED(status))
+		g_return_value = WEXITSTATUS(status);
+	//ft_printf("%d\n", g_return_value);
+	return (g_return_value);
 }

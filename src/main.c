@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 00:24:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 03:47:38 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_param	prm;
 	t_node	*root;
 
+	cmd = NULL;
 	if (argc != 1)
 		return (ft_printf_fd(2, "minishell: too many arguments"), 1);
 	ft_memset(&prm, 0, sizeof(t_param));
@@ -67,7 +68,7 @@ int	main(int argc, char *argv[], char *env[])
 		prm.source.cur = 0;
 		readline_new_prompt(&cmd_buf);
 		if (cmd_buf == NULL)
-			return (0);
+			return (ft_printf("exit\n"), 0);
 		cmd = ft_strtrim(cmd_buf, " ");
 		if (ft_strlen(cmd) > 0 && cmd_buf[0] != ' ')
 			add_history(cmd);
@@ -79,7 +80,7 @@ int	main(int argc, char *argv[], char *env[])
 		garbage_col(&prm, prm.source.id, cmd);
 
 		root = parsing(&prm);
-		g_return_value = exec_root(&prm, root, env);
+		exec_root(&prm, root, env);
 		empty_garbage(&prm, prm.source.id);
 	}
 	empty_garbage(&prm, -1);

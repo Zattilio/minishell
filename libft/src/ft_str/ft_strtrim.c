@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:45:20 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/13 16:09:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 02:11:23 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static size_t	strimlen(char const *s1, char const *set)
 	while (s1[debut] && is_partofset(s1[debut], set))
 		debut++;
 	fin = ft_strlen(s1) - 1;
+	if (ft_strlen(s1) == 0)
+		fin++;
 	while (fin != 0 && is_partofset(s1[fin], set))
 		fin--;
 	if (fin < debut)
@@ -49,6 +51,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	start;
 	size_t	len;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = strimlen(s1, set);
 	new = malloc ((len + 1) * sizeof (*new));
 	if (new == NULL)
