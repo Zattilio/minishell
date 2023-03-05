@@ -71,5 +71,7 @@ int		error_ft_strjoin3(char **path_tab, char **cmd);
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
 void	init_pipes(t_pipe *args, int *pids, t_fd *fd_list);
 void	init_fork(t_pipe *args, int *pids, t_fd *fd_list);
+void	init_signal_child(void);
+void	init_signal_parent(void);
 
 #endif

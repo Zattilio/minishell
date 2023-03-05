@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 16:41:13 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 00:24:14 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	main(int argc, char *argv[], char *env[])
 	if (argc != 1)
 		return (ft_printf_fd(2, "minishell: too many arguments"), 1);
 	ft_memset(&prm, 0, sizeof(t_param));
-	init_signal();
 	print_minishell_title();
 	do_ = 1;
 	while (do_)
 	{
+		init_signal();
 		prm.source.cur = 0;
 		readline_new_prompt(&cmd_buf);
 		if (cmd_buf == NULL)

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 18:17:33 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 01:01:27 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef enum e_token {
 	TK_DOLLAR,
 	TK_SQUOTE,
 	TK_DQUOTE,
+	TK_DAMP,
+	TK_DPIPE,
 	TK_EOF
 }			t_token;
 

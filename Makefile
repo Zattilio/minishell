@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/03 18:15:00 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/04 21:18:13 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES =	exec/exec_pipe.c \
 			exec/error_cmd.c \
 			exec/ft_wait.c \
 			exec/init.c \
+			exec/signal_exec.c \
 			exec/here_doc.c \
 			command_line_interface/command_line_interface.c \
 			command_line_interface/signal.c \

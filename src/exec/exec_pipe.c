@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 16:26:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/04 20:48:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
 	init_pipex(pipe, &pipe->pids, &pipe->fd_list);
 }
 
-static void	print_pipe(t_pipe *root)
+/* static void	print_pipe(t_pipe *root)
 {
 	int		i;
 
@@ -68,7 +68,7 @@ static void	print_pipe(t_pipe *root)
 	if (root->argv[i] == NULL)
 		printf("end\n");
 	printf("argc = %d\n", root->argc);
-}
+} */
 
 int	exec_pipe(t_param *prm, t_node *root, char *env[])
 {
@@ -76,7 +76,7 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 	int		status;
 
 	init_s_pipe(&args, root, env, prm);
-	print_pipe(&args);
+	//print_pipe(&args);
 	init_pipes(&args, args.pids, args.fd_list);
 	// fork_heredoc(args, pids, args.fd_list);
 	init_fork(&args, args.pids, args.fd_list);
