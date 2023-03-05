@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 03:46:15 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 05:20:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
 	waitpid(args.pids[args.argc], &status, 0);
-	if (!is_parent_process(args.pids, args.argc))
-		exit(0);
+	// if (!is_parent_process(args.pids, args.argc))
+	// 	exit(0);
 	free(args.pids);
 	free(args.fd_list);
 	if (WIFSIGNALED(status))

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 03:47:38 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 05:20:53 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,13 @@ int	main(int argc, char *argv[], char *env[])
 
 		prm.source.line = cmd;
 		prm.source.line_size = ft_strlen(cmd);
-		(prm.source.id)++;
 		garbage_col(&prm, prm.source.id, cmd);
 
 		root = parsing(&prm);
 		exec_root(&prm, root, env);
+
 		empty_garbage(&prm, prm.source.id);
+		(prm.source.id)++;
 	}
 	empty_garbage(&prm, -1);
 	rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 16:35:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 04:30:17 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	get_path_name(t_pipe *args, char **path_cmd, char **cmd)
 		i++;
 	}
 	if (!access(cmd[0], F_OK))
-		return (test_exec_rights(path_cmd, cmd[0], path_tab, cmd));
+		return (test_exec_rights(path_cmd, ft_strdup(cmd[0]), path_tab, cmd));
 	return (command_not_found(path_tab, cmd));
 }
 
