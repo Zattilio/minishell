@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 00:11:22 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 15:58:18 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	execute_middle_cmd(t_pipe *args, int *pids, t_fd *fd_list)
 		if (pids[i] == 0)
 		{
 			init_signal_child();
+			if (i != 0)
+				dup2(fd_list[i - 1].fd[0], 0);
 			if (i + 1 != args->argc)
 				dup2(fd_list[i].fd[1], 1);
-			if (i + 1 != 1)
-				dup2(fd_list[i - 1].fd[0], 0);
 			close_fd(args, fd_list);
 			ft_error(execute_cmd(args, i), args, pids, fd_list);
 		}

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 05:35:02 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 03:35:21 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/05 16:03:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_pipes(t_pipe *args, int *pids, t_fd *fd_list)
 	int	i;
 
 	i = 0;
-	while (i < args->argc)
+	while (i < args->argc - 1)
 	{
 		if (pipe((fd_list[i]).fd) == -1)
 			ft_error(4, args, pids, fd_list);
