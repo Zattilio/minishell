@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/03 12:54:21 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/06 15:03:59 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SOURCES = 	alloc_garbage/ft_alloc_gc.c \
 			lexer/lexer.c \
 			parser/make_node.c \
 			parser/parser_utils.c \
+			parser/parser_utils_2.c \
 			parser/parser.c \
 			utils/print_ast.c \
 			utils/utils.c \

@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:17:48 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:05:12 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	empty_all_garbage(t_param *prm)
 		elem_garb = temp->next;
 		free(temp);
 	}
+	prm->garb = NULL;
 }
 
 void	empty_garbage(t_param *prm, int id)

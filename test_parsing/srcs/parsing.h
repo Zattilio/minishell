@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 18:33:25 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:18:27 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# define PARSING_STOPPER "|<>$\'\""
+# define PARSING_STOPPER "|<>\'\""
 
 /*
 	TK_WILDCARD,
@@ -30,6 +30,7 @@
 typedef enum e_token {
 	TK_ERROR = -1,
 	TK_WORD,
+	TK_WORD_SUB,
 	TK_PIPE,
 	TK_EXEC,
 	TK_INF,
@@ -83,14 +84,14 @@ typedef struct s_source {
 typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
-	char			***env;
+	char			**env;
 }					t_param;
 
 /*	alloc_garbage -> ft_alloc_gc.c */
 void	*ft_malloc_gc(t_param *prm, int id, size_t size);
 void	*ft_calloc_gc(t_param *prm, int id, size_t nmemb, size_t size);
 char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
-char	*ft_strdup_gc(t_param *prm, const char *s);
+char	*ft_strdup_gc(t_param *prm, int id, const char *s);
 char	*ft_strjoin_gc(t_param *prm, int id, char const *s1, char const *s2);
 
 /*	alloc_garbage -> garbage.c */
@@ -122,6 +123,7 @@ t_node	*parsing(t_param *prm);
 t_node	*parse_pipe(t_param *prm);
 t_node	*parse_exec(t_param *prm);
 t_node	*parse_redir(t_param *prm);
+char	*get_endheredoc(t_param *prm);
 
 /*	parser -> parser_utils.c	*/
 void	add_last_left(t_node **root, t_node *node);
@@ -129,9 +131,13 @@ char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*get_word(t_param *prm);
 char	*get_word_squote(t_param *prm);
 char	*get_word_dquote(t_param *prm);
+void	get_word_dquote_2(t_param *prm, char **to_process,
+			int *pos_start, char **word);
+char	*get_word_dollar(t_param *prm);
+char	*substitute_word(t_param *prm, char	*word);
 
 /*	utils -> print_ast.c	*/
-void	print_ast(t_node *root);
+void	print_ast(t_param *prm, t_node *root);
 char	*get_tk_str(int tk_type);
 
 /*	utils -> utils.c	*/

@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:48:31 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 18:23:50 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:18:33 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len)
 	return (result_str);
 }
 
-char	*ft_strdup_gc(t_param *prm, const char *s)
+char	*ft_strdup_gc(t_param *prm, int id, const char *s)
 {
 	char	*dest;
 	int		i;
@@ -73,7 +73,7 @@ char	*ft_strdup_gc(t_param *prm, const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dest = (char *)ft_malloc_gc(prm, prm->source.id, (len + 1) * sizeof(char));
+	dest = (char *)ft_malloc_gc(prm, id, (len + 1) * sizeof(char));
 	if (dest == NULL)
 		return (NULL);
 	while (s[i])

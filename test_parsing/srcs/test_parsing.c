@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 17:52:15 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:19:52 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,28 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 */
-/*
+
 //main pour tester la prise en compte des quote
+/*
 int	main(int argc, char **argv, char **env)
 {
 	t_param	prm;
-	char	*word = NULL;
-	
+	//t_node	*node;
+	(void)argc;
+	(void)argv;
 	ft_memset(&prm, 0, sizeof(t_param));
+	clone_env(&prm, env);
 	prm.source.id = 1;
-	prm.source.line = "ls \'coucou $ * | < >A\' > in";
+	prm.source.line = "\"ls     coucou \' $USER  $ $TEST $USER \' u\" hdghd ";
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
-	clone_env(&prm, env);
-	while (peek_tk(&prm) != TK_EOF)
-	{
-		printf("prochain tk de type %d\n", peek_tk(&prm));
-		if (peek_tk(&prm) == TK_WORD || peek_tk(&prm) == TK_SQUOTE)
-		{
-			word = get_word(&prm);
-			printf("%s\n",word);
-		}
-		else
-			get_token(&prm);
-	}
+	printf("word : %s\n",get_word_dquote(&prm));
+
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}*/
+} */
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	t_param	prm;
 	t_node	*node;
@@ -74,9 +67,9 @@ int	main(int argc, char **argv)
 	print_ast(node);
 	empty_garbage(&prm, prm.source.id);
 	return (0);
-}
-/*
-int	main(int argc, char **argv)
+} */
+
+int	main(int argc, char **argv, char **env)
 {
 	t_param	prm;
 	t_node	*node;
@@ -87,7 +80,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (1);
 	ft_memset(&prm, 0, sizeof(t_param));
-	prm.source.line = ft_strdup(argv[1]);
+	clone_env(&prm, env);
+	prm.source.line = ft_strdup_gc(&prm, 0, argv[1]);
 	prm.source.id = 1;
 	if (prm.source.line)
 		prm.source.line_size = ft_strlen(prm.source.line);
@@ -95,13 +89,12 @@ int	main(int argc, char **argv)
 	{
 		token = get_token(&prm);
 		node = make_node(&prm, ++id, get_t_token(token), token);
-		print_ast(node);
+		print_ast(&prm, node);
 		if (node->token_type == TK_EOF)
 			break ;
 	}
 	print_garbage(&prm);
-	empty_garbage(&prm, prm.source.id);
+	empty_garbage(&prm, -1);
 	print_garbage(&prm);
-	free(prm.source.line);
 	return (0);
-}*/
+}

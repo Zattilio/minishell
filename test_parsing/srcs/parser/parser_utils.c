@@ -6,55 +6,21 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:50:05 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 18:33:39 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:28:38 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
 
-void	add_last_left(t_node **root, t_node *node)
-{
-	t_node	*elem;
-
-	elem = *root;
-	if (elem == NULL)
-		*root = node;
-	else
-	{
-		while (elem->left)
-			elem = elem->left;
-		elem->left = node;
-	}
-}
-
-char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
-{
-	char	**new_cmd;
-	int		nb_arg;
-	int		i;
-
-	i = -1;
-	nb_arg = get_nb_str(cmd);
-	new_cmd = (char **)ft_malloc_gc(prm, prm->source.id,
-			(nb_arg + 2) * sizeof(char *));
-	if (new_cmd == NULL)
-		return (NULL);
-	new_cmd[nb_arg] = ft_strdup_gc(prm, arg);
-	if (new_cmd[nb_arg] == NULL)
-		return (NULL);
-	new_cmd[nb_arg + 1] = NULL;
-	while (++i < nb_arg)
-		new_cmd[i] = cmd[i];
-	return (new_cmd);
-}
-
+/*Voir le cas ou on a pas de quote mais directement un changement
+de variable*/
 char	*get_word(t_param *prm)
 {
 	t_token	peek;
 	char	*token;
 
 	peek = peek_tk(prm);
-	if (!(peek == TK_WORD || peek == TK_SQUOTE))
+	if (!(peek == TK_WORD || peek == TK_SQUOTE || peek == TK_DQUOTE || peek == TK_DOLLAR))
 		return (NULL);
 	token = get_token(prm);
 	if (get_t_token(token) == TK_WORD)
@@ -63,11 +29,11 @@ char	*get_word(t_param *prm)
 		return (get_word_squote(prm));
 	if (get_t_token(token) == TK_DQUOTE)
 		return (get_word_dquote(prm));
+	if (get_t_token(token) == TK_DOLLAR)
+		return (get_word_dollar(prm));
 	return (NULL);
 }
 
-/*tant que l'on est pas arrive sur une autre simple quote on continue 
-et on le rajoute dans le word que l'on renvoie sans jamais rien interpreter. */
 char	*get_word_squote(t_param *prm)
 {
 	char	*word;
@@ -89,38 +55,98 @@ char	*get_word_squote(t_param *prm)
 	return (word);
 }
 
-//Fonction pas termine. 
 char	*get_word_dquote(t_param *prm)
 {
 	char	*word;
-	size_t	pos_start;
-	int	pos_end;
+	int		pos_start;
+	int		pos_end;
+	char	*to_process;
 
 	word = NULL;
-	get_token(prm);
-	pos_start = prm->source.cur;
-	pos_end = get_pos_in_str(prm->source.line + prm->source.cur, '\"');
-	if (pos_end == -1)
+	pos_start = (int)prm->source.cur;
+	pos_end = pos_start + get_pos_in_str(prm->source.line + pos_start, '\"');
+	if (pos_end - pos_start == -1)
 	{
 		prm->source.error = ERR_DQUOTE_CLOSE;
 		return (NULL);
 	}
-	while (peek_tk(prm) != TK_DQUOTE)
+	to_process = ft_substr_gc(prm, prm->source.line, pos_start,
+			pos_end - pos_start);
+	while (get_pos_in_str(to_process, '$') != -1)
+		get_word_dquote_2(prm, &to_process, &pos_start, &word);
+	if (get_pos_in_str(to_process, '$') == -1)
+		word = ft_strjoin_gc(prm, prm->source.id, word, to_process);
+	prm->source.cur = pos_end + 1;
+	return (word);
+}
+
+void	get_word_dquote_2(t_param *prm, char **to_process,
+	int *pos_start, char **word)
+{
+	char	*var_sub;
+
+	*word = ft_strjoin_gc(prm, prm->source.id, *word,
+			ft_substr_gc(prm, *to_process, 0,
+				get_pos_in_str(*to_process, '$')));
+	prm->source.cur = *pos_start + get_pos_in_str(*to_process, '$');
+	get_token(prm);
+	if (ft_isspace(prm->source.line[prm->source.cur]))
+		var_sub = "$";
+	else
+		var_sub = get_token(prm);
+	*pos_start = prm->source.cur;
+	*word = ft_strjoin_gc(prm, prm->source.id, *word,
+			get_env_var(prm, var_sub));
+	*to_process = ft_substr_gc(prm, prm->source.line, *pos_start,
+			get_pos_in_str(prm->source.line + *pos_start, '\"'));
+}
+
+char	*get_word_dollar(t_param *prm)
+{
+	char	*var_sub;
+
+	if (peek_tk(prm) != TK_WORD)
+		return ("$");
+	var_sub = get_token(prm);
+	return (get_env_var(prm, var_sub));	
+}
+
+char	*get_space(t_param *prm);
+
+char	*substitute_word(t_param *prm, char	*word)
+{
+	char	*new_word;
+	int		pos_dol;
+	int		len_var_sub;
+	char	*var_sub;
+	char 	*to_process;
+
+	new_word = NULL;
+	if (word == NULL)
+		return (NULL);
+	pos_dol = get_pos_in_str(word, '$');
+	if (pos_dol == -1)
+		return (word);
+	else
 	{
-		if (peek_tk(prm) == TK_DINF)
-		{
-			//On recupere la variable.
-		}
+		new_word = ft_strjoin_gc(prm, prm->source.id, new_word,
+			ft_substr_gc(prm, word, 0, pos_dol));
+		if (pos_dol + 1 == (int)ft_strlen(word))//le $est sur la fin
+			new_word = ft_strjoin_gc(prm, prm->source.id, new_word, "$");
 		else
 		{
-			pos_start = prm->source.cur;
-			get_token(prm);
-			pos_end = prm->source.cur;
-			ft_strjoin_gc(prm, prm->source.id, word, ft_substr_gc(prm, prm->source.line, pos_start, pos_end - pos_start));
+			len_var_sub = ft_strlen(word) - pos_dol	- 1;
+			if (get_pos_in_str(word + pos_dol + 1, '$') != -1)
+				len_var_sub = get_pos_in_str(word + pos_dol + 1, '$');
+			
+			var_sub = ft_substr_gc(prm, word, pos_dol + 1, len_var_sub);
+			//printf("	var_sub %s\n", var_sub);
+			new_word = ft_strjoin_gc(prm, prm->source.id, new_word, get_env_var(prm, var_sub));
+			to_process = ft_substr_gc(prm, word, pos_dol + 1 + len_var_sub, ft_strlen(word));
+			if (ft_strlen(to_process))
+				new_word = ft_strjoin_gc(prm, prm->source.id, new_word, substitute_word(prm,to_process));
+			//printf("	to_process %s\n", to_process);
 		}
 	}
-	return (NULL);
-	//je veux la position du prochain $. tant que j'en ai un je dois concatener 
-	//J'avance tant que je suis pas sur un $
-
+	return (new_word);
 }
