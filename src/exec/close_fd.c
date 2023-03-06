@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:38 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 16:05:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 17:30:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	close_fd(t_pipe *args, t_fd *fd_list)
 	int	i;
 
 	i = 0;
-	while (i < args->argc - 1)
+	while (i < args->argc + 1)
 	{
 		close(fd_list[i].fd[0]);
 		close(fd_list[i].fd[1]);

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:19 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 12:59:16 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 19:14:41 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	ft_error(int n, t_pipe *args, int *pids, t_fd *fd_list)
 		ft_putendl_fd("minishell: error fork", 2);
 	if (n == 6)
 		ft_putendl_fd("minishell: could not execve", 2);
-	exit(n);
+	exit (n);
 }
 
