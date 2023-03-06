@@ -6,14 +6,14 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:49:30 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 16:09:07 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 16:19:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // Version that display ^C in shell
-/* static void	handle_sigint(int sig)
+static void	handle_sigint(int sig)
 {
 	g_return_value = 130;
 	ft_printf("\n");
@@ -23,9 +23,9 @@
 	ft_printf("\33[2K\r");
 	printf_new_prompt();
 	(void)sig;
-} */
+}
 
-static void	handle_sigint(int sig)
+/* static void	handle_sigint(int sig)
 {
 	rl_on_new_line();
 	rl_redisplay();
@@ -37,7 +37,7 @@ static void	handle_sigint(int sig)
 	printf_new_prompt();
 	rl_replace_line("", 0);
 	(void)sig;
-}
+} */
 
 /* static void	handle_sigquit(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 16:24:44 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 16:25:26 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
 			left_child = left_child->left;
 		}
 		pipe->argv[i] = left_child;
+		pipe->argv[i]->redir = right_parent;
 		i++;
 		right_parent = right_parent->right;
 	}
@@ -76,7 +77,6 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 	int		status;
 
 	init_s_pipe(&args, root, env, prm);
-	//print_pipe(&args);
 	init_pipes(&args, args.pids, args.fd_list);
 	if (root->token_type == TK_EXEC && root->cmd == NULL)
 	{
@@ -87,7 +87,7 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 	init_fork(&args, args.pids, args.fd_list);
 	// if (args.pids[0] == 0)
 	// ft_error(execute_first_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
-	execute_middle_cmd(&args, args.pids, args.fd_list);
+	execute_all_cmds(&args, args.pids, args.fd_list);
 	// if (args.pids[pipe.argc] == 0)
 	// 	ft_error(execute_last_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);

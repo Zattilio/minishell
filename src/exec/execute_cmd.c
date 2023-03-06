@@ -6,11 +6,12 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 04:49:50 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 16:47:19 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/exec.h"
+
 
 int	execute_cmd(t_pipe *args, int n_cmd)
 {

@@ -47,9 +47,9 @@ int		get_path_name(t_pipe *args, char **path_cmd1, char **cmd);
 void	ft_wait(t_pipe *args, int *pids);
 
 int		execute_cmd(t_pipe *args, int n_cmd);
-int		execute_last_cmd(t_pipe *args, t_fd *fd_list);
-void	execute_middle_cmd(t_pipe *args, int *pids, t_fd *fd_list);
-int		execute_first_cmd(t_pipe *args, t_fd *fd_lst);
+//int		execute_last_cmd(t_pipe *args, t_fd *fd_list);
+void	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list);
+//int		execute_first_cmd(t_pipe *args, t_fd *fd_lst);
 
 int		is_parent_process(int *pids, int n);
 int		ft_error(int n, t_pipe *args, int *pids, t_fd *fd_list);

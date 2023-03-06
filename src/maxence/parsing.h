@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/05 01:01:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/06 15:50:12 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_node {
 	t_bool			conv_dol;
 	struct s_node	*right;
 	struct s_node	*left;
+	struct s_node	*redir;
 }					t_node;
 
 typedef struct s_garb
