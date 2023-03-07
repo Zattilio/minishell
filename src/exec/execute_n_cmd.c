@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 08:11:24 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 19:00:45 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,12 @@ int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
 		{
 			init_signal_child();
 			if (redirection(args, args->argv[i]->redir, i, fd_list))
-				ft_error(1, args, pids, fd_list);
+				ft_error(1, args, fd_list);
 			close_fd(args, fd_list);
-			ft_error(execute_cmd(args, i), args, pids, fd_list);
+			ft_error(execute_cmd(args, i), args, fd_list);
 		}
 		if (pids[i] < 0)
-			ft_error(5, args, pids, fd_list);
+			ft_error(5, args, fd_list);
 		i++;
 	}
 	return (0);

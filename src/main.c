@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 04:18:00 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 18:56:57 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,6 @@
 
 unsigned char	g_return_value = 0;
 
-// int	main(int argc, char *argv[], char *env[])
-// {
-// 	char	do_;
-// 	char	*cmd_buf;
-// 	char	*cmd;
-// 	t_param prm;
-
-// 	init_signal();
-// 	ft_memset(&prm, 0, sizeof(t_param));
-// 	print_minishell_title();
-// 	do_ = 1;
-// 	while (do_)
-// 	{
-// 		print_new_prompt(&cmd_buf);
-// 		if (cmd_buf == NULL)
-// 			return (0);
-// 		cmd = ft_strtrim(cmd_buf, " ");
-// 		if (ft_strlen(cmd) > 0 && cmd_buf[0] != ' ')
-// 			add_history(cmd);
-// 		free(cmd_buf);
-// 		prm.source.line = cmd;
-// 		prm.source.line_size = ft_strlen(cmd);
-// 		(prm.source.id)++;
-// 		garbage_col(&prm, cmd);
-// 		//ok pour envoie vers parsing puis exec.
-
-// 	}
-// 	rl_clear_history();
-// 	(void)argc;
-// 	(void)argv;
-// 	(void)env;
-// 	return (g_return_value);
-// }
-
-/*attention, ne pas utiliser l'enve du main*/
 int	main(int argc, char *argv[], char *env[])
 {
 	char	do_;

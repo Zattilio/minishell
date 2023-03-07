@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 18:31:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 21:06:49 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ static void	ft_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i)
 static void	fork_heredoc(t_pipe *args, t_node *node, int i)
 {
 	int	pid;
-	int	stdin;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		ft_heredoc(args, args->fd_list, node, i);
-		free(args->pids);
-		free(args->fd_list);
 		empty_garbage(args->prm, -1);
 		exit (0);
 	}
@@ -112,8 +109,8 @@ int	init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list)
 		{
 			init_signal_heredoc();
 			if (redirection_heredoc(args, args->argv[i]->redir, i, fd_list))
-				ft_error(1, args, pids, fd_list);
-			ft_error(0, args, pids, fd_list);
+				ft_error(1, args, fd_list);
+			ft_error(0, args, fd_list);
 		}
 		else
 			waitpid(pids[i], NULL, 0);
