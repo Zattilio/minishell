@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:53:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/06 18:17:56 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/07 13:23:49 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,47 @@ char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
 	while (++i < nb_arg)
 		new_cmd[i] = cmd[i];
 	return (new_cmd);
+}
+
+char	*substitute_word(t_param *prm, char	*word)
+{
+	char	*new;
+	int		len;
+	char	*to_process;
+
+	new = NULL;
+	if (word == NULL || pos_str(word, '$') == -1)
+		return (word);
+	new = ft_strjoin_gc(prm, prm->source.id, new,
+			ft_substr_gc(prm, word, 0, pos_str(word, '$')));
+	if (pos_str(word, '$') + 1 == (int)ft_strlen(word))
+		new = ft_strjoin_gc(prm, prm->source.id, new, "$");
+	else
+	{
+		len = ft_strlen(word) - pos_str(word, '$') - 1;
+		if (pos_str(word + pos_str(word, '$') + 1, '$') != -1)
+			len = pos_str(word + pos_str(word, '$') + 1, '$');
+		new = ft_strjoin_gc(prm, prm->source.id, new, get_env_var(prm,
+					ft_substr_gc(prm, word, pos_str(word, '$') + 1, len)));
+		to_process = ft_substr_gc(prm, word, pos_str(word, '$')
+				+ 1 + len, ft_strlen(word));
+		if (ft_strlen(to_process))
+			new = ft_strjoin_gc(prm, prm->source.id, new,
+					substitute_word(prm, to_process));
+	}
+	return (new);
+}
+
+char	*get_space(t_param *prm)
+{
+	size_t	pos_start;
+	size_t	cur;
+	char	*space;
+
+	pos_start = prm->source.cur;
+	cur = prm->source.cur;
+	while (cur < prm->source.line_size && ft_isspace(prm->source.line[cur]))
+		cur++;
+	space = ft_substr_gc(prm, prm->source.line, pos_start, cur - pos_start);
+	return (space);
 }

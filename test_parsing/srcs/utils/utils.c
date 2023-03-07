@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:57:00 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 15:20:01 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/07 14:56:03 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_redir(t_token token_type)
 
 int	is_word(t_token token_type)
 {
-	if (token_type == TK_WORD || token_type == TK_DOLLAR
+	if (token_type == TK_WORD || token_type == TK_WORD_SUB
 		|| token_type == TK_SQUOTE || token_type == TK_DQUOTE)
 		return (1);
 	return (0);
@@ -40,7 +40,7 @@ void	print_space(int space)
 	}
 }
 
-int	get_pos_in_str(char *str, char c)
+int	pos_str(char *str, char c)
 {
 	int	i;
 

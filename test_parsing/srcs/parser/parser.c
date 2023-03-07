@@ -6,24 +6,34 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/06 17:00:31 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/07 17:41:29 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*The parser check that the syntax of the user command is valid. It then 
-generates an Abstract Syntax Tree (AST) that will be use for the next step :
-the execution.*/
-
-/*Plusieurs approches de parsing ; Top Down Parsing et Bottom up parsing.
- mais aussi Recursive descent parser
- */
-
-/* quand j'ai une erreur de syntax je renvoie un NULL, mais je l'interprete pas.
-il faudra changer ca par la suite*/
-
 #include "../parsing.h"
-/*il faur que je fasse en sorte de renoyer un node de type EXEC avec une 
-commande "" si on m'envoie une chaine vide. */
+
+t_node	*parse(t_param *prm, char *line)
+{
+	char	*new_line;
+	t_node	*root;
+
+	new_line = ft_strdup_gc(prm, prm->source.id + 1, line);
+	if (new_line == NULL)
+		return (NULL);
+	if (prm->source.id > 0)
+		empty_garbage(prm, prm->source.id);
+	(prm->source.id)++;
+	prm->source.line = new_line;
+	prm->source.cur = 0;
+	prm->source.error = 0;
+	prm->source.line_size = ft_strlen(new_line);
+	root = parse_pipe(prm);
+	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
+		return (NULL);
+	return (root);
+}
+
+/*old ==> a ne plus utiliser*/
 t_node	*parsing(t_param *prm)
 {
 	t_node	*root;
@@ -56,6 +66,8 @@ t_node	*parse_exec(t_param *prm)
 
 	node = NULL;
 	cmd = NULL;
+	if (prm->source.cur == 0 && peek_tk(prm) == TK_EOF)
+		return (make_exec_node(prm, add_cmd_arg(prm, cmd, "")));
 	if (is_redir(peek_tk(prm)))
 		node = parse_redir(prm);
 	while (is_word(peek_tk(prm)) || is_redir(peek_tk(prm)))
@@ -91,36 +103,4 @@ t_node	*parse_redir(t_param *prm)
 		file_name = get_word(prm);
 	node = make_redir_node(prm, NULL, token, file_name);
 	return (node);
-}
-
-char	*get_endheredoc(t_param *prm)
-{
-	size_t	pos_end;
-	char	*end_file;
-
-	if (peek_tk(prm) == TK_SQUOTE)
-	{
-		get_token(prm);
-		return (get_word_squote(prm));
-	}
-	if (peek_tk(prm) == TK_DQUOTE)
-	{
-		get_token(prm);
-		if (get_pos_in_str(prm->source.line + prm->source.cur, '\"') == -1)
-		{
-			prm->source.error = ERR_DQUOTE_CLOSE;
-			return (NULL);
-		}
-		pos_end = prm->source.cur + get_pos_in_str(prm->source.line + prm->source.cur, '\"');
-		end_file = ft_substr_gc(prm, prm->source.line + prm->source.cur, 0, pos_end - prm->source.cur); 
-		prm->source.cur = pos_end + 1;
-		return (end_file);
-	}
-	else
-	{
-		pos_end = prm->source.cur + get_pos_in_str(prm->source.line + prm->source.cur, ' ');
-		end_file = ft_substr_gc(prm, prm->source.line + prm->source.cur, 0, pos_end - prm->source.cur); 
-		prm->source.cur = pos_end + 1;
-		return (end_file);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:48:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/06 18:25:29 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/07 14:27:50 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*get_token(t_param *prm)
 	cur = prm->source.cur;
 	if (!prm->source.line)
 		return (NULL);
-	while (cur < prm->source.line_size && prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
+	while (cur < prm->source.line_size && prm->source.line[cur]
+		&& ft_isspace(prm->source.line[cur]))
 		cur++;
 	if (cur >= prm->source.line_size)
 		return (ft_strdup_gc(prm, prm->source.id, ""));
@@ -96,7 +97,7 @@ static t_token	get_t_token_2(char *token)
 		return (TK_SQUOTE);
 	if (ft_strncmp(token, "\"", 1) == 0)
 		return (TK_DQUOTE);
-	if (get_pos_in_str(token, '$') != -1 && ft_strlen(token) > 1)
+	if (pos_str(token, '$') != -1 && ft_strlen(token) > 1)
 		return (TK_WORD_SUB);
 	return (TK_WORD);
 }
