@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 21:07:08 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 09:08:54 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 09:13:28 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	init_signal_heredoc(void)
 
 static void	handle_sigint_child(int sig)
 {
-	//printf("sigint child\n");
 	exit (130);
 	(void)sig;
 }

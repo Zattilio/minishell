@@ -1,9 +1,0 @@
-build
-goinfre
-libft
-Makefile
-minishell
-out
-src
-test_parsing
-valgrind_readline_leaks_ignore.supp

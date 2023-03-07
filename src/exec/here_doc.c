@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 08:48:16 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 18:31:14 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	fork_heredoc(t_pipe *args, t_node *node, int i)
 		ft_heredoc(args, args->fd_list, node, i);
 		free(args->pids);
 		free(args->fd_list);
+		empty_garbage(args->prm, -1);
 		exit (0);
 	}
 	dup2(args->fd_list[i].fd[0], STDIN_FILENO);
@@ -63,6 +64,7 @@ void	fake_heredoc(t_node *node)
 {
 	char	*str;
 
+	str = "";
 	while (str && ft_strcmp(str, node->file_name))
 	{
 		str = readline("> ");
