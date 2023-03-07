@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:38:11 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 21:00:41 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 00:58:37 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,25 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../libft.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
 
-char	*get_next_line(int fd);
+typedef struct s_list_sto
+{
+	char					*content;
+	struct s_list_sto		*next;
+}					t_list_sto;
 
-int		pos_end_line(char *s);
-char	*get_begin(char *s, int pos);
-char	*get_end(char *src, char *dst, int pos);
-int		ft_strlen2(const char *s);
-char	*ft_strjoin_gnl(char *s1, char const *s2);
+void	ft_lstadd_back_gnl(t_list_sto **lst, void *content);
+char	*get_next_line(int fd);
+int		line_to_make_gnl(t_list_sto *storage);
+char	*make_next_line(t_list_sto **storage, int *error);
+int		read_store_gnl(t_list_sto **storage, char *buffer, int fd, int *error);
+size_t	ft_line_len(t_list_sto *storage);
+void	clean_storage_gnl(t_list_sto **storage);
+void	clear_all_memory_gnl(t_list_sto **storage);
 
 #endif

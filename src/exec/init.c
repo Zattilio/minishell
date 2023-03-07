@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 05:35:02 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 17:30:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 07:17:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_pipes(t_pipe *args, int *pids, t_fd *fd_list)
 	}
 }
 
-void	init_fork(t_pipe *args, int *pids, t_fd *fd_list)
+/* void	init_fork(t_pipe *args, int *pids, t_fd *fd_list)
 {
 	int	i;
 
@@ -46,9 +46,11 @@ void	init_fork(t_pipe *args, int *pids, t_fd *fd_list)
 	while (i < args->argc && is_parent_process(pids, i))
 	{
 		pids[i] = fork();
+		if (pids[i] == 0)
+			init_signal_child();
 		if (pids[i] < 0)
 			ft_error(5, args, pids, fd_list);
 		i++;
 	}
-}
+} */
 

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 19:15:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 09:08:17 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 		return (0);
 	}
 	// fork_heredoc(args, pids, args.fd_list);
-	init_fork(&args, args.pids, args.fd_list);
+	init_fork_heredoc(&args, args.pids, args.fd_list);
+	init_signal_parent_during_exec();
+	//init_fork(&args, args.pids, args.fd_list);
+	//init_fork_heredoc(&args, args.pids, args.fd_list);
 	// if (args.pids[0] == 0)
 	// ft_error(execute_first_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	execute_all_cmds(&args, args.pids, args.fd_list);
@@ -99,5 +102,5 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 		g_return_value = WTERMSIG(status);
 	else if (WIFEXITED(status))
 		g_return_value = WEXITSTATUS(status);
-	return (g_return_value);
+	exit (g_return_value);
 }

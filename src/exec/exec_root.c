@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/05 03:47:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 08:35:54 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	exec_root(t_param *prm, t_node *root, char *env[])
 {
+	int	pipe_pid;
+
+	init_signal_parent();
 	if (root->token_type == TK_DAMP)
 	{
 		exec_root(prm, root->left, env);
@@ -27,6 +30,15 @@ int	exec_root(t_param *prm, t_node *root, char *env[])
 			exec_root(prm, root->right, env);
 	}
 	else
-		exec_pipe(prm, root, env);
+	{
+		pipe_pid = fork();
+		if (pipe_pid == 0)
+		{
+			init_signal_parent_during_heredoc();
+			exec_pipe(prm, root, env);
+		}
+		else
+			waitpid(pipe_pid, NULL, 0);
+	}
 	return (g_return_value);
 }

@@ -55,8 +55,6 @@ int		is_parent_process(int *pids, int n);
 int		ft_error(int n, t_pipe *args, int *pids, t_fd *fd_list);
 void	close_fd(t_pipe *args, t_fd *fd_list);
 
-void	fork_heredoc(t_pipe *args, t_node *node, int i);
-
 void	ft_put2str_fd(char *s1, char *s2, int fd);
 void	ft_put3str_fd(char *s1, char *s2, char *s3, int fd);
 char	*ft_strjoin3(char *str1, char *str2, char *str3);
@@ -69,7 +67,12 @@ int		error_ft_strjoin3(char **path_tab, char **cmd);
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
 void	init_pipes(t_pipe *args, int *pids, t_fd *fd_list);
 void	init_fork(t_pipe *args, int *pids, t_fd *fd_list);
+int		init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list);
+
 void	init_signal_child(void);
 void	init_signal_parent(void);
+void	init_signal_parent_during_heredoc(void);
+void	init_signal_parent_during_exec(void);
+void	init_signal_heredoc(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 20:04:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/07 08:11:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	redir_out(t_node *redir)
 	return (0);
 }
 
-int	redir_heredoc(t_pipe *args, t_node *redir, int i)
+static int	redir_heredoc(t_fd *fd_list, int i)
 {
-	fork_heredoc(args, redir, i);
+	dup2(fd_list[i].fd[0], 0);
 	return (0);
 }
 
@@ -124,11 +124,8 @@ int	redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
 		if (redir_out(redir))
 			return (1);
 	}
-	if (redir->token_type == TK_DINF)
-	{
-		if (redir_heredoc(args, redir, i))
-			return (1);
-	}
+	if (redir->token_type == TK_DINF && redir->left->token_type == TK_EXEC)
+		return (redir_heredoc(fd_list, i));
 	return (redirection(args, redir->left, i, fd_list));
 }
 
@@ -136,10 +133,10 @@ int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
 {
 	int	i;
 
-	init_signal_parent();
 	i = 0;
-	while (i < args->argc)
+	while (i < args->argc && is_parent_process(pids, i))
 	{
+		pids[i] = fork();
 		if (pids[i] == 0)
 		{
 			init_signal_child();
@@ -148,6 +145,8 @@ int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
 			close_fd(args, fd_list);
 			ft_error(execute_cmd(args, i), args, pids, fd_list);
 		}
+		if (pids[i] < 0)
+			ft_error(5, args, pids, fd_list);
 		i++;
 	}
 	return (0);
