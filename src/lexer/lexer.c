@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:48:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 17:05:52 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:56:59 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*The lexer, or tokenizer aims to create groups of character from the command
-line and identify what type they are. It does not check whether or not the 
+line and identify what type they are. It does not check whether or not the
 command is synaxicaly correct (this is the role of the parser).*/
 
-#include "../parsing.h"
+#include "../include/minishell.h"
 
 size_t	test_double_token(t_param *prm, size_t cur)
 {
@@ -37,14 +37,15 @@ char	*get_token(t_param *prm)
 	cur = prm->source.cur;
 	if (!prm->source.line)
 		return (NULL);
-	while (prm->source.line[cur] && ft_isspace(prm->source.line[cur]))
+	while (cur < prm->source.line_size && prm->source.line[cur]
+		&& ft_isspace(prm->source.line[cur]))
 		cur++;
 	if (cur >= prm->source.line_size)
-		return (ft_strdup_gc(prm, ""));
+		return (ft_strdup_gc(prm, prm->source.id, ""));
 	pos_start = cur;
 	while (cur < prm->source.line_size && !ft_isspace(prm->source.line[cur])
 		&& !ft_strchr(PARSING_STOPPER, prm->source.line[cur]))
-	{	
+	{
 		if (prm->source.line[cur + 1] && (ft_isspace(prm->source.line[cur + 1])
 				|| ft_strchr(PARSING_STOPPER, prm->source.line[cur + 1])))
 			break ;
@@ -92,12 +93,12 @@ static t_token	get_t_token_2(char *token)
 		return (TK_DINF);
 	if (ft_strncmp(token, ">>", 2) == 0)
 		return (TK_DSUP);
-	if (ft_strncmp(token, "$", 1) == 0)
-		return (TK_DOLLAR);
 	if (ft_strncmp(token, "\'", 1) == 0)
 		return (TK_SQUOTE);
 	if (ft_strncmp(token, "\"", 1) == 0)
 		return (TK_DQUOTE);
+	if (pos_str(token, '$') != -1 && ft_strlen(token) > 1)
+		return (TK_WORD_SUB);
 	return (TK_WORD);
 }
 

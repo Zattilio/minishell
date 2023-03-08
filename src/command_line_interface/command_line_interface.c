@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:30:50 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 21:00:01 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 13:50:27 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	print_minishell_title(void)
 void	readline_new_prompt(char **cmd_buf)
 {
 	if (g_return_value == 0)
-		*cmd_buf = readline("\033[1;32m➜  \033[0;36m\e[1mminishell$\e[0m \033[0m");
+		*cmd_buf = readline("\033[1;32m➜  \033[0;33m\e[1mminishell$\e[0m \033[0m");
 	else
-		*cmd_buf = readline("\033[1;31m➜  \033[0;36m\e[1mminishell$\e[0m \033[0m");
+		*cmd_buf = readline("\033[1;31m➜  \033[0;33m\e[1mminishell$\e[0m \033[0m");
 }
 
 void	printf_new_prompt(void)
 {
 	if (g_return_value == 0)
-		ft_printf("\033[1;32m➜  \033[0;36m\e[1mminishell$\e[0m \033[0m");
+		ft_printf("\033[1;32m➜  \033[0;33m\e[1mminishell$\e[0m \033[0m");
 	else
-		ft_printf("\033[1;31m➜  \033[0;36m\e[1mminishell$\e[0m \033[0m");
+		ft_printf("\033[1;31m➜  \033[0;33m\e[1mminishell$\e[0m \033[0m");
 }

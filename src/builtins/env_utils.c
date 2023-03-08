@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd.c                                      :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 06:52:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:52:32 by jlanza           ###   ########.fr       */
+/*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/08 12:56:41 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
-
-int	execute_cmd(t_pipe *args, int n_cmd)
+void	print_env(t_param *prm)
 {
-	char	**cmd;
-	char	*path_cmd;
-	int		return_value;
+	int	i;
 
-	cmd = args->argv[n_cmd]->cmd;
-	if (cmd == NULL)
-		return (1);
-	return_value = get_path_name(args, &path_cmd, cmd);
-	if (return_value != 0)
-		return (return_value);
-	if (exec_cmd(args, path_cmd, cmd) == -1)
+	i = 0;
+	if (prm->env == NULL)
+		ft_printf("\n");
+	while (prm->env[i])
 	{
-		free(path_cmd);
-		return (command_not_found(cmd, cmd));
+		ft_printf("%s\n", prm->env[i]);
+		i++;
 	}
-	return (6);
+}
+
+void	garbage_env(t_param *prm)
+{
+	int	i;
+
+	i = -1;
+	while (prm->env && prm->env[++i])
+		remove_from_garb(prm, prm->env[i]);
+	remove_from_garb(prm, prm->env);
 }

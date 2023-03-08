@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 21:07:08 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 21:25:08 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 13:11:43 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void	init_signal_parent_during_heredoc(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	handle_sigint_heredoc(int)
+void	handle_sigint_heredoc(int sig)
 {
+	(void)sig;
 	close(0);
 	close(1);
 	g_return_value = 130;

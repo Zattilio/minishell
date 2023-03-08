@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 11:58:20 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 13:58:52 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ static int	ft_argc(t_node *root)
 	return (n + 1);
 }
 
-static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
+static void	init_s_pipe(t_pipe *pipe, t_node *root, t_param *prm)
 {
 	t_node	*right_parent;
 	t_node	*left_child;
 	int		i;
 
 	pipe->argc = ft_argc(root);
-	pipe->env = env;
 	pipe->prm = prm;
+	pipe->root = root;
 	pipe->argv = ft_calloc_gc(prm, prm->source.id,
 			pipe->argc + 1, sizeof(t_node *));
 	right_parent = root;
@@ -71,12 +71,12 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
 	printf("argc = %d\n", root->argc);
 } */
 
-int	exec_pipe(t_param *prm, t_node *root, char *env[]) //
+int	exec_pipe(t_param *prm, t_node *root) //
 {
 	t_pipe	args;
 	int		status;
 
-	init_s_pipe(&args, root, env, prm);
+	init_s_pipe(&args, root, prm);
 	init_pipes(&args, args.fd_list);
 	if (root->token_type == TK_EXEC && root->cmd == NULL)
 	{

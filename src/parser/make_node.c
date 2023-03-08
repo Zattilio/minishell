@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   make_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:46:58 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 16:58:35 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:57:02 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
+#include "../include/minishell.h"
 
 t_node	*make_node(t_param *prm, int id, int token_type, char *token)
 {

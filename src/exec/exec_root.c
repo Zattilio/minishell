@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 08:35:54 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 13:33:55 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/exec.h"
 
-int	exec_root(t_param *prm, t_node *root, char *env[])
+/*int	exec_root(t_param *prm, t_node *root, char *env[])
 {
 	int	pipe_pid;
 
@@ -40,5 +40,21 @@ int	exec_root(t_param *prm, t_node *root, char *env[])
 		else
 			waitpid(pipe_pid, NULL, 0);
 	}
+	return (g_return_value);
+}
+*/
+int	exec_root(t_param *prm, t_node *root)
+{
+	int	pipe_pid;
+
+	init_signal_parent();
+	pipe_pid = fork();
+	if (pipe_pid == 0)
+	{
+		init_signal_parent_during_heredoc();
+		exec_pipe(prm, root);
+	}
+	else
+		waitpid(pipe_pid, NULL, 0);
 	return (g_return_value);
 }

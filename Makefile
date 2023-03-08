@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/07 18:40:19 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/08 13:41:32 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,24 @@ SOURCES =	exec/exec_pipe.c \
 			exec/here_doc.c \
 			command_line_interface/command_line_interface.c \
 			command_line_interface/signal.c \
-			builtins/ft_cd.c \
-			builtins/ft_pwd.c \
-			builtins/ft_exit.c \
-			maxence/alloc_garbage/garbage.c \
-			maxence/alloc_garbage/ft_alloc_gc.c \
-			maxence/builtins/env.c \
-			maxence/lexer/lexer.c \
-			maxence/parser/make_node.c \
-			maxence/parser/parser_utils.c \
-			maxence/parser/parser.c \
-			maxence/utils/print_ast.c \
-			maxence/utils/utils.c \
-			maxence/test_parsing.c \
+			alloc_garbage/ft_alloc_gc.c \
+			alloc_garbage/garbage.c \
+			builtins/echo.c \
+			builtins/env_utils.c \
+			builtins/env.c \
+			builtins/exec_env.c \
+			builtins/exec_builtins.c \
+			lexer/lexer.c \
+			parser/make_node.c \
+			parser/parser_error.c \
+			parser/parser_utils_2.c \
+			parser/parser_utils.c \
+			parser/parser.c \
+			utils/print_ast.c \
+			utils/utils.c \
+			builtins/ft_cd_old.c \
+			builtins/ft_pwd_old.c \
+			builtins/ft_exit_old.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})

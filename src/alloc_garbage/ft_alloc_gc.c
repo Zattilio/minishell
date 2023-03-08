@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_alloc_gc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 13:48:31 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:18:58 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:56:32 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
+#include "../include/minishell.h"
 
 void	*ft_malloc_gc(t_param *prm, int id, size_t size)
 {
@@ -63,7 +63,7 @@ char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len)
 	return (result_str);
 }
 
-char	*ft_strdup_gc(t_param *prm, const char *s)
+char	*ft_strdup_gc(t_param *prm, int id, const char *s)
 {
 	char	*dest;
 	int		i;
@@ -73,7 +73,7 @@ char	*ft_strdup_gc(t_param *prm, const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dest = (char *)ft_malloc_gc(prm, prm->source.id, (len + 1) * sizeof(char));
+	dest = (char *)ft_malloc_gc(prm, id, (len + 1) * sizeof(char));
 	if (dest == NULL)
 		return (NULL);
 	while (s[i])
@@ -83,4 +83,31 @@ char	*ft_strdup_gc(t_param *prm, const char *s)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+char	*ft_strjoin_gc(t_param *prm, int id, char const *s1, char const *s2)
+{
+	char	*result_join;
+	int		i;
+	int		len[2];
+
+	len[0] = 0;
+	len[1] = 0;
+	if (s1)
+		len[0] = ft_strlen(s1);
+	if (s2)
+		len[1] = ft_strlen(s2);
+	result_join = ft_calloc((len[0] + len[1] + 1), sizeof(char));
+	if (result_join == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < len[0])
+		result_join[i] = s1[i];
+	while (i < len[0] + len[1])
+	{
+		result_join[i] = s2[i - len[0]];
+		i++;
+	}
+	garbage_col(prm, id, (void *)result_join);
+	return (result_join);
 }

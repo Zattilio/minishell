@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:29:45 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:17:48 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:56:34 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
+#include "../include/minishell.h"
 
 int	garbage_col(t_param *prm, int id, void *ptr)
 {
@@ -45,6 +45,7 @@ void	empty_all_garbage(t_param *prm)
 		elem_garb = temp->next;
 		free(temp);
 	}
+	prm->garb = NULL;
 }
 
 void	empty_garbage(t_param *prm, int id)

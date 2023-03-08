@@ -22,25 +22,13 @@
 
 typedef struct s_param	t_param;
 typedef struct s_node	t_node;
+typedef struct s_pipe	t_pipe;
+typedef struct s_fd		t_fd;
 
-typedef struct s_fd
-{
-	int	fd[2];
-}				t_fd;
+int		exec_root(t_param *prm, t_node *root);
+int		exec_pipe(t_param *prm, t_node *root);
+int		exec_cmd(t_pipe *args, char *path, char *arg[]);
 
-typedef struct s_pipe
-{
-	int		argc;
-	t_node	**argv;
-	char	**env;
-	t_param	*prm;
-	t_fd	*fd_list;
-	int		*pids;
-}				t_pipe;
-
-
-int		exec_root(t_param *prm, t_node *root, char *env[]);
-int		exec_pipe(t_param *prm, t_node *root, char *env[]);
 
 int		get_path_name(t_pipe *args, char **path_cmd1, char **cmd);
 

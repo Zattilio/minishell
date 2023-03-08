@@ -3,26 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 16:59:54 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:12:53 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*The parser check that the syntax of the user command is valid. It then 
-generates an Abstract Syntax Tree (AST) that will be use for the next step :
-the execution.*/
+#include "../include/minishell.h"
 
-/*Plusieurs approches de parsing ; Top Down Parsing et Bottom up parsing.
- mais aussi Recursive descent parser
- */
+t_node	*parse(t_param *prm, char *line)
+{
+	t_node	*root;
 
-/* quand j'ai une erreur de syntax je renvoie un NULL, mais je l'interprete pas.
-il faudra changer ca par la suite*/
+	(prm->source.id)++;
+	prm->source.line = line;
+	garbage_col(prm, prm->source.id, line);
+	prm->source.cur = 0;
+	prm->source.error = 0;
+	prm->source.line_size = ft_strlen(line);
+	root = parse_pipe(prm);
+	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
+		return (NULL);
+	return (root);
+}
 
-#include "../parsing.h"
-
+/*old ==> a ne plus utiliser*/
 t_node	*parsing(t_param *prm)
 {
 	t_node	*root;
@@ -30,6 +36,7 @@ t_node	*parsing(t_param *prm)
 	root = parse_pipe(prm);
 	if (peek_tk(prm) != TK_EOF)
 		return (NULL);
+	prm->source.cur = 0;
 	return (root);
 }
 
@@ -54,11 +61,13 @@ t_node	*parse_exec(t_param *prm)
 
 	node = NULL;
 	cmd = NULL;
+	if (prm->source.cur == 0 && peek_tk(prm) == TK_EOF)
+		return (make_exec_node(prm, add_cmd_arg(prm, cmd, "")));
 	if (is_redir(peek_tk(prm)))
 		node = parse_redir(prm);
 	while (is_word(peek_tk(prm)) || is_redir(peek_tk(prm)))
 	{
-		if (is_word(peek_tk(prm)))/*plutot que d'envoyer le get token, il faut envoyer le mot qui va bien*/
+		if (is_word(peek_tk(prm)))
 		{
 			arg = get_word(prm);
 			cmd = add_cmd_arg(prm, cmd, arg);
@@ -74,20 +83,19 @@ t_node	*parse_redir(t_param *prm)
 {
 	t_node	*node;
 	t_token	token;
+	t_token	peek;
 	char	*file_name;
 
 	token = get_t_token(get_token(prm));
 	file_name = NULL;
-	if (!(peek_tk(prm) == TK_WORD || peek_tk(prm) == TK_SQUOTE
-			|| peek_tk(prm) == TK_DQUOTE))
+	peek = peek_tk(prm);
+	if (!(peek == TK_WORD || peek == TK_SQUOTE
+			|| peek == TK_DQUOTE || peek == TK_WORD_SUB))
 		return (NULL);
-	file_name = get_word(prm);
-	/*if (peek_tk(prm) == TK_WORD)
-		file_name = get_token(prm);
-	else if (peek_tk(prm) == TK_SQUOTE)
-		file_name = get_word_squote(prm);
-	else if (peek_tk(prm) == TK_DQUOTE)
-		file_name = get_word_dquote(prm);*/
+	if (token == TK_DINF)
+		file_name = get_endheredoc(prm);
+	else
+		file_name = get_word(prm);
 	node = make_redir_node(prm, NULL, token, file_name);
 	return (node);
 }

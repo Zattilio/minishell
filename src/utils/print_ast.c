@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/03 12:21:22 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 13:13:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parsing.h"
+#include "../include/minishell.h"
 
 static char	*get_tk_str_2(int tk_type)
 {
@@ -18,8 +18,6 @@ static char	*get_tk_str_2(int tk_type)
 		return ("DOUBLE_INF");
 	if (tk_type == TK_DSUP)
 		return ("DOUBLE_SUP");
-	if (tk_type == TK_DOLLAR)
-		return ("DOLLAR");
 	if (tk_type == TK_SQUOTE)
 		return ("SINGLE QUOTE");
 	if (tk_type == TK_DQUOTE)
@@ -35,6 +33,8 @@ char	*get_tk_str(int tk_type)
 {
 	if (tk_type == TK_WORD)
 		return ("WORD");
+	if (tk_type == TK_WORD_SUB)
+		return ("TK_WORD_SUB");
 	if (tk_type == TK_PIPE)
 		return ("PIPE");
 	if (tk_type == TK_INF)
@@ -64,25 +64,32 @@ static void	print_node_suite(t_node *root, int space)
 	ft_printf("\n");
 }
 
-static void	print2dutil(t_node *root, int space)
+static void	print2dutil(t_param *prm, t_node *root, int space)
 {
 	if (root == NULL)
 		return ;
 	space += 15;
-	print2dutil(root->right, space);
+	print2dutil(prm, root->right, space);
 	print_space(space);
 	ft_printf("|--------------|\n");
 	print_space(space);
 	ft_printf("| type  : %s\n", get_tk_str(root->token_type));
+	print_space(space);
+	ft_printf("| token  : %s\n", root->token);
+	if (root->token_type == TK_WORD_SUB)
+	{
+		print_space(space);
+		ft_printf("| sub  : %s\n", substitute_word(prm, root->token));
+	}
 	print_node_suite(root, space);
 	print_space(space);
 	ft_printf("|--------------|\n");
-	print2dutil(root->left, space);
+	print2dutil(prm, root->left, space);
 }
 
-void	print_ast(t_node *root)
+void	print_ast(t_param *prm, t_node *root)
 {
 	if (root == NULL)
 		return ;
-	print2dutil(root, 0);
+	print2dutil(prm, root, 0);
 }
