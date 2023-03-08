@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 18:24:42 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:38:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,21 @@ void	garbage_env(t_param *prm)
 	while (prm->env && prm->env[++i])
 		remove_from_garb(prm, prm->env[i]);
 	remove_from_garb(prm, prm->env);
+}
+
+int	clone_env(t_param *prm, char **env)
+{
+	int	i;
+
+	prm->env = ft_calloc_gc(prm, 0, get_nb_str(env) + 1, sizeof(char *));
+	if (prm->env == NULL)
+		return (1);
+	i = -1;
+	while (env && env[++i])
+	{
+		(prm->env)[i] = ft_strdup_gc(prm, 0, env[i]);
+		if ((prm->env)[i] == NULL)
+			return (1);
+	}
+	return (0);
 }

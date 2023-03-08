@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:06:29 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 14:48:41 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:38:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	clone_env(t_param *prm, char **env)
-{
-	int	i;
-
-	prm->env = ft_calloc_gc(prm, 0, get_nb_str(env) + 1, sizeof(char *));
-	if (prm->env == NULL)
-		return (1);
-	i = -1;
-	while (env && env[++i])
-	{
-		(prm->env)[i] = ft_strdup_gc(prm, 0, env[i]);
-		if ((prm->env)[i] == NULL)
-			return (1);
-	}
-	return (0);
-}
 
 char	*get_last_return(t_param *prm)
 {

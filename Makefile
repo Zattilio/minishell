@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
+#    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/08 17:51:02 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/08 19:34:05 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,8 @@ SOURCES =	exec/exec_pipe.c \
 			exec/error_cmd.c \
 			exec/ft_wait.c \
 			exec/init.c \
-			exec/signal_exec.c \
 			exec/here_doc.c \
 			command_line_interface/command_line_interface.c \
-			command_line_interface/signal.c \
 			alloc_garbage/ft_alloc_gc.c \
 			alloc_garbage/garbage.c \
 			builtins/echo.c \
@@ -50,6 +48,12 @@ SOURCES =	exec/exec_pipe.c \
 			builtins/exec_cd.c \
 			builtins/exec_pwd.c \
 			builtins/exec_exit.c \
+			signals/signal_child.c \
+			signals/signal_command_line_interface.c \
+			signals/signal_heredoc.c \
+			signals/signal_parent.c \
+			signals/signal_parent_during_exec.c \
+			signals/signal_parent_during_heredoc.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})
@@ -128,7 +132,7 @@ avatar:
 	@echo "		⠀⠀⠀⠀⠙⠿⢿⡿⠿⣯⣤⣴⣾⣿⣧⠀⠀⠀⢠⠁⠀⢸⠀⠀⡟⣿⣦⣀⠀⠀"
 	@echo "		⠀⠀⠀⠀⠀⠀⠀⡉⠀⠀⢙⢉⣝⣉⠙⠀⠀⠀⣆⣀⣀⣠⣀⣼⡷⠤⠽⠛⠛⠃"
 	@echo "		⠀⠀⠀⠀⠀⠀⠘⠛⠛⠛⠊⠈⠉⠉⠿⢷⣿⠾⠿⠛⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀\n"
-	
+
 .PHONY: all clean fclean re
 
 -include $(DEPS)

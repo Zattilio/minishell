@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:16:15 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:43:28 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int		exec_echo(char **cmd);
 /*	builtins -> env_utils.c	*/
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
+int		clone_env(t_param *prm, char **env);
 
 /*	builtins -> env.c	*/
-int		clone_env(t_param *prm, char **env);
 char	*get_env_var(t_param *prm, char *name);
 int		export_env(t_param *prm, char *str);
 int		pos_in_env(t_param *prm, char *str);
@@ -87,9 +87,6 @@ int		exec_pwd(void);
 void	print_minishell_title(void);
 void	readline_new_prompt(char **cmd_buf);
 void	printf_new_prompt(void);
-
-/* command_line_interface -> signal.c */
-void	init_signal(void);
 
 /*	excec	*/
 /*	excec -> close_fd.c	*/
@@ -130,9 +127,17 @@ void	ft_wait(t_pipe *args, int *pids);
 char	*ft_strjoin3(char *str1, char *str2, char *str3);
 int		get_path_name(t_pipe *args, char **path_cmd, char **cmd);
 
+/*	excec -> here_doc_utils.c	*/
+void	ft_lstprint(t_list *lst, char *stop);
+void	ft_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
+void	fork_heredoc(t_pipe *args, t_node *node, int i);
+
 /*	excec -> here_doc.c	*/
 void	fake_heredoc(t_node *node);
 int		is_there_another_heredoc(t_node *node);
+int		redirection_heredoc(t_pipe *args, t_node *redir,
+			int i, t_fd *fd_list);
+void	clean_heredoc(t_pipe *args, t_fd *fd_list);
 int		init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list);
 
 /*	excec -> init.c	*/
@@ -141,14 +146,6 @@ void	init_pipes(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> is_parent_process.c	*/
 int		is_parent_process(int *pids, int n);
-
-/*	excec -> signal_exec.c	*/
-void	init_signal_parent(void);
-void	init_signal_parent_during_exec(void);
-void	init_signal_parent_during_heredoc(void);
-void	handle_sigint_heredoc(int sig);
-void	init_signal_heredoc(void);
-void	init_signal_child(void);
 
 /* lexer	*/
 /* lexer -> lexer.c	*/
@@ -185,6 +182,26 @@ void	add_last_left(t_node **root, t_node *node);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*substitute_word(t_param *prm, char	*word);
 char	*get_space(t_param *prm);
+
+/*	signals	*/
+/*	signals -> signal_child.c	*/
+void	init_signal_child(void);
+
+/*	signals -> signal_command_line_interface.c	*/
+void	init_signal(void);
+
+/*	signals -> signal_heredoc.c	*/
+void	init_signal_heredoc(void);
+
+/*	signals -> signal_parent_during_exec.c	*/
+void	init_signal_parent_during_exec(void);
+
+/*	signals -> signal_parent_during_heredoc.c	*/
+void	init_signal_parent_during_heredoc(void);
+
+/*	signals -> signal_parent.c	*/
+
+void	init_signal_parent(void);
 
 /*	utils	*/
 /*	utils -> print_ast.c	*/

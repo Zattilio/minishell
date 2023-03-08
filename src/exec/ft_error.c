@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:19 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:04:17 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:16:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ int	ft_error(int n, t_pipe *args, t_fd *fd_list)
 	empty_garbage(args->prm, -1);
 	exit (n);
 }
-

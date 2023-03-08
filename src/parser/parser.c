@@ -6,15 +6,15 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 18:35:42 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:13:36 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_node    *parse(t_param *prm, char *line)
+t_node	*parse(t_param *prm, char *line)
 {
-    t_node    *root;
+	t_node	*root;
 
 	if (prm->source.id != 0)
 		empty_garbage(prm, prm->source.id);

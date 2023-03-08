@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:58:32 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:10:34 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
 	char			**env;
-	char			do_;
 }					t_param;
 
 typedef struct s_fd

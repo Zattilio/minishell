@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:14:34 by jlanza           ###   ########.fr       */
+/*   Created: 2023/03/08 19:24:21 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/08 19:24:46 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+static void	handle_sigint_parent(int sig)
 {
-	char	*working_directory;
+	g_return_value = 130;
+	(void)sig;
+}
 
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
-	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
-	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
+static void	handle_sigquit_parent(int sig)
+{
+	g_return_value = 131;
+	(void)sig;
+}
+
+void	init_signal_parent(void)
+{
+	signal(SIGINT, &handle_sigint_parent);
+	signal(SIGQUIT, &handle_sigquit_parent);
 }

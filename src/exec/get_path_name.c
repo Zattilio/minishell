@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:31:27 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:19:48 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ int	get_path_name(t_pipe *args, char **path_cmd, char **cmd)
 					args->prm->source.id, cmd[0]), path_tab, cmd));
 	return (command_not_found(path_tab, cmd));
 }
-

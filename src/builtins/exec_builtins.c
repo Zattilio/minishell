@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:43:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:17:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:14:08 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	exec_builtins(t_pipe *pipe, char *arg[])
 {
 	int	ret_val;
+
 	ret_val = 0;
 	if (!ft_strcmp(arg[0], "pwd"))
 		exec_pwd();
@@ -52,11 +53,12 @@ int	check_is_builtin(char *cmd)
 
 int	exec_cmd(t_pipe *pipe, char *path, char *arg[])
 {
-	if (check_exec_builtins(arg[0]))
+	if (check_is_builtin(arg[0]) && check_exec_builtins(arg[0]))
 	{
 		exec_builtins(pipe, arg);
 		return (0);
 	}
-	else
+	else if (!check_is_builtin(arg[0]))
 		return (execve(path, arg, pipe->prm->env));
+	return (0);
 }

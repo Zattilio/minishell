@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:52:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:00:37 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:19:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ int	error_ft_strjoin3(char **path_tab, char **cmd)
 	return (7);
 	(void)cmd;
 }
-
