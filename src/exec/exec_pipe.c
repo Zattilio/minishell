@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 11:52:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:58:20 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,22 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[]) //
 	int		status;
 
 	init_s_pipe(&args, root, env, prm);
-	init_pipes(&args, args.pids, args.fd_list);
+	init_pipes(&args, args.fd_list);
 	if (root->token_type == TK_EXEC && root->cmd == NULL)
 	{
 		g_return_value = 0;
 		return (0);
 	}
-	init_fork(&args, args.pids, args.fd_list);
+	init_fork_heredoc(&args, args.pids, args.fd_list);
+	init_signal_parent_during_exec();
 	execute_all_cmds(&args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
 	waitpid(args.pids[args.argc], &status, 0);
-	free(args.pids);
-	free(args.fd_list);
 	if (WIFSIGNALED(status))
 		g_return_value = WTERMSIG(status);
 	else if (WIFEXITED(status))
 		g_return_value = WEXITSTATUS(status);
-	return (g_return_value);
+	empty_garbage(prm, -1);
+	exit (g_return_value);
 }

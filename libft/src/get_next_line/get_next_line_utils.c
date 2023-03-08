@@ -5,113 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 17:42:46 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/13 15:39:39 by jlanza           ###   ########.fr       */
+/*   Created: 2022/11/18 10:23:16 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/07 00:56:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	pos_end_line(char *s)
+void	ft_lstadd_back_gnl(t_list_sto **lst, void *content)
 {
-	int	i;
+	t_list_sto	*new;
+	t_list_sto	*elem;
 
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		return (i);
-	return (-1);
+	new = malloc(sizeof(t_list_sto));
+	if (!new)
+		return ;
+	new->next = NULL;
+	new->content = content;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	elem = *lst;
+	while (elem->next)
+	{
+		elem = elem->next;
+	}
+	elem->next = new;
 }
 
-char	*get_begin(char *s, int pos)
+size_t	ft_line_len(t_list_sto *storage)
 {
-	char	*begin;
-	int		i;
-
-	if (s == NULL)
-		return (NULL);
-	if (pos == -1)
-		return (s);
-	begin = malloc (sizeof (*begin) * (2 + pos));
-	if (begin == NULL)
-		return (NULL);
-	i = 0;
-	while (i <= pos)
-	{
-		begin[i] = s[i];
-		i++;
-	}
-	begin[i] = '\0';
-	free(s);
-	return (begin);
-}
-
-char	*get_end(char *src, char *dst, int pos)
-{
-	int		len;
-	int		i;
-
-	if (src == NULL)
-		return (NULL);
-	if (pos == -1)
-	{
-		dst[0] = '\0';
-		return (dst);
-	}
-	pos++;
-	len = 0;
-	while (src[pos + len])
-		len++;
-	i = 0;
-	while (src[pos + i])
-	{
-		dst[i] = src[pos + i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-int	ft_strlen2(const char *s)
-{
+	size_t		len_line;
 	int			i;
-	char		*str;
+	t_list_sto	*elem;
 
-	str = (char *)s;
-	if (s == NULL)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	len_line = 0;
+	elem = storage;
+	while (elem)
+	{
+		i = -1;
+		while ((elem->content)[++i] && (elem->content)[i] != '\n')
+			len_line++;
+		if ((elem->content)[i] && (elem->content)[i] == '\n')
+			len_line++;
+		elem = elem->next;
+	}
+	return (len_line);
 }
 
-char	*ft_strjoin_gnl(char *s1, char const *s2)
+void	clear_all_memory_gnl(t_list_sto **storage)
 {
-	char	*new;
-	int		i;
-	int		len1;
-	int		len2;
+	t_list_sto	*elem;
+	t_list_sto	*next;
 
-	len1 = ft_strlen2((char *)s1);
-	len2 = ft_strlen2((char *)s2);
-	new = malloc(sizeof(*new) * (len1 + len2 + 1));
-	if (new == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len1)
+	if (*storage == NULL)
+		return ;
+	elem = *storage;
+	while (elem)
 	{
-		new[i] = s1[i];
-		i++;
+		next = elem->next;
+		free(elem->content);
+		free(elem);
+		elem = next;
 	}
-	while (i < len1 + len2)
-	{
-		new[i] = s2[i - len1];
-		i++;
-	}
-	new[i] = '\0';
-	if (s1 != NULL)
-		free(s1);
-	return (new);
+	*storage = NULL;
 }

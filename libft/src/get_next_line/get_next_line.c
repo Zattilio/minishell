@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/28 11:15:23 by jlanza            #+#    #+#             */
-/*   Updated: 2023/01/13 15:40:53 by jlanza           ###   ########.fr       */
+/*   Created: 2022/11/18 10:22:18 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/07 00:56:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,135 @@
 
 char	*get_next_line(int fd)
 {
-	int			ret;
-	char		buf[1024][BUFFER_SIZE + 1];
-	char		*next_line;
-	static char	stash[1024][BUFFER_SIZE + 1];
+	static t_list_sto	*st[1024] = {NULL};
+	char				*buffer;
+	char				*next_line;
+	int					c;
+	int					e;
 
-	ret = 1;
-	next_line = ft_strjoin_gnl(NULL, stash[fd]);
-	if (BUFFER_SIZE <= 0 || next_line == NULL)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1023)
 		return (NULL);
-	if (stash[fd][0] == -1)
-		return (free(next_line), NULL);
-	while (pos_end_line(next_line) == -1 && ret != 0)
+	c = BUFFER_SIZE;
+	e = 0;
+	while (line_to_make_gnl(st[fd]) == 0 && c > 0 && e == 0)
 	{
-		ret = read (fd, buf[fd], BUFFER_SIZE);
-		if (ret == -1 || (ret == 0 && next_line[0] == '\0'))
-			return (free(next_line), NULL);
-		buf[fd][ret] = '\0';
-		next_line = ft_strjoin_gnl(next_line, buf[fd]);
+		buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+		if (buffer == NULL)
+			e = 1;
+		c = read_store_gnl(&(st[fd]), buffer, fd, &e);
+		free(buffer);
 	}
-	get_end(next_line, stash[fd], pos_end_line(next_line));
-	next_line = get_begin(next_line, pos_end_line(next_line));
-	if (ret == 0)
-		stash[fd][0] = -1;
+	next_line = make_next_line(&(st[fd]), &e);
+	clean_storage_gnl(&(st[fd]));
+	if (e != 0 || (st[fd] != NULL && (c == 0 || !ft_strlen(st[fd]->content))))
+		clear_all_memory_gnl(&(st[fd]));
+	if (e != 0)
+		return (NULL);
 	return (next_line);
 }
 
-/*int	ft_strlen(char *s)
+int	read_store_gnl(t_list_sto **storage, char *buffer, int fd, int *error)
 {
-	int	i;
+	int		char_read;
+	char	*content;
+	int		i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-void	ft_putstr(char *s)
-{
-	write(1, s, ft_strlen(s));
-}
-
-int	main(void)
-{
-	int		fd;
-	char	*s;
-
-	s = "";
-	fd = 0;
-	fd = open("./Makefile", O_RDONLY);
-	if (fd == -1)
-		return (ft_putstr("open fail"), 1);
-	int i = 0;
-	while (s != 0)
+	char_read = read(fd, buffer, BUFFER_SIZE);
+	if (char_read > 0)
 	{
-		s = get_next_line(fd);
-		if (s == NULL)
-			return (ft_putstr("\nERROR\n"), 0);
-		ft_putstr(s);
-		free(s);
+		buffer[char_read] = '\0';
+		content = (char *)malloc((char_read + 1) * sizeof(char));
+		if (content == NULL)
+			*error = 1;
+		else
+		{
+			i = -1;
+			while (buffer[++i])
+				content[i] = buffer[i];
+			content[i] = '\0';
+			ft_lstadd_back_gnl(storage, content);
+		}
+	}
+	if (char_read == -1)
+		*error = 1;
+	return (char_read);
+}
+
+int	line_to_make_gnl(t_list_sto *storage)
+{
+	t_list_sto	*elem;
+	int			i;
+
+	elem = storage;
+	i = 0;
+	while (elem)
+	{
+		if (elem->next == NULL)
+			break ;
+		elem = elem->next;
+	}
+	while (elem && (elem->content)[i])
+	{
+		if ((elem->content)[i] == '\n')
+			return (1);
 		i++;
 	}
-
-	if (close(fd) == -1)
-		return (ft_putstr("close fail"), 1);
 	return (0);
-}*/
+}
+
+char	*make_next_line(t_list_sto **storage, int *error)
+{
+	int			j;
+	int			i;
+	t_list_sto	*elem;
+	char		*next_line;
+
+	if (*storage == NULL || ft_line_len(*storage) == 0)
+		return (NULL);
+	next_line = (char *)ft_calloc(ft_line_len(*storage) + 1, sizeof(char));
+	if (next_line == NULL)
+	{
+		*error = 1;
+		return (NULL);
+	}
+	j = -1;
+	elem = *storage;
+	while (elem)
+	{
+		i = -1;
+		while ((elem->content)[++i] && (elem->content)[i] != '\n')
+			next_line[++j] = (elem->content)[i];
+		if ((elem->content)[i] && (elem->content)[i] == '\n')
+			next_line[++j] = '\n';
+		elem = elem->next;
+	}
+	return (next_line);
+}
+
+void	clean_storage_gnl(t_list_sto **storage)
+{
+	t_list_sto	*elem;
+	t_list_sto	*next;
+	int			i;
+	int			j;
+
+	if (*storage == NULL)
+		return ;
+	elem = *storage;
+	while (elem->next)
+	{
+		next = elem->next;
+		free(elem->content);
+		free(elem);
+		elem = next;
+	}
+	i = 0;
+	while ((elem->content)[i] && (elem->content)[i] != '\n')
+		i++;
+	j = -1;
+	while (++j < (int)ft_strlen(elem->content) - 1 - i
+		&& (elem->content)[i + 1 + j])
+		(elem->content)[j] = (elem->content)[i + 1 + j];
+	(elem->content)[j] = '\0';
+	*storage = elem;
+}
