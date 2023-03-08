@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:31:32 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:30:41 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef enum e_token {
 	TK_SUP,
 	TK_DINF,
 	TK_DSUP,
-	TK_DOLLAR,
 	TK_SQUOTE,
 	TK_DQUOTE,
 	TK_EOF

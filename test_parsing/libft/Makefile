@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:11:32 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/01 15:38:05 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/08 10:37:44 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,9 @@ MY_SOURCES = ft_atoi.c \
 			ft_split.c \
 			ft_power.c \
 			ft_itoa.c \
+			ft_xtoa.c \
+			ft_utoa.c \
+			ft_ptoa.c \
 			ft_strmapi.c \
 			ft_striteri.c \
 			ft_putchar_fd.c\

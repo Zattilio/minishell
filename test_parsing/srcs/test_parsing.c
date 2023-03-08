@@ -6,11 +6,24 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:29:46 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:31:00 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 11:27:14 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+/*
+int	main(void)
+{
+	int a;
+
+	a = 0;
+	ft_printf("%p", &a);
+	printf("\n");
+	printf("%s", ft_ptoa((void *)&a));
+	printf("\n");
+	return 0;
+}
+*/
 
 int	main(int argc, char **argv, char **env)
 {
