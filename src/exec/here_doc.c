@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:06:28 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 18:31:55 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int	redirection_heredoc(t_pipe *args, t_node *redir,
 int	init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	while (i < args->argc && is_parent_process(pids, i))
@@ -113,7 +114,15 @@ int	init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list)
 			ft_error(0, args, fd_list);
 		}
 		else
-			waitpid(pids[i], NULL, 0);
+		{
+			waitpid(pids[i], &status, 0);
+			if (WIFSIGNALED(status) && WTERMSIG(status) == 131)
+			{
+				close_fd(args, fd_list);
+				empty_garbage(args->prm, -1);
+				exit (131);
+			}
+		}
 		i++;
 	}
 	return (0);

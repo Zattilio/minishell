@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 21:07:08 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:09:07 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 18:32:33 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void	handle_sigint_parent_during_heredoc(int sig)
 {
 	ft_printf("^C\n");
 	g_return_value = 130;
-	close(0);
-	exit(130);
 	(void)sig;
 }
 
@@ -73,7 +71,6 @@ void	handle_sigint_heredoc(int sig)
 	close(0);
 	close(1);
 	g_return_value = 130;
-	//exit(130);
 }
 
 void	init_signal_heredoc(void)

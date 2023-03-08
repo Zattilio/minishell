@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 14:59:37 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 18:23:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ int	main(int argc, char *argv[], char *env[])
 		init_signal();
 		readline_new_prompt(&cmd);
 		if (cmd == NULL)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		{
 			ft_printf("exit\n");
 			break ;

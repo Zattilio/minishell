@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:40:40 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 17:43:59 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/08 18:30:46 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	exec_cd(t_param *prm, char *arg[])
 {
 	char	*new_path;
-	
+
 	if (get_nb_str(arg) != 2)
 	{
 		ft_printf("minishell: cd: wrong number of arguments\n");
