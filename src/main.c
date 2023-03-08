@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:11:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 19:47:11 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 unsigned char	g_return_value = 0;
 
-/* ne plus trim les espaces */
 /*attention, ne pas utiliser l'enve du main*/
 /*
 int	main(int argc, char **argv, char **env)
