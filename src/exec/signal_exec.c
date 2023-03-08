@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 21:07:08 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:11:43 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:09:07 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 static void	handle_sigint_parent(int sig)
 {

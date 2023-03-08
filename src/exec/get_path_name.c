@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:35:01 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:05:39 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 static int	is_path(char *str)
 {
@@ -83,11 +83,11 @@ int	get_path_name(t_pipe *args, char **path_cmd, char **cmd)
 	while (path_tab[i] != NULL)
 	{
 		path = ft_strjoin3(path_tab[i], "/", cmd[0]);
+		garbage_col(args->prm, args->prm->source.id, path);
 		if (path == NULL)
 			return (error_ft_strjoin3(path_tab, cmd));
 		if (!access(path, F_OK))
 			return (test_exec_rights(path_cmd, path, path_tab, cmd));
-		free(path);
 		i++;
 	}
 	if (!access(cmd[0], F_OK))

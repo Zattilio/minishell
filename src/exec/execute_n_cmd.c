@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_n_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/07 19:00:45 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:03:06 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 /*
 int	execute_first_cmd(t_pipe *args, t_fd *fd_list)

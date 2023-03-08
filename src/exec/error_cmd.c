@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:52:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 16:39:49 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:00:37 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 int	permission_denied(char **cmd)
 {

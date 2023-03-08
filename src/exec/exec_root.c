@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_root.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:33:55 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:02:45 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 /*int	exec_root(t_param *prm, t_node *root, char *env[])
 {
@@ -56,5 +56,6 @@ int	exec_root(t_param *prm, t_node *root)
 	}
 	else
 		waitpid(pipe_pid, NULL, 0);
+	//exec cd exit, export et unset, si on a pas de pipe et que c'est la fonction a faire. 
 	return (g_return_value);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:56:41 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 15:14:21 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	print_env(t_param *prm)
+int	print_env(t_param *prm)
 {
 	int	i;
 
@@ -24,6 +24,7 @@ void	print_env(t_param *prm)
 		ft_printf("%s\n", prm->env[i]);
 		i++;
 	}
+	return (0);
 }
 
 void	garbage_env(t_param *prm)

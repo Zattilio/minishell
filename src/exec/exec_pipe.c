@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:58:52 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:01:29 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
 #include "../include/minishell.h"
 
 static int	ft_argc(t_node *root)
@@ -71,7 +70,7 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, t_param *prm)
 	printf("argc = %d\n", root->argc);
 } */
 
-int	exec_pipe(t_param *prm, t_node *root) //
+int	exec_pipe(t_param *prm, t_node *root)
 {
 	t_pipe	args;
 	int		status;

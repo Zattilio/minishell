@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   exec_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 13:55:58 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/01/30 15:35:20 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/08 17:55:54 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	exec_pwd(void)
 {
-	if (write(fd, s, ft_strlen(s)) == -1)
-		return ;
+	char	*working_directory;
+
+	working_directory = getcwd(NULL, 0);
+	if (working_directory == NULL)
+	{
+		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
+		return (1);
+	}
+	ft_printf("%s\n", working_directory);
+	free(working_directory);
+	return (0);	
 }

@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   exec_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:41:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2022/12/15 14:43:16 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/01 04:01:22 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/08 18:17:40 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+int	exec_exit(t_param *prm, char *arg[])
 {
-	int				i;
-	unsigned char	uc;
+	int	i;
 
+	prm->do_ = 0;
 	i = 0;
-	uc = (unsigned char)c;
-	while (s[i])
+	if (!ft_isint(arg[1]))
 	{
-		if (s[i] == uc)
-			return ((char *)s + i);
-		i++;
+		arg[1][i] = '\0';
+		ft_printf("exit\nminishell: exit: %s: numeric argument required\n", arg[1]);
+		g_return_value = 2;
 	}
-	if (c == 0)
-		return ((char *)s + i);
-	return (NULL);
+	else if (arg[1][i] == ' ')
+	{
+		ft_printf("exit\nminishell: exit: too many arguments\n");
+		g_return_value = 1;
+	}
+	else
+		g_return_value = ft_atoi(arg[1]);
+	return (0);
 }

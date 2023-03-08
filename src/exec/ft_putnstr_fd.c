@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnstr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:42:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/04 16:36:13 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:04:59 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../include/minishell.h"
 
 void	ft_put2str_fd(char *s1, char *s2, int fd)
 {

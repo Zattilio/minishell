@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:06:29 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:56:44 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 14:48:41 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ int	clone_env(t_param *prm, char **env)
 	return (0);
 }
 
+char	*get_last_return(t_param *prm)
+{
+	char	*result;
+
+	result = ft_itoa((int)g_return_value);
+	if (result == NULL)
+		return ("");
+	garbage_col(prm, prm->source.id, result);
+	return (result);
+}
+
 char	*get_env_var(t_param *prm, char *name)
 {
 	int		i;
@@ -37,6 +48,8 @@ char	*get_env_var(t_param *prm, char *name)
 	size_t	pos;
 
 	i = 0;
+	if (ft_strcmp(name, "?") == 0)
+		return (get_last_return(prm));
 	len_name = ft_strlen(name);
 	while (prm->env && prm->env[i])
 	{

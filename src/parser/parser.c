@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 13:12:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 16:19:28 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_node	*parse(t_param *prm, char *line)
+t_node    *parse(t_param *prm, char *line)
 {
-	t_node	*root;
+    t_node    *root;
 
-	(prm->source.id)++;
-	prm->source.line = line;
-	garbage_col(prm, prm->source.id, line);
-	prm->source.cur = 0;
-	prm->source.error = 0;
-	prm->source.line_size = ft_strlen(line);
-	root = parse_pipe(prm);
-	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
-		return (NULL);
-	return (root);
+	if (prm->source.id != 0)
+	    empty_garbage(prm, prm->source.id);
+    (prm->source.id)++;
+    prm->source.line = line;
+    garbage_col(prm, prm->source.id, line);
+    prm->source.cur = 0;
+    prm->source.error = 0;
+    prm->source.line_size = ft_strlen(line);
+    if (peek_tk(prm) == TK_EOF)
+        return (NULL);
+    root = parse_pipe(prm);
+    if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
+        return (NULL);
+    return (root);
 }
 
 /*old ==> a ne plus utiliser*/
@@ -70,6 +74,8 @@ t_node	*parse_exec(t_param *prm)
 		if (is_word(peek_tk(prm)))
 		{
 			arg = get_word(prm);
+			if (arg == NULL)
+				return (NULL);
 			cmd = add_cmd_arg(prm, cmd, arg);
 		}
 		else

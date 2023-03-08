@@ -3,38 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:43:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 13:53:11 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 18:17:11 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	exec_builtins(char *arg[], char *env[])
+void	exec_builtins(t_pipe *pipe, char *arg[])
 {
-/* 	if (!ft_strcmp(arg[0], "cd"))
-		cd(arg, env);
-	if (!ft_strcmp(arg[0], "exit"))
-		ft_exit(arg, env);
+	int	ret_val;
+	ret_val = 0;
 	if (!ft_strcmp(arg[0], "pwd"))
-		pwd(arg, env);
+		exec_pwd();
 	if (!ft_strcmp(arg[0], "echo"))
-
-	if (!ft_strcmp(arg[0], "export"))
-
-	if (!ft_strcmp(arg[0], "unset"))
-
+		ret_val = exec_echo(arg);
 	if (!ft_strcmp(arg[0], "env"))
-
-	return (-1); */
-	(void)arg;
-	(void)env;
-	return (0);
+		ret_val = exec_env(pipe->prm, arg);
+	empty_garbage(pipe->prm, -1);
+	exit(ret_val);
 }
 
-static int	check_builtins(char *cmd)
+static int	check_exec_builtins(char *cmd)
+{
+	if (!ft_strcmp(cmd, "echo")
+		|| !ft_strcmp(cmd, "pwd")
+		|| !ft_strcmp(cmd, "env"))
+		return (1);
+	else
+		return (0);
+}
+
+int	check_is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo")
 		|| !ft_strcmp(cmd, "cd")
@@ -50,8 +52,11 @@ static int	check_builtins(char *cmd)
 
 int	exec_cmd(t_pipe *pipe, char *path, char *arg[])
 {
-	if (check_builtins(arg[0]))
-		return (exec_builtins(arg, pipe->prm->env));
+	if (check_exec_builtins(arg[0]))
+	{
+		exec_builtins(pipe, arg);
+		return (0);
+	}
 	else
 		return (execve(path, arg, pipe->prm->env));
 }
