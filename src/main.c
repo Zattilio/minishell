@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 14:01:39 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 16:12:33 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	main(int argc, char *argv[], char *env[])
 		init_signal();
 		readline_new_prompt(&cmd);
 		if (cmd == NULL)
-			return (ft_printf("exit\n"), 0);
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		if (ft_strlen(cmd) > 0)
 			add_history(cmd);
 		root = parse(&prm, cmd);

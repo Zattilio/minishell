@@ -6,13 +6,13 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:56:41 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:48:22 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	print_env(t_param *prm)
+int	print_env(t_param *prm)
 {
 	int	i;
 

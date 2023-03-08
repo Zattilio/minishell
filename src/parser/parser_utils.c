@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:50:05 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:57:11 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 14:37:56 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_word_dquote(t_param *prm, t_bool sub)
 	}
 	if (peek_tk(prm) == TK_EOF)
 	{
-		prm->source.cur = ERR_DQUOTE_CLOSE;
+		prm->source.error = ERR_DQUOTE_CLOSE;
 		return (NULL);
 	}
 	word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
