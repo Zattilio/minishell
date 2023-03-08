@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:37:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/06 15:50:12 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:51:58 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_source {
 typedef struct s_param {
 	t_source		source;
 	t_garb			*garb;
-	char			***env;
+	char			**env;
 }					t_param;
 
 /*	alloc_garbage -> ft_alloc_gc.c */

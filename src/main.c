@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 15:26:32 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:49:55 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ unsigned char	g_return_value = 0;
 // 	(void)env;
 // 	return (g_return_value);
 // }
-
+/* ne plus trim les espaces */
 /*attention, ne pas utiliser l'enve du main*/
 int	main(int argc, char *argv[], char *env[])
 {
 	char	do_;
-	char	*cmd_buf;
 	char	*cmd;
 	t_param	prm;
 	t_node	*root;
@@ -61,29 +60,28 @@ int	main(int argc, char *argv[], char *env[])
 	if (argc != 1)
 		return (ft_printf_fd(2, "minishell: too many arguments"), 1);
 	ft_memset(&prm, 0, sizeof(t_param));
+	//clone env
 	print_minishell_title();
 	do_ = 1;
 	while (do_)
 	{
 		init_signal();
-		prm.source.cur = 0;
-		readline_new_prompt(&cmd_buf);
-		if (cmd_buf == NULL)
+		prm.source.cur = 0; // a suppr
+		readline_new_prompt(&cmd);
+		if (cmd == NULL)
 			return (ft_printf("exit\n"), 0);
-		cmd = ft_strtrim(cmd_buf, " ");
-		if (ft_strlen(cmd) > 0 && cmd_buf[0] != ' ')
+		if (ft_strlen(cmd) > 0)
 			add_history(cmd);
-		free(cmd_buf);
 
-		prm.source.line = cmd;
-		prm.source.line_size = ft_strlen(cmd);
-		garbage_col(&prm, prm.source.id, cmd);
+		prm.source.line = cmd;// a suppr
+		prm.source.line_size = ft_strlen(cmd); // a suppr
+		garbage_col(&prm, prm.source.id, cmd); // a suppr
 
-		root = parsing(&prm);
-		exec_root(&prm, root, env);
+		root = parsing(&prm); // a transformer en parse
+		if (root != NULL)
+			exec_root(&prm, root, env);
 
-		empty_garbage(&prm, prm.source.id);
-		(prm.source.id)++;
+		(prm.source.id)++; // a suppr
 	}
 	empty_garbage(&prm, -1);
 	rl_clear_history();

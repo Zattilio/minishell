@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/06 19:15:03 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/08 11:52:49 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, char *env[], t_param *prm)
 	printf("argc = %d\n", root->argc);
 } */
 
-int	exec_pipe(t_param *prm, t_node *root, char *env[])
+int	exec_pipe(t_param *prm, t_node *root, char *env[]) //
 {
 	t_pipe	args;
 	int		status;
@@ -83,13 +83,8 @@ int	exec_pipe(t_param *prm, t_node *root, char *env[])
 		g_return_value = 0;
 		return (0);
 	}
-	// fork_heredoc(args, pids, args.fd_list);
 	init_fork(&args, args.pids, args.fd_list);
-	// if (args.pids[0] == 0)
-	// ft_error(execute_first_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	execute_all_cmds(&args, args.pids, args.fd_list);
-	// if (args.pids[pipe.argc] == 0)
-	// 	ft_error(execute_last_cmd(&args, args.fd_list), &args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
 	waitpid(args.pids[args.argc], &status, 0);
