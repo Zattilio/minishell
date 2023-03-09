@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal_command_line_interface.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 02:49:30 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:35:46 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:09:10 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
 	g_return_value = 130;
 	ft_printf("\n");

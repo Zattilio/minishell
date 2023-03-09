@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:19:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:56:22 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3)
 
 static char	**get_path_tab(t_pipe *args, char **cmd)
 {
-	int	i;
+	int		i;
+	char 	**strs;
 
 	i = 0;
 	while (args->prm->env[i] != NULL && !is_path(args->prm->env[i]))
@@ -53,13 +54,15 @@ static char	**get_path_tab(t_pipe *args, char **cmd)
 		ft_put3str_fd("minishell: ", cmd[0], ": Command not found\n", 2);
 		return (NULL);
 	}
-	return (ft_split(&(args->prm->env[i][5]), ':'));
+	strs = ft_split(&(args->prm->env[i][5]), ':');
+	garbage_split(args->prm, args->prm->source.id, strs);
+	return (strs);
 }
 
 static int	test_exec_rights(char **path_cmd, char *path,
 	char **path_tab, char **cmd)
 {
-	free_tab (path_tab);
+	(void)(path_tab);
 	if (!access(path, X_OK))
 	{
 		*path_cmd = path;

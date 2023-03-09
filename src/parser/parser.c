@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 19:13:36 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:41:23 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ t_node	*parse_pipe(t_param *prm)
 {
 	t_node	*node;
 
+	if (!(is_redir(peek_tk(prm)) || is_word(peek_tk(prm))))
+	{
+		prm->source.error = ERR_PARSING;
+		return (NULL);
+	}
 	node = parse_exec(prm);
 	if (peek_tk(prm) == TK_PIPE)
 	{
@@ -97,7 +102,10 @@ t_node	*parse_redir(t_param *prm)
 	peek = peek_tk(prm);
 	if (!(peek == TK_WORD || peek == TK_SQUOTE
 			|| peek == TK_DQUOTE || peek == TK_WORD_SUB))
+	{
+		prm->source.error = ERR_PARSING;
 		return (NULL);
+	}
 	if (token == TK_DINF)
 		file_name = get_endheredoc(prm);
 	else

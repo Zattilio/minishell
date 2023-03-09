@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:43:28 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:53:03 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	empty_all_garbage(t_param *prm);
 void	empty_garbage(t_param *prm, int id);
 void	print_garbage(t_param *prm);
 void	remove_from_garb(t_param *prm, void *ptr);
+
+/*	alloc_garbage -> garbage_2.c */
+void	garbage_split(t_param *prm, int id, char **strs);
 
 /*	builtins	*/
 /*	builtins -> echo.c	*/
@@ -185,22 +188,30 @@ char	*get_space(t_param *prm);
 
 /*	signals	*/
 /*	signals -> signal_child.c	*/
+void	handle_sigint_child(int sig);
+void	handle_sigquit_child(int sig);
 void	init_signal_child(void);
 
 /*	signals -> signal_command_line_interface.c	*/
+void	handle_sigint(int sig);
 void	init_signal(void);
 
 /*	signals -> signal_heredoc.c	*/
+void	handle_sigint_heredoc(int sig);
 void	init_signal_heredoc(void);
 
 /*	signals -> signal_parent_during_exec.c	*/
+void	handle_sigint_parent_during_exec(int sig);
+void	handle_sigquit_parent_during_exec(int sig);
 void	init_signal_parent_during_exec(void);
 
 /*	signals -> signal_parent_during_heredoc.c	*/
+void	handle_sigint_parent_during_heredoc(int sig);
 void	init_signal_parent_during_heredoc(void);
 
 /*	signals -> signal_parent.c	*/
-
+void	handle_sigint_parent(int sig);
+void	handle_sigquit_parent(int sig);
 void	init_signal_parent(void);
 
 /*	utils	*/

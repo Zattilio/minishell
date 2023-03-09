@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:15:18 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:57:05 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:35:27 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	check_error_parsing(t_param *prm)
 			"minishell: parsing error: double quote not closed\n");
 	else if (prm->source.error == ERR_PARSING)
 		ft_printf_fd(2,
-			"minishell: parsing error\n");
+			"minishell: parsing: syntax error\n");
 	return (prm->source.error);
 }

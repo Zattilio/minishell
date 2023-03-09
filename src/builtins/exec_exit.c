@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 04:01:22 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:15:00 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 11:06:50 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int	exec_exit(t_param *prm, char *arg[])
 {
 	if (arg == NULL || arg[0] == NULL || ft_strcmp(arg[0], "exit"))
-		return (1);
+	{
+		empty_garbage(prm, -1);
+		rl_clear_history();
+		exit(0);
+	}
 	if (arg[1] && !ft_isint(arg[1]))
 	{
 		ft_printf("exit\nminishell: exit: %s: numeric argument required\n",

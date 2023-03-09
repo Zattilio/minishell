@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
+#    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/08 19:34:05 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/09 10:52:29 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,44 +16,46 @@ SOURCES_DIR = ./src/
 
 BUILD_DIR = ./build/
 
-SOURCES =	exec/exec_pipe.c \
-			exec/exec_root.c \
-			exec/get_path_name.c \
-			exec/execute_cmd.c \
-			exec/execute_n_cmd.c \
-			exec/is_parent_process.c \
-			exec/ft_error.c \
-			exec/ft_putnstr_fd.c \
-			exec/close_fd.c \
-			exec/error_cmd.c \
-			exec/ft_wait.c \
-			exec/init.c \
-			exec/here_doc.c \
-			command_line_interface/command_line_interface.c \
-			alloc_garbage/ft_alloc_gc.c \
+SOURCES =	alloc_garbage/ft_alloc_gc.c \
+			alloc_garbage/garbage_2.c \
 			alloc_garbage/garbage.c \
 			builtins/echo.c \
 			builtins/env_utils.c \
 			builtins/env.c \
-			builtins/exec_env.c \
 			builtins/exec_builtins.c \
+			builtins/exec_cd.c \
+			builtins/exec_env.c \
+			builtins/exec_exit.c \
+			builtins/exec_pwd.c \
+			command_line_interface/command_line_interface.c \
+			exec/close_fd.c \
+			exec/error_cmd.c \
+			exec/exec_pipe.c \
+			exec/exec_root.c \
+			exec/execute_cmd.c \
+			exec/execute_n_cmd.c \
+			exec/ft_error.c \
+			exec/ft_putnstr_fd.c \
+			exec/ft_wait.c \
+			exec/get_path_name.c \
+			exec/here_doc_utils.c \
+			exec/here_doc.c \
+			exec/init.c \
+			exec/is_parent_process.c \
 			lexer/lexer.c \
 			parser/make_node.c \
 			parser/parser_error.c \
 			parser/parser_utils_2.c \
 			parser/parser_utils.c \
 			parser/parser.c \
-			utils/print_ast.c \
-			utils/utils.c \
-			builtins/exec_cd.c \
-			builtins/exec_pwd.c \
-			builtins/exec_exit.c \
 			signals/signal_child.c \
 			signals/signal_command_line_interface.c \
 			signals/signal_heredoc.c \
-			signals/signal_parent.c \
 			signals/signal_parent_during_exec.c \
 			signals/signal_parent_during_heredoc.c \
+			signals/signal_parent.c \
+			utils/print_ast.c \
+			utils/utils.c \
 			main.c
 
 OBJECTS		= $(addprefix ${BUILD_DIR}, ${SOURCES:.c=.o})

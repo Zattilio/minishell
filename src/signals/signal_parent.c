@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:24:21 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:24:46 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 10:09:30 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	handle_sigint_parent(int sig)
+void	handle_sigint_parent(int sig)
 {
 	g_return_value = 130;
 	(void)sig;
 }
 
-static void	handle_sigquit_parent(int sig)
+void	handle_sigquit_parent(int sig)
 {
 	g_return_value = 131;
 	(void)sig;

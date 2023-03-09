@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_parent_during_exec.c                        :+:      :+:    :+:   */
+/*   garbage_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 19:25:13 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 10:09:18 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/09 10:50:47 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/09 10:52:53 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	handle_sigint_parent_during_exec(int sig)
+void	garbage_split(t_param *prm, int id, char **strs)
 {
-	ft_printf("\n");
-	g_return_value = 130;
-	exit(130);
-	(void)sig;
-}
+	int	i;
 
-void	handle_sigquit_parent_during_exec(int sig)
-{
-	g_return_value = 131;
-	ft_printf("Quit (core dumped)\n");
-	exit(131);
-	(void)sig;
-}
-
-void	init_signal_parent_during_exec(void)
-{
-	signal(SIGINT, &handle_sigint_parent_during_exec);
-	signal(SIGQUIT, &handle_sigquit_parent_during_exec);
+	i = 0;
+	while (strs[i])
+	{
+		garbage_col(prm, id, (void *)(strs[i]));
+		i++;
+	}
+	garbage_col(prm, id, (void *)strs);
 }
