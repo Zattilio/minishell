@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:50:10 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 17:13:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exec_special_builtins(t_param *prm, char **cmd)
 {
 	int	ret_val;
 
-	ret_val = 0;
+	ret_val = g_return_value;
 	if (!ft_strcmp(cmd[0], "cd"))
 		ret_val = exec_cd(prm, cmd);
 	if (!ft_strcmp(cmd[0], "export"))
@@ -63,6 +63,7 @@ static void	exec_special_builtins(t_param *prm, char **cmd)
 int	exec_root(t_param *prm, t_node *root)
 {
 	int	pipe_pid;
+	int	status;
 
 	init_signal_parent();
 	pipe_pid = fork();
@@ -72,7 +73,13 @@ int	exec_root(t_param *prm, t_node *root)
 		exec_pipe(prm, root);
 	}
 	else
-		waitpid(pipe_pid, NULL, 0);
+	{
+		waitpid(pipe_pid, &status, 0);
+		if (WIFSIGNALED(status))
+			g_return_value = WTERMSIG(status);
+		else if (WIFEXITED(status))
+			g_return_value = WEXITSTATUS(status);
+	}
 	if (root->token_type != TK_PIPE)
 	{
 		while (root->token_type != TK_EXEC)
