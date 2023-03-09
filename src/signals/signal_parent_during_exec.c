@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:25:13 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 10:09:18 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:48:59 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_sigint_parent_during_exec(int sig)
 {
 	ft_printf("\n");
 	g_return_value = 130;
-	exit(130);
 	(void)sig;
 }
 
@@ -24,7 +23,6 @@ void	handle_sigquit_parent_during_exec(int sig)
 {
 	g_return_value = 131;
 	ft_printf("Quit (core dumped)\n");
-	exit(131);
 	(void)sig;
 }
 
