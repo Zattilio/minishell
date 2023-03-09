@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:11:53 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/09 11:04:23 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ int	main(int argc, char *argv[], char *env[])
 		init_signal();
 		readline_new_prompt(&cmd);
 		if (cmd == NULL && ft_printf("exit\n"))
-			break ;
+			exec_exit(&prm, NULL);
 		if (ft_strlen(cmd) > 0)
 			add_history(cmd);
 		root = parse(&prm, cmd);
+		print_ast(&prm, root);
 		if (root != NULL)
 			exec_root(&prm, root);
 	}
