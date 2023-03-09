@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 10:56:22 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/09 13:21:05 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3)
 static char	**get_path_tab(t_pipe *args, char **cmd)
 {
 	int		i;
-	char 	**strs;
+	char	**strs;
 
 	i = 0;
 	while (args->prm->env[i] != NULL && !is_path(args->prm->env[i]))
