@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:20:38 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 18:28:46 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 11:48:19 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	exec_export(t_param *prm, char **cmd)
 	while (i < get_nb_str(cmd))
 	{
 		ret_val += export_env(prm, cmd[i]);
+		if (ret_val != 0)
+		{
+			ft_put3str_fd("minishell: export: `", cmd[i],
+				"`: not a valid identifier\n", 2);
+			break ;
+		}
 		i++;
 	}
 	return (ret_val);

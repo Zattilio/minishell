@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/09 10:41:23 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:46:17 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ t_node	*parse(t_param *prm, char *line)
 	root = parse_pipe(prm);
 	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
 		return (NULL);
-	return (root);
-}
-
-/*old ==> a ne plus utiliser*/
-t_node	*parsing(t_param *prm)
-{
-	t_node	*root;
-
-	root = parse_pipe(prm);
-	if (peek_tk(prm) != TK_EOF)
-		return (NULL);
-	prm->source.cur = 0;
 	return (root);
 }
 

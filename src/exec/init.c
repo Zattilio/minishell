@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 05:35:02 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 19:15:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 12:45:04 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,3 @@ void	init_pipes(t_pipe *args, t_fd *fd_list)
 		i++;
 	}
 }
-
-/* void	init_fork(t_pipe *args, int *pids, t_fd *fd_list)
-{
-	int	i;
-
-	i = 0;
-	//if (check_heredoc(args))
-	//	i = 1;
-	while (i < args->argc && is_parent_process(pids, i))
-	{
-		pids[i] = fork();
-		if (pids[i] == 0)
-			init_signal_child();
-		if (pids[i] < 0)
-			ft_error(5, args, fd_list);
-		i++;
-	}
-} */

@@ -3,40 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 17:14:00 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 12:43:52 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
 
 unsigned char	g_return_value = 0;
-
-/*attention, ne pas utiliser l'enve du main*/
-/*
-int	main(int argc, char **argv, char **env)
-{
-	t_param	prm;
-	t_node	*root;
-	int		i;
-
-	i = 1;
-	if (argc < 2)
-		return (1);
-	ft_memset(&prm, 0, sizeof(t_param));
-	clone_env(&prm, env);
-	while (i < argc)
-	{
-		root = parse(&prm, argv[i]);
-		print_ast(&prm, root);
-		ft_printf("\n");
-		i++;
-	}
-	empty_garbage(&prm, -1);
-	return (0);
-}*/
 
 int	main(int argc, char *argv[], char *env[])
 {

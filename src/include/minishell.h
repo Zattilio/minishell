@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 10:53:03 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:46:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		exec_echo(char **cmd);
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
 int		clone_env(t_param *prm, char **env);
+int		check_valid_export(char *str);
 
 /*	builtins -> env.c	*/
 char	*get_env_var(t_param *prm, char *name);
@@ -169,7 +170,6 @@ int		check_error_parsing(t_param *prm);
 
 /*	parser -> parser.c	*/
 t_node	*parse(t_param *prm, char *line);
-t_node	*parsing(t_param *prm);
 t_node	*parse_pipe(t_param *prm);
 t_node	*parse_exec(t_param *prm);
 t_node	*parse_redir(t_param *prm);

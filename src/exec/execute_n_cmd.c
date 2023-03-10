@@ -6,63 +6,11 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/08 18:03:06 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:44:43 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-int	execute_first_cmd(t_pipe *args, t_fd *fd_list)
-{
-	int		fd_input;
-
-	if (!check_heredoc(args))
-	{
-		dup2(fd_list[0].fd[1], STDOUT_FILENO);
-		close_fd(args, fd_list);
-		fd_input = open(args->argv[1], O_RDONLY, 00600);
-		if (fd_input == -1)
-		{
-			if (!access(args->argv[1], F_OK))
-				ft_put3str_fd("minishell: ", args->argv[1],
-					": Permission denied\n", 2);
-			else
-				ft_put3str_fd("minishell: ", args->argv[1],
-					": No such file or directory\n", 2);
-			return (1);
-		}
-		dup2(fd_input, 0);
-		close(fd_input);
-		return (execute_cmd(args, 2));
-	}
-	return (0);
-}*/
-
-/*
-int	execute_last_cmd(t_pipe *args, t_fd *fd_list)
-{
-	int	fd_output;
-
-	dup2(fd_list[args->argc - 5].fd[0], STDIN_FILENO);
-	close_fd(args, fd_list);
-	if (!check_heredoc(args))
-		fd_output = open(args->argv[args->argc - 1],
-				O_WRONLY | O_CREAT | O_TRUNC, 00644);
-	else
-		fd_output = open(args->argv[args->argc - 1],
-				O_WRONLY | O_CREAT | O_APPEND, 00644);
-	if (fd_output == -1)
-	{
-		ft_put3str_fd("minishell: ", args->argv[args->argc - 1],
-			": Permission denied\n", 2);
-		return (1);
-	}
-	dup2(fd_output, 1);
-	close(fd_output);
-	return (execute_cmd(args, args->argc - 1 - 1));
-}
- */
 
 int	redir_in(t_node *redir)
 {

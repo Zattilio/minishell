@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:06:29 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 19:38:40 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 11:58:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ int	export_env(t_param *prm, char *str)
 {
 	char	**new_env;
 	int		i;
+	int		error;
 
+	error = check_valid_export(str);
+	if (error)
+		return (error);
 	if (pos_str(str, '=') == -1)
 		return (0);
 	new_env = ft_calloc_gc(prm, 0, get_nb_str(prm->env) + 2, sizeof(char *));

@@ -3,16 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:48:44 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:56:59 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 12:45:13 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*The lexer, or tokenizer aims to create groups of character from the command
-line and identify what type they are. It does not check whether or not the
-command is synaxicaly correct (this is the role of the parser).*/
 
 #include "../include/minishell.h"
 

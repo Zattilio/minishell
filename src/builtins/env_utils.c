@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/08 19:38:48 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 11:58:11 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,26 @@ int	clone_env(t_param *prm, char **env)
 		(prm->env)[i] = ft_strdup_gc(prm, 0, env[i]);
 		if ((prm->env)[i] == NULL)
 			return (1);
+	}
+	return (0);
+}
+
+int	check_valid_export(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = pos_str(str, '=');
+	if (len == -1 && str)
+		len = ft_strlen(str);
+	while (i < len)
+	{
+		if (!(ft_isalnum(str[i]) || str[i] == '_'))
+			return (2);
+		if (i == 0 && ft_isdigit(str[i]))
+			return (1);
+		i++;
 	}
 	return (0);
 }

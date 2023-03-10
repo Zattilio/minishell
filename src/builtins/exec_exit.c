@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 04:01:22 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 11:06:50 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:40:07 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_exit(t_param *prm, char *arg[])
 		g_return_value = 1;
 		return (1);
 	}
-	if (arg[1] && ft_isint(arg[1]))
+	else if (arg[1] && ft_isint(arg[1]))
 		g_return_value = ft_atoi(arg[1]);
 	else
 		g_return_value = 0;

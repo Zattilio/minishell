@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:58:49 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/09 11:22:00 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:47:19 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static void	print_node_suite(t_node *root, int space)
 	print_space(space);
 	ft_printf("| cmd : ");
 	if (root->cmd == NULL)
-		ft_printf("%s%", NULL);
+		ft_printf("%s#", NULL);
 	while (root->cmd && root->cmd[++i])
-		ft_printf("%s% ", root->cmd[i]);
+		ft_printf("%s# ", root->cmd[i]);
 	ft_printf("\n");
 }
 
