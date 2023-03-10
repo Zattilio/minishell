@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 13:33:42 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:16:16 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ int	main(int argc, char *argv[], char *env[])
 	{
 		init_signal();
 		readline_new_prompt(&cmd);
-		if (cmd == NULL && ft_printf("exit\n"))
+		if (cmd == NULL)
 			exec_exit(&prm, NULL);
 		if (ft_strlen(cmd) > 0)
 			add_history(cmd);
 		root = parse(&prm, cmd);
-		print_ast(&prm, root);
 		if (root != NULL)
 			exec_root(&prm, root);
 	}

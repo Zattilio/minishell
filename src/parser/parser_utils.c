@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 12:50:05 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 13:22:27 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:58:20 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,48 +106,3 @@ char	*get_endheredoc(t_param *prm)
 	else
 		return (ft_strjoin_gc(prm, prm->source.id, word, get_endheredoc(prm)));
 }
-
-/*char	*get_endheredoc(t_param *prm)
-{
-	char	*token;
-
-	token = get_token(prm);
-	if (get_t_token(token) == TK_SQUOTE)
-		return (get_word_squote(prm));
-	if (get_t_token(token) == TK_DQUOTE)
-		return (get_word_dquote(prm, FALSE));
-	if (get_t_token(token) == TK_WORD || get_t_token(token) == TK_WORD_SUB)
-		return (token);
-	else
-	{
-		prm->source.error = ERR_PARSING;
-		return (NULL);
-	}
-}*/
-
-/*char	*get_word(t_param *prm)
-{
-	t_token	peek;
-	char	*token;
-	char	*word;
-
-	peek = peek_tk(prm);
-	if (!(peek == TK_WORD || peek == TK_SQUOTE || peek == TK_WORD_SUB
-			|| peek == TK_DQUOTE))
-		return (NULL);
-	token = get_token(prm);
-	if (get_t_token(token) == TK_WORD)
-		word = token;
-	if (get_t_token(token) == TK_WORD_SUB)
-		word = substitute_word(prm, token);
-	if (get_t_token(token) == TK_SQUOTE)
-		word = get_word_squote(prm);
-	if (get_t_token(token) == TK_DQUOTE)
-		word = get_word_dquote(prm, TRUE);
-	if (prm->source.cur < prm->source.line_size
-		&& ft_isspace(prm->source.line[prm->source.cur]))
-		return (word);
-	else
-		return (ft_strjoin_gc(prm, prm->source.id, word, get_word(prm)));
-}
-*/
