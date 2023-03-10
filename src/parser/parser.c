@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 12:46:17 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:34:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ t_node	*parse(t_param *prm, char *line)
 		return (NULL);
 	root = parse_pipe(prm);
 	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
+	{
+		g_return_value = 1;
 		return (NULL);
+	}
 	return (root);
 }
 
@@ -98,6 +101,8 @@ t_node	*parse_redir(t_param *prm)
 		file_name = get_endheredoc(prm);
 	else
 		file_name = get_word(prm);
+	if (file_name == NULL)
+		prm->source.error = ERR_PARSING;
 	node = make_redir_node(prm, NULL, token, file_name);
 	return (node);
 }

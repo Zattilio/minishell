@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 12:46:26 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:40:11 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	init_signal_parent_during_heredoc(void);
 /*	signals -> signal_parent.c	*/
 void	handle_sigint_parent(int sig);
 void	handle_sigquit_parent(int sig);
-void	init_signal_parent(void);
+void	reset_ret_val_and_init_signal_parent(void);
 
 /*	utils	*/
 /*	utils -> print_ast.c	*/

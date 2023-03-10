@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 13:01:14 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:39:29 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	exec_root(t_param *prm, t_node *root)
 	int	pipe_pid;
 	int	status;
 
-	init_signal_parent();
+	reset_ret_val_and_init_signal_parent();
 	pipe_pid = fork();
 	if (pipe_pid == 0)
 	{
