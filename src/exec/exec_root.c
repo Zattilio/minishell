@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 12:44:29 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:01:14 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	exec_special_builtins(t_param *prm, char **cmd)
 	int	ret_val;
 
 	ret_val = g_return_value;
-	if (!ft_strcmp(cmd[0], "cd"))
+	if (cmd && !ft_strcmp(cmd[0], "cd"))
 		ret_val = exec_cd(prm, cmd);
-	if (!ft_strcmp(cmd[0], "export"))
+	if (cmd && !ft_strcmp(cmd[0], "export"))
 		ret_val = exec_export(prm, cmd);
-	if (!ft_strcmp(cmd[0], "unset"))
+	if (cmd && !ft_strcmp(cmd[0], "unset"))
 		ret_val = exec_unset(prm, cmd);
-	if (!ft_strcmp(cmd[0], "exit"))
+	if (cmd && !ft_strcmp(cmd[0], "exit"))
 		ret_val = exec_exit(prm, cmd);
 	g_return_value = ret_val;
 }
