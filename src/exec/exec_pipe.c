@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 16:46:05 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/10 14:55:25 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	exec_pipe(t_param *prm, t_node *root)
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
 	waitpid(args.pids[args.argc], &status, 0);
-	if (WIFSIGNALED(status))
-		g_return_value = WTERMSIG(status);
-	else if (WIFEXITED(status))
+	if (WIFEXITED(status))
 		g_return_value = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_return_value = WTERMSIG(status);
 	empty_garbage(prm, -1);
 	exit (g_return_value);
 }
