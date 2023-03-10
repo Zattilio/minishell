@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:06:29 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 11:58:26 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:36:34 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ int	export_env(t_param *prm, char *str)
 {
 	char	**new_env;
 	int		i;
-	int		error;
 
-	error = check_valid_export(str);
-	if (error)
-		return (error);
+	if (check_valid_export(str))
+		return (check_valid_export(str));
 	if (pos_str(str, '=') == -1)
 		return (0);
+	unset_env(prm, ft_substr_gc(prm, str, 0, pos_str(str, '=')));
 	new_env = ft_calloc_gc(prm, 0, get_nb_str(prm->env) + 2, sizeof(char *));
 	if (new_env == NULL)
 		return (1);
@@ -83,9 +82,9 @@ int	pos_in_env(t_param *prm, char *str)
 	size_t	len_str;
 
 	i = 0;
-	len_str = ft_strlen(str);
 	if (str == NULL)
 		return (-1);
+	len_str = ft_strlen(str);
 	while (prm->env && prm->env[i])
 	{
 		len = len_str;
