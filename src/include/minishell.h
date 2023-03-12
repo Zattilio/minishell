@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 13:40:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/12 11:58:46 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ t_node	*parse(t_param *prm, char *line);
 t_node	*parse_pipe(t_param *prm);
 t_node	*parse_exec(t_param *prm);
 t_node	*parse_redir(t_param *prm);
+char	*substitute_line(t_param *prm);
 
 /*	parser -> parser_utils.c	*/
 char	*get_word(t_param *prm);
