@@ -6,7 +6,7 @@
 #    By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/13 11:11:59 by mbocquel         ###   ########.fr        #
+#    Updated: 2023/03/13 17:10:08 by mbocquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SOURCES =	alloc_garbage/ft_alloc_gc.c \
 			alloc_garbage/garbage.c \
 			builtins/echo.c \
 			builtins/env_utils.c \
+			builtins/env_utils_2.c \
 			builtins/env.c \
 			builtins/exec_builtins.c \
 			builtins/exec_cd.c \
@@ -47,6 +48,7 @@ SOURCES =	alloc_garbage/ft_alloc_gc.c \
 			parser/make_node.c \
 			parser/parser_error.c \
 			parser/parser_utils_2.c \
+			parser/parser_utils_3.c \
 			parser/parser_utils.c \
 			parser/parser.c \
 			signals/signal_child.c \

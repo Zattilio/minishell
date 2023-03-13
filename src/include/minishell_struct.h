@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 11:13:56 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:04:21 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_garb
 
 typedef struct s_source {
 	int				id;
+	char			*line_before;
 	char			*line;
 	size_t			line_size;
 	size_t			cur;

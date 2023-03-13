@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:43:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 16:47:45 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 15:45:07 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_builtins(t_pipe *pipe, char *arg[])
 
 	ret_val = 0;
 	if (!ft_strcmp(arg[0], "pwd"))
-		exec_pwd();
+		ret_val = exec_pwd();
 	if (!ft_strcmp(arg[0], "echo"))
 		ret_val = exec_echo(arg);
 	if (!ft_strcmp(arg[0], "env"))

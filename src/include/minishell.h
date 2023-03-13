@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 11:11:42 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:16:00 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,25 @@ void	garbage_split(t_param *prm, int id, char **strs);
 
 /*	builtins	*/
 /*	builtins -> echo.c	*/
+t_bool	valid_n(char *str);
+void	ft_print_echo(char *str, int *ret);
+int		ft_error_echo(int ret_val);
 int		exec_echo(char **cmd);
 
 /*	builtins -> env_utils.c	*/
+int		ft_error_print_env(int ret_val);
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
 int		clone_env(t_param *prm, char **env);
 int		check_valid_export(char *str);
 
+/*	builtins -> env_utils_2.c	*/
+int		ft_error_write_export(int ret_val);
+int		exec_export_no_args(t_param *prm);
+char	**ft_sort_strs(char **strs, int size);
+
 /*	builtins -> env.c	*/
+char	*get_last_return(t_param *prm);
 char	*get_env_var(t_param *prm, char *name);
 int		export_env(t_param *prm, char *str);
 int		pos_in_env(t_param *prm, char *str);
@@ -73,6 +83,8 @@ int		check_is_builtin(char *cmd);
 int		exec_cmd(t_pipe *pipe, char *path, char *arg[]);
 
 /*	builtins -> exec_cd.c	*/
+int		change_pwd_env(t_param *prm, char *old_pwd);
+int		ft_error_cd(int n_error, int return_value, char *str);
 int		exec_cd(t_param *prm, char *arg[]);
 
 /*	builtins -> exec_env.c	*/
@@ -160,7 +172,7 @@ t_token	get_t_token(char *token);
 /* lexer -> substitute_heredoc.c	*/
 char	*get_space_heredoc(t_param *prm, char *str, size_t *cur);
 char	*get_token_heredoc(t_param *prm, char *str, size_t *cur);
-char 	*substitute_heredoc(t_param *prm, char *str);
+char	*substitute_heredoc(t_param *prm, char *str);
 
 /*	parser	*/
 /*	parser -> make_node.c	*/
@@ -191,6 +203,13 @@ void	add_last_left(t_node **root, t_node *node);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*substitute_word(t_param *prm, char	*word);
 char	*get_space(t_param *prm);
+
+/*	parser -> parser_utils_3.c	*/
+int		init_source(t_param *prm);
+char	*sub_line_cas_squote(t_param *prm, char *word);
+char	*sub_line_cas_dquote(t_param *prm, char *word);
+char	*sub_line_cas_redir_simple(t_param *prm, char *word);
+char	*sub_line_cas_redir_heredoc(t_param *prm, char *word);
 
 /*	signals	*/
 /*	signals -> signal_child.c	*/

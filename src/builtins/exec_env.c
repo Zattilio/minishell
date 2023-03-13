@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:20:38 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 11:48:19 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:02:05 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ int	exec_export(t_param *prm, char **cmd)
 
 	i = 1;
 	ret_val = 0;
-	if (cmd == NULL || cmd[0] == NULL || ft_strlen(cmd[0]) != 6
-		|| ft_strncmp(cmd[0], "export", 6) != 0)
-		return (1);
+	if (get_nb_str(cmd) == 1)
+		return (exec_export_no_args(prm));
 	while (i < get_nb_str(cmd))
 	{
 		ret_val += export_env(prm, cmd[i]);

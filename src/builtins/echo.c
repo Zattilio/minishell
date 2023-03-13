@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 17:52:58 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/09 14:04:20 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:03:43 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,44 @@ t_bool	valid_n(char *str)
 	return (TRUE);
 }
 
+void	ft_print_echo(char *str, int *ret)
+{
+	char	*working_dir;
+	int		return_val;
+
+	return_val = 0;
+	working_dir = NULL;
+	if (ft_strcmp(str, "~") == 0)
+	{
+		working_dir = getcwd(NULL, 0);
+		if (working_dir != NULL)
+		{
+			return_val = write(1, working_dir, ft_strlen(working_dir));
+			free(working_dir);
+		}
+	}
+	else
+		return_val = write(1, str, ft_strlen(str));
+	if (return_val == -1 && *ret > 0)
+		*ret = -1;
+}
+
+int	ft_error_echo(int ret_val)
+{
+	write(2, "minishell: echo: write error: No space left on device\n",
+		ft_strlen("minishell: echo: write error: No space left on device\n"));
+	return (ret_val);
+}
+
 int	exec_echo(char **cmd)
 {
 	t_bool	print_nl;
 	int		i;
+	int		ret;
 
 	print_nl = TRUE;
 	i = 1;
-	if (cmd == NULL || cmd[0] == NULL || ft_strlen(cmd[0]) != 4
-		|| ft_strncmp(cmd[0], "echo", 4) != 0)
-		return (1);
+	ret = 1;
 	while (cmd[i] && valid_n(cmd[i]))
 	{
 		print_nl = FALSE;
@@ -45,12 +73,14 @@ int	exec_echo(char **cmd)
 	}
 	while (i < get_nb_str(cmd))
 	{
-		ft_printf("%s", cmd[i]);
+		ft_print_echo(cmd[i], &ret);
 		if (i != get_nb_str(cmd) - 1)
-			ft_printf(" ");
+			ft_print_echo(" ", &ret);
 		i++;
 	}
 	if (print_nl == TRUE)
-		ft_printf("\n");
+		ft_print_echo("\n", &ret);
+	if (ret < 0)
+		return (ft_error_echo(1));
 	return (0);
 }

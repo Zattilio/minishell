@@ -6,22 +6,32 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 11:58:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:07:26 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_error_print_env(int ret_val)
+{
+	write(2, "minishell: env: write error: No space left on device\n",
+		ft_strlen("minishell: env: write error: No space left on device\n"));
+	return (ret_val);
+}
 
 int	print_env(t_param *prm)
 {
 	int	i;
 
 	i = 0;
-	if (prm->env == NULL)
-		ft_printf("\n");
+	if (prm->env == NULL && write(1, "\n", ft_strlen("\n")) == -1)
+		return (ft_error_print_env(1));
 	while (prm->env[i])
 	{
-		ft_printf("%s\n", prm->env[i]);
+		if (write(1, prm->env[i], ft_strlen(prm->env[i])) == -1)
+			return (ft_error_print_env(1));
+		if (write(1, "\n", ft_strlen("\n")) == -1)
+			return (ft_error_print_env(1));
 		i++;
 	}
 	return (0);

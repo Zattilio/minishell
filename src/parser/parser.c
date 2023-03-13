@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/13 10:20:21 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:52:37 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,21 @@
 t_node	*parse(t_param *prm, char *line)
 {
 	t_node	*root;
-	char	*new_line;
 
 	if (prm->source.id != 0)
 		empty_garbage(prm, prm->source.id);
 	(prm->source.id)++;
 	prm->source.line = line;
 	garbage_col(prm, prm->source.id, line);
-	prm->source.cur = 0;
-	prm->source.error = 0;
-	prm->source.line_size = ft_strlen(line);
-	if (peek_tk(prm) == TK_EOF)
+	if (init_source(prm))
 		return (NULL);
-	new_line = substitute_line(prm);
-	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
+	prm->source.line = substitute_line(prm);
+	prm->source.line_before = line;
+	if (prm->source.line == NULL || init_source(prm))
 	{
 		g_return_value = 1;
 		return (NULL);
 	}
-	ft_printf("new_line \n%s\n\n", new_line);
-	prm->source.cur = 0;
-	prm->source.error = 0;
 	root = parse_pipe(prm);
 	if (check_error_parsing(prm) || peek_tk(prm) != TK_EOF)
 	{
@@ -117,32 +111,6 @@ t_node	*parse_redir(t_param *prm)
 	return (node);
 }
 
-/*test du parser. je fait les substitutions avant 
-
-char	*get_word_dquote(t_param *prm, t_bool sub)
-{
-	char	*word;
-
-	word = NULL;
-	while (!(peek_tk(prm) == TK_DQUOTE || peek_tk(prm) == TK_EOF))
-	{
-		word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
-		if (peek_tk(prm) == TK_WORD_SUB && sub == TRUE)
-			word = ft_strjoin_gc(prm, prm->source.id, word,
-					substitute_word(prm, get_token(prm)));
-		else
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-	}
-	if (peek_tk(prm) == TK_EOF)
-	{
-		prm->source.error = ERR_DQUOTE_CLOSE;
-		return (NULL);
-	}
-	word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
-	get_token(prm);
-	return (word);
-}*/
-
 char	*substitute_line(t_param *prm)
 {
 	char	*word;
@@ -152,51 +120,21 @@ char	*substitute_line(t_param *prm)
 	{
 		word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
 		if (peek_tk(prm) == TK_WORD_SUB)
-			word = ft_strjoin_gc(prm, prm->source.id, word,	substitute_word(prm, get_token(prm)));
+			word = ft_strjoin_gc(prm, prm->source.id, word,
+					substitute_word(prm, get_token(prm)));
 		else if (peek_tk(prm) == TK_WORD || peek_tk(prm) == TK_PIPE)
 			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
 		else if (peek_tk(prm) == TK_SQUOTE)
-		{
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_word_squote(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, "\'");
-		}
+			word = sub_line_cas_squote(prm, word);
 		else if (peek_tk(prm) == TK_DQUOTE)
-		{
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_word_dquote(prm, FALSE));
-			word = ft_strjoin_gc(prm, prm->source.id, word, "\"");
-		}
-		else if (peek_tk(prm) == TK_DSUP || peek_tk(prm) == TK_SUP || peek_tk(prm) == TK_INF)
-		{
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
-			if (peek_tk(prm) == TK_DQUOTE)
-			{
-				word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-				word = ft_strjoin_gc(prm, prm->source.id, word, get_word_dquote(prm, FALSE));
-				word = ft_strjoin_gc(prm, prm->source.id, word, "\"");
-			}
-			else if (peek_tk(prm) == TK_SQUOTE)
-			{
-				word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-				word = ft_strjoin_gc(prm, prm->source.id, word, get_word_squote(prm));
-				word = ft_strjoin_gc(prm, prm->source.id, word, "\'");
-			}
-			else
-				word = ft_strjoin_gc(prm, prm->source.id, word, get_word(prm));
-		}
+			word = sub_line_cas_dquote(prm, word);
+		else if (peek_tk(prm) == TK_DSUP || peek_tk(prm) == TK_SUP
+			|| peek_tk(prm) == TK_INF)
+			word = sub_line_cas_redir_simple(prm, word);
 		else if (peek_tk(prm) == TK_DINF)
-		{
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_token(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_space(prm));
-			word = ft_strjoin_gc(prm, prm->source.id, word, get_endheredoc(prm));
-		}
+			word = sub_line_cas_redir_heredoc(prm, word);
 		else
-		{
-			ft_printf_fd(2, "error dans le substitute line \n");
-			break;
-		}
+			return (NULL);
 	}
 	return (word);
 }
