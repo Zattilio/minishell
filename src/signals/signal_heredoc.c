@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:30:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 04:23:08 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 14:14:43 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
+	ft_printf("\n");
 	close(0);
 	g_return_value = 130;
 }

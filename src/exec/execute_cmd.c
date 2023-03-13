@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 03:07:40 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 15:15:01 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_cmd(t_pipe *args, int n_cmd)
 	cmd = args->argv[n_cmd]->cmd;
 	return_value = 0;
 	if (cmd == NULL)
-		return (1);
+		return (0);
 	if (!check_is_builtin(cmd[0]))
 		return_value = get_path_name(args, &path_cmd, cmd);
 	if (return_value != 0)

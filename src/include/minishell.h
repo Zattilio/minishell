@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 13:05:32 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 14:49:47 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	ft_lstprint(t_list *lst, char *stop, t_fd *fd_list, int i);
 void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
 
 /*	excec -> here_doc.c	*/
-void	fake_heredoc(t_node *node);
+void	fake_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
 int		is_there_another_heredoc(t_node *node);
 int		redirection_heredoc(t_pipe *args, t_node *redir,
 			int i, t_fd *fd_list);
@@ -156,6 +156,9 @@ int		is_parent_process(int *pids, int n);
 char	*get_token(t_param *prm);
 t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
+
+char	*substitute_heredoc(t_param *prm, char *str);
+
 
 /*	parser	*/
 /*	parser -> make_node.c	*/
