@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 13:40:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:11:41 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,8 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3);
 int		get_path_name(t_pipe *args, char **path_cmd, char **cmd);
 
 /*	excec -> here_doc_utils.c	*/
-void	ft_lstprint(t_list *lst, char *stop);
-void	ft_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
-void	fork_heredoc(t_pipe *args, t_node *node, int i);
+void	ft_lstprint(t_list *lst, char *stop, t_fd *fd_list, int i);
+void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
 
 /*	excec -> here_doc.c	*/
 void	fake_heredoc(t_node *node);
@@ -142,7 +141,7 @@ int		is_there_another_heredoc(t_node *node);
 int		redirection_heredoc(t_pipe *args, t_node *redir,
 			int i, t_fd *fd_list);
 void	clean_heredoc(t_pipe *args, t_fd *fd_list);
-int		init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list);
+int		init_heredoc(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> init.c	*/
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);

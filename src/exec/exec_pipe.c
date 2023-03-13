@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 14:55:25 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 02:25:07 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	exec_pipe(t_param *prm, t_node *root)
 		g_return_value = 0;
 		return (0);
 	}
-	init_fork_heredoc(&args, args.pids, args.fd_list);
+	init_heredoc(&args, args.fd_list);
 	init_signal_parent_during_exec();
 	execute_all_cmds(&args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);

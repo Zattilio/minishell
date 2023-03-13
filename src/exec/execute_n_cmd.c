@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   execute_n_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 12:44:43 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 02:30:13 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	no_other_redir_in(t_node *redir)
+{
+	if (redir == NULL)
+		return (1);
+	if (redir->token_type == TK_INF || redir->token_type == TK_DINF)
+		return (0);
+	else
+		return (no_other_redir_in(redir->left));
+}
+
+int	no_other_redir_out(t_node *redir)
+{
+	if (redir == NULL)
+		return (1);
+	if (redir->token_type == TK_SUP || redir->token_type == TK_DSUP)
+		return (0);
+	else
+		return (no_other_redir_out(redir->left));
+}
 
 int	redir_in(t_node *redir)
 {
@@ -27,7 +47,8 @@ int	redir_in(t_node *redir)
 				": No such file or directory\n", 2);
 		return (1);
 	}
-	dup2(fd_input, 0);
+	if (no_other_redir_in(redir->left))
+		dup2(fd_input, 0);
 	close(fd_input);
 	return (0);
 }
@@ -43,7 +64,8 @@ int	redir_out(t_node *redir)
 			": Permission denied\n", 2);
 		return (1);
 	}
-	dup2(fd_output, 1);
+	if (no_other_redir_out(redir->left))
+		dup2(fd_output, 1);
 	close(fd_output);
 	return (0);
 }
@@ -56,10 +78,6 @@ static int	redir_heredoc(t_fd *fd_list, int i)
 
 int	redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
 {
-	if (i != 0)
-		dup2(fd_list[i].fd[0], 0);
-	if (i + 1 != args->argc)
-		dup2(fd_list[i + 1].fd[1], 1);
 	if (redir == NULL)
 		return (0);
 	if (redir->token_type == TK_INF)
@@ -67,13 +85,19 @@ int	redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
 		if (redir_in(redir))
 			return (1);
 	}
+	if (redir->token_type == TK_DINF && no_other_redir_in(redir->left))
+		redir_heredoc(fd_list, i);
 	if (redir->token_type == TK_SUP || redir->token_type == TK_DSUP)
 	{
 		if (redir_out(redir))
 			return (1);
 	}
-	if (redir->token_type == TK_DINF && redir->left->token_type == TK_EXEC)
-		return (redir_heredoc(fd_list, i));
+	if (i != 0 && redir->token_type == TK_EXEC
+		&& no_other_redir_in(redir->redir))
+		dup2(fd_list[i].fd[0], 0);
+	if (i + 1 != args->argc && redir->token_type == TK_EXEC
+		&& no_other_redir_out(redir->redir))
+		dup2(fd_list[i + 1].fd[1], 1);
 	return (redirection(args, redir->left, i, fd_list));
 }
 
