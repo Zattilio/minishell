@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/12 11:58:46 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:11:42 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ int		is_parent_process(int *pids, int n);
 char	*get_token(t_param *prm);
 t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
+
+/* lexer -> substitute_heredoc.c	*/
+char	*get_space_heredoc(t_param *prm, char *str, size_t *cur);
+char	*get_token_heredoc(t_param *prm, char *str, size_t *cur);
+char 	*substitute_heredoc(t_param *prm, char *str);
 
 /*	parser	*/
 /*	parser -> make_node.c	*/
