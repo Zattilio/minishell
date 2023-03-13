@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:32:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 18:23:51 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:48:26 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	cmd = NULL;
 	if (argc != 1)
-		return (ft_printf_fd(2, "minishell: too many arguments"), 1);
+		return (ft_printf_fd(2, "minishell: too many arguments\n"), 1);
 	ft_memset(&prm, 0, sizeof(t_param));
 	clone_env(&prm, env);
 	print_minishell_title();

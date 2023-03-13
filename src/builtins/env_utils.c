@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 11:58:11 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 11:54:53 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,48 @@ void	garbage_env(t_param *prm)
 	remove_from_garb(prm, prm->env);
 }
 
-int	clone_env(t_param *prm, char **env)
+int	increment_shlvl(t_param *prm)
+{
+	char	*new_level;
+	char	*new_shlvl;
+
+	new_level = ft_itoa(ft_atoi(get_env_var(prm, "SHLVL")) + 1);
+	if (new_level == NULL)
+		return (1);
+	unset_env(prm, "SHLVL");
+	new_shlvl = ft_strjoin_gc(prm, 0, "SHLVL=", new_level);
+	free(new_level);
+	if (new_shlvl == NULL)
+		return (1);
+	export_env(prm, new_shlvl);
+	return (0);
+}
+
+void	clone_env(t_param *prm, char **env)
 {
 	int	i;
 
 	prm->env = ft_calloc_gc(prm, 0, get_nb_str(env) + 1, sizeof(char *));
 	if (prm->env == NULL)
-		return (1);
+	{
+		empty_garbage(prm, -1);
+		exit (1);
+	}
 	i = -1;
 	while (env && env[++i])
 	{
 		(prm->env)[i] = ft_strdup_gc(prm, 0, env[i]);
 		if ((prm->env)[i] == NULL)
-			return (1);
+		{
+			empty_garbage(prm, -1);
+			exit (1);
+		}
 	}
-	return (0);
+	if (increment_shlvl(prm))
+	{
+		empty_garbage(prm, -1);
+		exit (1);
+	}
 }
 
 int	check_valid_export(char *str)

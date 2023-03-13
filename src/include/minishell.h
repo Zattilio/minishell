@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 03:39:50 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 11:46:18 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		exec_echo(char **cmd);
 /*	builtins -> env_utils.c	*/
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
-int		clone_env(t_param *prm, char **env);
+void	clone_env(t_param *prm, char **env);
 int		check_valid_export(char *str);
 
 /*	builtins -> env.c	*/
