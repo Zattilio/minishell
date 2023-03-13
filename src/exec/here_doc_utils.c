@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:40:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 04:32:14 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 12:16:57 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i)
 		str = readline("> ");
 		ft_lstadd_back(&lst_str, ft_lstnew((void *)str));
 	}
-	if (close (0) != -1)
+	if (write(0, "", 0) != -1)
 	{
 		if (!str)
 			ft_printf("minishell: warning: here-document delimited by %s%s%s",

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:31:33 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/10 13:34:26 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:03:03 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ t_node	*parse(t_param *prm, char *line)
 {
 	t_node	*root;
 
+	if (ft_strlen(line) == 0)
+	{
+		g_return_value = 0;
+		return (NULL);
+	}
 	if (prm->source.id != 0)
 		empty_garbage(prm, prm->source.id);
 	(prm->source.id)++;

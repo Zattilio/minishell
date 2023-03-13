@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 11:46:18 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 13:05:32 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	init_signal_parent_during_heredoc(void);
 /*	signals -> signal_parent.c	*/
 void	handle_sigint_parent(int sig);
 void	handle_sigquit_parent(int sig);
-void	reset_ret_val_and_init_signal_parent(void);
+void	init_signal_parent(void);
 
 /*	utils	*/
 /*	utils -> print_ast.c	*/
