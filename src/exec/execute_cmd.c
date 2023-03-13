@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 06:52:28 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 11:12:10 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 03:07:40 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	execute_cmd(t_pipe *args, int n_cmd)
 		return (return_value);
 	if (exec_cmd(args, path_cmd, cmd) == -1)
 	{
-		return (command_not_found(cmd, cmd));
+		return (command_not_found(cmd));
 	}
 	return (0);
 }

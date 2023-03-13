@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 02:11:41 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 03:39:50 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ void	close_fd(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> error_cmd.c	*/
 int		permission_denied(char **cmd);
-int		command_not_found(char **path_tab, char **cmd);
-int		path_not_found(char **path_tab, char **cmd);
+int		command_not_found(char **cmd);
+int		not_a_command(char **cmd);
+int		no_such_file_or_directory(char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
 /*	excec -> exec_pipe.c	*/

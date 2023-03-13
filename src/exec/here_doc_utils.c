@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:40:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 02:10:26 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 04:32:14 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,21 @@ void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i)
 		str = readline("> ");
 		ft_lstadd_back(&lst_str, ft_lstnew((void *)str));
 	}
-	if (!str)
-		ft_printf("minishell: warning: here-document delimited by %s%s%s",
-			"end-of-file (wanted '", node->file_name, "')\n");
-	ft_lstprint(lst_str, node->file_name, fd_list, i);
+	if (close (0) != -1)
+	{
+		if (!str)
+			ft_printf("minishell: warning: here-document delimited by %s%s%s",
+				"end-of-file (wanted '", node->file_name, "')\n");
+		ft_lstprint(lst_str, node->file_name, fd_list, i);
+	}
+	else
+	{
+		ft_printf("\n");
+		close_fd(args, fd_list);
+		ft_lstclear(&lst_str, &free);
+		empty_garbage(args->prm, -1);
+		exit (130);
+	}
 	ft_lstclear(&lst_str, &free);
 	(void)args;
 }

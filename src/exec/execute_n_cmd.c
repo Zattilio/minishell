@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 02:30:13 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 04:12:18 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
 {
 	int	i;
 
+	init_signal_parent_during_exec();
 	i = 0;
 	while (i < args->argc && is_parent_process(pids, i))
 	{

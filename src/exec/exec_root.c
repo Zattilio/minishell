@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:50:34 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/10 14:53:57 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 04:16:00 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	exec_special_builtins(t_param *prm, char **cmd)
 	g_return_value = ret_val;
 }
 
-int	interpret_signal(int sig)
+static int	interpret_signal(int sig)
 {
 	if (sig == SIGINT)
 		return (130);

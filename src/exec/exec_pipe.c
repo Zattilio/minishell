@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 02:25:07 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/13 04:14:54 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,21 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, t_param *prm)
 	printf("argc = %d\n", root->argc);
 } */
 
+static int	interpret_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_printf("\n");
+		return (130);
+	}
+	if (sig == SIGQUIT)
+	{
+		ft_printf("Quit (core dumped)\n");
+		return (131);
+	}
+	return (sig);
+}
+
 int	exec_pipe(t_param *prm, t_node *root)
 {
 	t_pipe	args;
@@ -83,7 +98,6 @@ int	exec_pipe(t_param *prm, t_node *root)
 		return (0);
 	}
 	init_heredoc(&args, args.fd_list);
-	init_signal_parent_during_exec();
 	execute_all_cmds(&args, args.pids, args.fd_list);
 	close_fd(&args, args.fd_list);
 	ft_wait(&args, args.pids);
@@ -91,7 +105,7 @@ int	exec_pipe(t_param *prm, t_node *root)
 	if (WIFEXITED(status))
 		g_return_value = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_return_value = WTERMSIG(status);
+		g_return_value = interpret_signal(WTERMSIG(status));
 	empty_garbage(prm, -1);
 	exit (g_return_value);
 }
