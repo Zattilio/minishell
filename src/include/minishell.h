@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 02:54:23 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:16:44 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void	readline_new_prompt(char **cmd_buf);
 void	printf_new_prompt(void);
 
 /*	excec	*/
-/*	excec -> close_fd.c	*/
-void	close_fd(t_pipe *args, t_fd *fd_list);
-
 /*	excec -> error_cmd.c	*/
 int		permission_denied(char **cmd);
 int		command_not_found(char **cmd);
@@ -104,6 +101,7 @@ int		no_such_file_or_directory(char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
 /*	excec -> exec_pipe.c	*/
+int		execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list);
 int		exec_pipe(t_param *prm, t_node *root);
 
 /*	excec -> exec_root.c	*/
@@ -111,13 +109,6 @@ int		exec_root(t_param *prm, t_node *root);
 
 /*	excec -> execute_cmd.c	*/
 int		execute_cmd(t_pipe *args, int n_cmd);
-
-/*	excec -> execute_n_cmd.c	*/
-int		no_other_redir_out(t_node *redir);
-int		redir_in(t_node *redir);
-int		redir_out(t_node *redir);
-int		redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
-int		execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list);
 
 /*	excec -> ft_error.c	*/
 int		ft_error(int n, t_pipe *args, t_fd *fd_list);
@@ -132,18 +123,6 @@ void	ft_wait(t_pipe *args, int *pids);
 /*	excec -> get_path_name.c	*/
 char	*ft_strjoin3(char *str1, char *str2, char *str3);
 int		get_path_name(t_pipe *args, char **path_cmd, char **cmd);
-
-/*	excec -> here_doc_utils.c	*/
-void	ft_lstprint(t_list *lst, char *stop, t_fd *fd_list, int i);
-void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
-
-/*	excec -> here_doc.c	*/
-void	fake_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
-int		is_there_another_heredoc(t_node *node);
-int		redirection_heredoc(t_pipe *args, t_node *redir,
-			int i, t_fd *fd_list);
-void	clean_heredoc(t_pipe *args, t_fd *fd_list);
-int		init_heredoc(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> init.c	*/
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
@@ -188,6 +167,22 @@ void	add_last_left(t_node **root, t_node *node);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
 char	*substitute_word(t_param *prm, char	*word);
 char	*get_space(t_param *prm);
+
+/*	redir	*/
+/*	redir -> close_fd.c	*/
+void	close_fd(t_pipe *args, t_fd *fd_list);
+
+/*	redir -> redir.c	*/
+int		no_other_redir_out(t_node *redir);
+int		redir_in(t_node *redir);
+int		redir_out(t_node *redir);
+int		redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
+
+/*	redir -> here_doc_utils.c	*/
+void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
+
+/*	excec -> here_doc.c	*/
+int		init_heredoc(t_pipe *args, t_fd *fd_list);
 
 /*	signals	*/
 /*	signals -> signal_child.c	*/

@@ -6,7 +6,7 @@
 #    By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 10:48:53 by mbocquel          #+#    #+#              #
-#    Updated: 2023/03/13 13:47:47 by jlanza           ###   ########.fr        #
+#    Updated: 2023/03/14 14:20:07 by jlanza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,18 +28,14 @@ SOURCES =	alloc_garbage/ft_alloc_gc.c \
 			builtins/exec_exit.c \
 			builtins/exec_pwd.c \
 			command_line_interface/command_line_interface.c \
-			exec/close_fd.c \
 			exec/error_cmd.c \
 			exec/exec_pipe.c \
 			exec/exec_root.c \
 			exec/execute_cmd.c \
-			exec/execute_n_cmd.c \
 			exec/ft_error.c \
 			exec/ft_putnstr_fd.c \
 			exec/ft_wait.c \
 			exec/get_path_name.c \
-			exec/here_doc_utils.c \
-			exec/here_doc.c \
 			exec/init.c \
 			exec/is_parent_process.c \
 			lexer/lexer.c \
@@ -49,6 +45,11 @@ SOURCES =	alloc_garbage/ft_alloc_gc.c \
 			parser/parser_utils_2.c \
 			parser/parser_utils.c \
 			parser/parser.c \
+			redir/close_fd.c \
+			redir/here_doc_utils.c \
+			redir/here_doc.c \
+			redir/redir_utils.c \
+			redir/redir.c \
 			signals/signal_child.c \
 			signals/signal_command_line_interface.c \
 			signals/signal_heredoc.c \
