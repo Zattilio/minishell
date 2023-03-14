@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:30:00 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 10:09:12 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:14:43 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
+	ft_printf("\n");
 	close(0);
-	close(1);
 	g_return_value = 130;
 }
 

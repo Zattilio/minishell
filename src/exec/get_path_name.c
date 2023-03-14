@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 19:35:55 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/09 13:21:05 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/13 03:38:24 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3)
 	return (res);
 }
 
-static char	**get_path_tab(t_pipe *args, char **cmd)
+static char	**get_path_tab(t_pipe *args)
 {
 	int		i;
 	char	**strs;
@@ -45,15 +45,7 @@ static char	**get_path_tab(t_pipe *args, char **cmd)
 	while (args->prm->env[i] != NULL && !is_path(args->prm->env[i]))
 		i++;
 	if (args->prm->env[i] == NULL)
-	{
-		ft_put3str_fd("minishell: ", cmd[0], ": No such file or directory\n", 2);
 		return (NULL);
-	}
-	if (!is_path(args->prm->env[i]))
-	{
-		ft_put3str_fd("minishell: ", cmd[0], ": Command not found\n", 2);
-		return (NULL);
-	}
 	strs = ft_split(&(args->prm->env[i][5]), ':');
 	garbage_split(args->prm, args->prm->source.id, strs);
 	return (strs);
@@ -77,11 +69,11 @@ int	get_path_name(t_pipe *args, char **path_cmd, char **cmd)
 	char	**path_tab;
 	char	*path;
 
-	path_tab = get_path_tab(args, cmd);
+	path_tab = get_path_tab(args);
 	if (path_tab == NULL && !access(cmd[0], F_OK))
 		return (test_exec_rights(path_cmd, cmd[0], path_tab, cmd));
 	if (path_tab == NULL)
-		return (path_not_found(path_tab, cmd));
+		return (no_such_file_or_directory(cmd));
 	i = 0;
 	while (path_tab[i] != NULL)
 	{
@@ -96,5 +88,5 @@ int	get_path_name(t_pipe *args, char **path_cmd, char **cmd)
 	if (!access(cmd[0], F_OK))
 		return (test_exec_rights(path_cmd, ft_strdup_gc(args->prm,
 					args->prm->source.id, cmd[0]), path_tab, cmd));
-	return (command_not_found(path_tab, cmd));
+	return (not_a_command(cmd));
 }

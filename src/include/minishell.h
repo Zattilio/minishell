@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 17:16:00 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:28:10 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		exec_echo(char **cmd);
 int		ft_error_print_env(int ret_val);
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
-int		clone_env(t_param *prm, char **env);
+void	clone_env(t_param *prm, char **env);
 int		check_valid_export(char *str);
 
 /*	builtins -> env_utils_2.c	*/
@@ -110,8 +110,9 @@ void	close_fd(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> error_cmd.c	*/
 int		permission_denied(char **cmd);
-int		command_not_found(char **path_tab, char **cmd);
-int		path_not_found(char **path_tab, char **cmd);
+int		command_not_found(char **cmd);
+int		not_a_command(char **cmd);
+int		no_such_file_or_directory(char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
 /*	excec -> exec_pipe.c	*/
@@ -124,6 +125,7 @@ int		exec_root(t_param *prm, t_node *root);
 int		execute_cmd(t_pipe *args, int n_cmd);
 
 /*	excec -> execute_n_cmd.c	*/
+int		no_other_redir_out(t_node *redir);
 int		redir_in(t_node *redir);
 int		redir_out(t_node *redir);
 int		redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
@@ -144,17 +146,16 @@ char	*ft_strjoin3(char *str1, char *str2, char *str3);
 int		get_path_name(t_pipe *args, char **path_cmd, char **cmd);
 
 /*	excec -> here_doc_utils.c	*/
-void	ft_lstprint(t_list *lst, char *stop);
-void	ft_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
-void	fork_heredoc(t_pipe *args, t_node *node, int i);
+void	ft_lstprint(t_list *lst, char *stop, t_fd *fd_list, int i);
+void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
 
 /*	excec -> here_doc.c	*/
-void	fake_heredoc(t_node *node);
+void	fake_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
 int		is_there_another_heredoc(t_node *node);
 int		redirection_heredoc(t_pipe *args, t_node *redir,
 			int i, t_fd *fd_list);
 void	clean_heredoc(t_pipe *args, t_fd *fd_list);
-int		init_fork_heredoc(t_pipe *args, int *pids, t_fd *fd_list);
+int		init_heredoc(t_pipe *args, t_fd *fd_list);
 
 /*	excec -> init.c	*/
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
@@ -237,7 +238,7 @@ void	init_signal_parent_during_heredoc(void);
 /*	signals -> signal_parent.c	*/
 void	handle_sigint_parent(int sig);
 void	handle_sigquit_parent(int sig);
-void	reset_ret_val_and_init_signal_parent(void);
+void	init_signal_parent(void);
 
 /*	utils	*/
 /*	utils -> print_ast.c	*/
