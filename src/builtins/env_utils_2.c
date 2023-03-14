@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 17:00:14 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/13 17:20:20 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:31:17 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,24 @@ char	**ft_sort_strs(char **strs, int size)
 		}
 	}
 	return (strs);
+}
+
+int	check_valid_export(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = pos_str(str, '=');
+	if (len == -1 && str)
+		len = ft_strlen(str);
+	while (i < len)
+	{
+		if (!(ft_isalnum(str[i]) || str[i] == '_'))
+			return (2);
+		if (i == 0 && ft_isdigit(str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }

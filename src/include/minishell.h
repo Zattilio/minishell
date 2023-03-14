@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 14:28:10 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:31:54 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ int		ft_error_print_env(int ret_val);
 int		print_env(t_param *prm);
 void	garbage_env(t_param *prm);
 void	clone_env(t_param *prm, char **env);
-int		check_valid_export(char *str);
+int		increment_shlvl(t_param *prm);
 
 /*	builtins -> env_utils_2.c	*/
 int		ft_error_write_export(int ret_val);
 int		exec_export_no_args(t_param *prm);
 char	**ft_sort_strs(char **strs, int size);
+int		check_valid_export(char *str);
 
 /*	builtins -> env.c	*/
 char	*get_last_return(t_param *prm);
