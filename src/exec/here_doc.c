@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 14:48:41 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/14 02:22:31 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	redirection_heredoc(t_pipe *args, t_node *redir,
 		return (0);
 	if (redir->token_type == TK_DINF)
 	{
-		if (is_there_another_redir_in(redir->left))
+		if (is_there_another_redir_in(redir->left)
+			|| (i + 1 != args->argc && no_other_redir_out(redir)))
 			fake_heredoc(args, fd_list, redir);
 		else
 			do_heredoc(args, fd_list, redir, i);

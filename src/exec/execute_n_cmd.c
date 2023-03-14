@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 15:13:29 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/14 02:45:46 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,46 @@ static int	redir_heredoc(t_fd *fd_list, int i)
 	return (0);
 }
 
-int	redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
+int	redirection_stdin(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
 {
-	if (redir == NULL)
+	if (redir == NULL || redir->token_type == TK_EXEC)
 		return (0);
+	if (redir->token_type == TK_SUP || redir->token_type == TK_DSUP)
+		return (redirection_stdin(args, redir->left, i, fd_list));
+	if (i != 0 && no_other_redir_in(redir))
+	{
+		if (dup2(fd_list[i].fd[0], 0) != -1)
+			return (0);
+		return (1);
+	}
 	if (redir->token_type == TK_INF)
 	{
 		if (redir_in(redir))
 			return (1);
 	}
 	if (redir->token_type == TK_DINF && no_other_redir_in(redir->left))
-		redir_heredoc(fd_list, i);
+		return (redir_heredoc(fd_list, i));
+	return (redirection_stdin(args, redir->left, i, fd_list));
+}
+
+int	redirection_stdout(t_pipe *args, t_node *redir, int i, t_fd *fd_list)
+{
+	if (redir == NULL || redir->token_type == TK_EXEC)
+		return (0);
+	if (redir->token_type == TK_INF || redir->token_type == TK_DINF)
+		return (redirection_stdout(args, redir->left, i, fd_list));
+	if (i + 1 != args->argc && no_other_redir_out(redir))
+	{
+		if (dup2(fd_list[i + 1].fd[1], 1) != -1)
+			return (0);
+		return (1);
+	}
 	if (redir->token_type == TK_SUP || redir->token_type == TK_DSUP)
 	{
 		if (redir_out(redir))
 			return (1);
 	}
-	if (i != 0 && redir->token_type == TK_EXEC
-		&& no_other_redir_in(redir->redir))
-		dup2(fd_list[i].fd[0], 0);
-	if (i + 1 != args->argc && redir->token_type == TK_EXEC
-		&& no_other_redir_out(redir->redir))
-		dup2(fd_list[i + 1].fd[1], 1);
-	return (redirection(args, redir->left, i, fd_list));
+	return (redirection_stdout(args, redir->left, i, fd_list));
 }
 
 int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
@@ -113,7 +130,8 @@ int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
 		if (pids[i] == 0)
 		{
 			init_signal_child();
-			if (redirection(args, args->argv[i]->redir, i, fd_list))
+			if (redirection_stdin(args, args->argv[i]->redir, i, fd_list)
+				|| redirection_stdout(args, args->argv[i]->redir, i, fd_list))
 				ft_error(1, args, fd_list);
 			close_fd(args, fd_list);
 			ft_error(execute_cmd(args, i), args, fd_list);

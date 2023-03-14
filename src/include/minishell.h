@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 14:49:47 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/14 02:54:23 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int		exec_root(t_param *prm, t_node *root);
 int		execute_cmd(t_pipe *args, int n_cmd);
 
 /*	excec -> execute_n_cmd.c	*/
+int		no_other_redir_out(t_node *redir);
 int		redir_in(t_node *redir);
 int		redir_out(t_node *redir);
 int		redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
@@ -158,7 +159,6 @@ t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
 
 char	*substitute_heredoc(t_param *prm, char *str);
-
 
 /*	parser	*/
 /*	parser -> make_node.c	*/
