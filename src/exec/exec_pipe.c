@@ -6,7 +6,7 @@
 /*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:00:06 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 04:14:54 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/14 14:12:26 by jlanza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,6 @@ static void	init_s_pipe(t_pipe *pipe, t_node *root, t_param *prm)
 	init_pipex(pipe, &pipe->pids, &pipe->fd_list);
 }
 
-/* static void	print_pipe(t_pipe *root)
-{
-	int		i;
-
-	i = 0;
-	while (root->argv[i])
-	{
-		print_ast(root->argv[i]);
-		i++;
-	}
-	if (root->argv[i] == NULL)
-		printf("end\n");
-	printf("argc = %d\n", root->argc);
-} */
-
 static int	interpret_signal(int sig)
 {
 	if (sig == SIGINT)
@@ -83,6 +68,30 @@ static int	interpret_signal(int sig)
 		return (131);
 	}
 	return (sig);
+}
+
+int	execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list)
+{
+	int	i;
+
+	init_signal_parent_during_exec();
+	i = 0;
+	while (i < args->argc && is_parent_process(pids, i))
+	{
+		pids[i] = fork();
+		if (pids[i] == 0)
+		{
+			init_signal_child();
+			if (redirections(args, args->argv[i]->redir, i, fd_list))
+				ft_error(1, args, fd_list);
+			close_fd(args, fd_list);
+			ft_error(execute_cmd(args, i), args, fd_list);
+		}
+		if (pids[i] < 0)
+			ft_error(5, args, fd_list);
+		i++;
+	}
+	return (0);
 }
 
 int	exec_pipe(t_param *prm, t_node *root)

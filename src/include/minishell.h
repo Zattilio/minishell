@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 14:31:54 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/14 14:36:08 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/14 14:47:27 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ char	*ft_substr_gc(t_param *prm, char *s, unsigned int start, size_t len);
 char	*ft_strdup_gc(t_param *prm, int id, const char *s);
 char	*ft_strjoin_gc(t_param *prm, int id, char const *s1, char const *s2);
 
+/*	alloc_garbage -> garbage_2.c */
+void	garbage_split(t_param *prm, int id, char **strs);
+
 /*	alloc_garbage -> garbage.c */
 int		garbage_col(t_param *prm, int id, void *ptr);
 void	empty_all_garbage(t_param *prm);
 void	empty_garbage(t_param *prm, int id);
 void	print_garbage(t_param *prm);
 void	remove_from_garb(t_param *prm, void *ptr);
-
-/*	alloc_garbage -> garbage_2.c */
-void	garbage_split(t_param *prm, int id, char **strs);
 
 /*	builtins	*/
 /*	builtins -> echo.c	*/
@@ -58,18 +58,18 @@ void	ft_print_echo(char *str, int *ret);
 int		ft_error_echo(int ret_val);
 int		exec_echo(char **cmd);
 
-/*	builtins -> env_utils.c	*/
-int		ft_error_print_env(int ret_val);
-int		print_env(t_param *prm);
-void	garbage_env(t_param *prm);
-void	clone_env(t_param *prm, char **env);
-int		increment_shlvl(t_param *prm);
-
 /*	builtins -> env_utils_2.c	*/
 int		ft_error_write_export(int ret_val);
 int		exec_export_no_args(t_param *prm);
 char	**ft_sort_strs(char **strs, int size);
 int		check_valid_export(char *str);
+
+/*	builtins -> env_utils.c	*/
+int		ft_error_print_env(int ret_val);
+int		print_env(t_param *prm);
+void	garbage_env(t_param *prm);
+int		increment_shlvl(t_param *prm);
+void	clone_env(t_param *prm, char **env);
 
 /*	builtins -> env.c	*/
 char	*get_last_return(t_param *prm);
@@ -106,9 +106,6 @@ void	readline_new_prompt(char **cmd_buf);
 void	printf_new_prompt(void);
 
 /*	excec	*/
-/*	excec -> close_fd.c	*/
-void	close_fd(t_pipe *args, t_fd *fd_list);
-
 /*	excec -> error_cmd.c	*/
 int		permission_denied(char **cmd);
 int		command_not_found(char **cmd);
@@ -117,6 +114,7 @@ int		no_such_file_or_directory(char **cmd);
 int		error_ft_strjoin3(char **path_tab, char **cmd);
 
 /*	excec -> exec_pipe.c	*/
+int		execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list);
 int		exec_pipe(t_param *prm, t_node *root);
 
 /*	excec -> exec_root.c	*/
@@ -124,13 +122,6 @@ int		exec_root(t_param *prm, t_node *root);
 
 /*	excec -> execute_cmd.c	*/
 int		execute_cmd(t_pipe *args, int n_cmd);
-
-/*	excec -> execute_n_cmd.c	*/
-int		no_other_redir_out(t_node *redir);
-int		redir_in(t_node *redir);
-int		redir_out(t_node *redir);
-int		redirection(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
-int		execute_all_cmds(t_pipe *args, int *pids, t_fd *fd_list);
 
 /*	excec -> ft_error.c	*/
 int		ft_error(int n, t_pipe *args, t_fd *fd_list);
@@ -146,18 +137,6 @@ void	ft_wait(t_pipe *args, int *pids);
 char	*ft_strjoin3(char *str1, char *str2, char *str3);
 int		get_path_name(t_pipe *args, char **path_cmd, char **cmd);
 
-/*	excec -> here_doc_utils.c	*/
-void	ft_lstprint(t_list *lst, char *stop, t_fd *fd_list, int i);
-void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node, int i);
-
-/*	excec -> here_doc.c	*/
-void	fake_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
-int		is_there_another_heredoc(t_node *node);
-int		redirection_heredoc(t_pipe *args, t_node *redir,
-			int i, t_fd *fd_list);
-void	clean_heredoc(t_pipe *args, t_fd *fd_list);
-int		init_heredoc(t_pipe *args, t_fd *fd_list);
-
 /*	excec -> init.c	*/
 void	init_pipex(t_pipe *args, int **pids, t_fd **fd_list);
 void	init_pipes(t_pipe *args, t_fd *fd_list);
@@ -167,6 +146,7 @@ int		is_parent_process(int *pids, int n);
 
 /* lexer	*/
 /* lexer -> lexer.c	*/
+size_t	test_double_token(t_param *prm, size_t cur);
 char	*get_token(t_param *prm);
 t_token	peek_tk(t_param *prm);
 t_token	get_t_token(char *token);
@@ -187,19 +167,6 @@ t_node	*make_exec_node(t_param *prm, char **cmd);
 /*	parser -> parser_error.c	*/
 int		check_error_parsing(t_param *prm);
 
-/*	parser -> parser.c	*/
-t_node	*parse(t_param *prm, char *line);
-t_node	*parse_pipe(t_param *prm);
-t_node	*parse_exec(t_param *prm);
-t_node	*parse_redir(t_param *prm);
-char	*substitute_line(t_param *prm);
-
-/*	parser -> parser_utils.c	*/
-char	*get_word(t_param *prm);
-char	*get_word_squote(t_param *prm);
-char	*get_word_dquote(t_param *prm, t_bool sub);
-char	*get_endheredoc(t_param *prm);
-
 /*	parser -> parser_utils_2.c	*/
 void	add_last_left(t_node **root, t_node *node);
 char	**add_cmd_arg(t_param *prm, char **cmd, char *arg);
@@ -212,6 +179,40 @@ char	*sub_line_cas_squote(t_param *prm, char *word);
 char	*sub_line_cas_dquote(t_param *prm, char *word);
 char	*sub_line_cas_redir_simple(t_param *prm, char *word);
 char	*sub_line_cas_redir_heredoc(t_param *prm, char *word);
+
+/*	parser -> parser_utils.c	*/
+char	*get_word(t_param *prm);
+char	*get_word_squote(t_param *prm);
+char	*get_word_dquote(t_param *prm, t_bool sub);
+char	*get_endheredoc(t_param *prm);
+
+/*	parser -> parser.c	*/
+t_node	*parse(t_param *prm, char *line);
+t_node	*parse_pipe(t_param *prm);
+t_node	*parse_exec(t_param *prm);
+t_node	*parse_redir(t_param *prm);
+char	*substitute_line(t_param *prm);
+
+/*	redir	*/
+/*	redir -> close_fd.c	*/
+void	close_fd(t_pipe *args, t_fd *fd_list);
+
+/*	redir -> here_doc_utils.c	*/
+void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node);
+
+/*	redir -> here_doc.c	*/
+int		init_heredoc(t_pipe *args, t_fd *fd_list);
+
+/*	redir -> redir_utils.c	*/
+int		redirection_stdin(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
+int		redirection_stdout(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
+int		redirections(t_pipe *args, t_node *redir, int i, t_fd *fd_list);
+
+/*	redir -> redir.c	*/
+int		no_other_redir_in(t_node *redir);
+int		no_other_redir_out(t_node *redir);
+int		redir_in(t_node *redir);
+int		redir_out(t_node *redir);
 
 /*	signals	*/
 /*	signals -> signal_child.c	*/
@@ -228,8 +229,6 @@ void	handle_sigint_heredoc(int sig);
 void	init_signal_heredoc(void);
 
 /*	signals -> signal_parent_during_exec.c	*/
-void	handle_sigint_parent_during_exec(int sig);
-void	handle_sigquit_parent_during_exec(int sig);
 void	init_signal_parent_during_exec(void);
 
 /*	signals -> signal_parent_during_heredoc.c	*/

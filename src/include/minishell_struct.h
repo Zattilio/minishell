@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:12 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/13 12:04:21 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:33:45 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_node {
 	struct s_node	*right;
 	struct s_node	*left;
 	struct s_node	*redir;
+	t_list			*lst_heredoc;
 }					t_node;
 
 typedef struct s_garb

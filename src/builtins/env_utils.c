@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 15:20:08 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/14 14:31:13 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:35:30 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	clone_env(t_param *prm, char **env)
 		exit (1);
 	}
 }
-
