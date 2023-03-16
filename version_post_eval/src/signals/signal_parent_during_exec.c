@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   signal_parent_during_exec.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/08 19:25:13 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/14 14:47:22 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+void	init_signal_parent_during_exec(void)
 {
-	char	*working_directory;
-
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
-	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
-	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   signal_command_line_interface.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/01 02:49:30 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/09 10:09:10 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+void	handle_sigint(int sig)
 {
-	char	*working_directory;
+	g_return_value = 130;
+	ft_printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	ft_printf("\33[2K\r");
+	printf_new_prompt();
+	(void)sig;
+}
 
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
-	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
-	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
+void	init_signal(void)
+{
+	signal(SIGINT, &handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }

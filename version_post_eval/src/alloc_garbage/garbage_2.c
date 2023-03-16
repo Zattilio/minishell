@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   garbage_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/03/09 10:50:47 by mbocquel          #+#    #+#             */
+/*   Updated: 2023/03/09 10:52:53 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+void	garbage_split(t_param *prm, int id, char **strs)
 {
-	char	*working_directory;
+	int	i;
 
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
+	i = 0;
+	while (strs[i])
 	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
+		garbage_col(prm, id, (void *)(strs[i]));
+		i++;
 	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
+	garbage_col(prm, id, (void *)strs);
 }

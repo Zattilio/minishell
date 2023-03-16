@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/01/20 00:47:07 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/16 12:50:02 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+static int	redirection_heredoc(t_pipe *args, t_node *redir,
+	int i, t_fd *fd_list)
 {
-	char	*working_directory;
-
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
+	if (redir == NULL)
+		return (0);
+	if (redir->token_type == TK_DINF)
 	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
+		do_heredoc(args, fd_list, redir);
 	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
+	return (redirection_heredoc(args, redir->left, i, fd_list));
+}
+
+int	init_heredoc(t_pipe *args, t_fd *fd_list)
+{
+	int	i;
+
+	i = 0;
+	while (i < args->argc)
+	{
+		init_signal_heredoc();
+		redirection_heredoc(args, args->argv[i]->redir, i, fd_list);
+		i++;
+	}
 	return (0);
 }

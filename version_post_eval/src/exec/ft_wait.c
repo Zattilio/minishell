@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   ft_wait.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/01/21 05:34:22 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/08 18:05:06 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+void	ft_wait(t_pipe *args, int *pids)
 {
-	char	*working_directory;
+	int	i;
 
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
+	i = 0;
+	while (i < args->argc - 1)
 	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
+		waitpid(pids[i], NULL, 0);
+		i++;
 	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
 }

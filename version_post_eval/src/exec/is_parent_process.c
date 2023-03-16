@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   is_parent_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/01 02:57:47 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 15:19:50 by mbocquel         ###   ########.fr       */
+/*   Created: 2023/01/21 06:51:53 by jlanza            #+#    #+#             */
+/*   Updated: 2023/03/08 18:08:18 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exec_pwd(void)
+int	is_parent_process(int *pids, int n)
 {
-	char	*working_directory;
+	int	i;
 
-	working_directory = getcwd(NULL, 0);
-	if (working_directory == NULL)
+	i = 0;
+	while (i < n)
 	{
-		ft_printf_fd(2, "minishell: pwd: %s\n", strerror(errno));
-		return (1);
+		if (pids[i] == 0)
+			return (0);
+		i++;
 	}
-	ft_printf("%s\n", working_directory);
-	free(working_directory);
-	return (0);
+	return (1);
 }
