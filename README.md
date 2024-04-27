@@ -15,6 +15,7 @@ This is a shell coded in C with [mbocquel](https://github.com/mbocquel).
     * `ctrl-C`, `ctrl-D` and `ctrl-\`
     * Builtins : echo, cd, pwd, export, unset, env, exit
     * Has a working history
+- Parsing is done thanks to an abstract syntax tree (AST).
 
 ## Usage (linux)
 
