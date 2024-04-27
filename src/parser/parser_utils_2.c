@@ -6,7 +6,7 @@
 /*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:53:54 by mbocquel          #+#    #+#             */
-/*   Updated: 2023/03/13 10:29:01 by mbocquel         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:45:39 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ char	**add_cmd_arg(t_param *prm, char **cmd, char *arg)
 	return (new_cmd);
 }
 
+int	pos_end_dol_sub(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str && str[0] && str[0] == '?')
+		return (1);
+	while (str && str[i])
+	{
+		if (!(ft_isalnum(str[i]) || str[i] == '_'))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 char	*substitute_word(t_param *prm, char	*word)
 {
 	char	*new;
@@ -64,8 +80,8 @@ char	*substitute_word(t_param *prm, char	*word)
 	else
 	{
 		len = ft_strlen(word) - pos_str(word, '$') - 1;
-		if (pos_str(word + pos_str(word, '$') + 1, '$') != -1)
-			len = pos_str(word + pos_str(word, '$') + 1, '$');
+		if (pos_end_dol_sub(word + pos_str(word, '$') + 1) != -1)
+			len = pos_end_dol_sub(word + pos_str(word, '$') + 1);
 		new = ft_strjoin_gc(prm, prm->source.id, new, get_env_var(prm,
 					ft_substr_gc(prm, word, pos_str(word, '$') + 1, len)));
 		to_process = ft_substr_gc(prm, word, pos_str(word, '$')

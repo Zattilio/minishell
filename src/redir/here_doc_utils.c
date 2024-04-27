@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlanza <jlanza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbocquel <mbocquel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:40:18 by jlanza            #+#    #+#             */
-/*   Updated: 2023/03/14 14:14:44 by jlanza           ###   ########.fr       */
+/*   Updated: 2023/03/16 12:50:07 by mbocquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node)
 		new = ft_lstnew((void *)ft_strdup_gc(args->prm, args->prm->source.id,
 					substitute_heredoc(args->prm, str)));
 		garbage_col(args->prm, args->prm->source.id, new);
-		ft_lstadd_back(&lst_str, new);
+		if (ft_strcmp(str, node->file_name) != 0)
+			ft_lstadd_back(&lst_str, new);
 	}
 	if (is_fd_open(0))
 	{
@@ -57,5 +58,4 @@ void	do_heredoc(t_pipe *args, t_fd *fd_list, t_node *node)
 	}
 	else
 		stdin_closed_heredoc(args, fd_list, lst_str);
-	(void)args;
 }
