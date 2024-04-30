@@ -2,7 +2,7 @@
 
 This is a shell coded in C with [mbocquel](https://github.com/mbocquel).
 
-![Alt Text](./readme/minishell.gif)
+![Alt Text](./readme/minishell.webp)
 
 ## About this project
 - This is an individual project at [School 42](https://42.fr/en/homepage/).
